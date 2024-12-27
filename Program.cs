@@ -2,19 +2,22 @@
 using Spectre.Console;
 while (true)
 {
-    Console.WriteLine("WELCOME TO MY MAZE GAME!!");
+    Console.Clear();
+    Console.WriteLine("Welcome to Labyrinth Of The Linked Worlds!!!");
     Console.WriteLine("");
     Console.WriteLine("1 to Play!! (lettsss gooo!)");
     Console.WriteLine("2 to Exit Game! (U scared? :'(");
     ConsoleKeyInfo decition = Console.ReadKey(true);
     if (decition.KeyChar == '1')
     {
+        Console.Clear();
         Console.WriteLine("");
         Console.WriteLine("");
         Console.WriteLine("");
         Console.WriteLine("Letsss goooo!!!");
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
+        Console.Clear();
         Console.WriteLine("");
         Console.WriteLine("");
         Console.WriteLine("");
@@ -23,6 +26,7 @@ while (true)
         Maze.PrintMaze(maze);
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
+        Console.Clear();
         Console.WriteLine("");
         Console.WriteLine("");
         Console.WriteLine("");
@@ -33,6 +37,7 @@ while (true)
         Console.WriteLine("");
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
+        Console.Clear();
         Console.WriteLine("");
         Console.WriteLine("");
         Console.WriteLine("");
@@ -45,6 +50,7 @@ while (true)
         Console.WriteLine("");
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
+        Console.Clear();
         Console.WriteLine("");
         Console.WriteLine("");
         Console.WriteLine("");
@@ -57,6 +63,7 @@ while (true)
         Console.WriteLine("");
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
+        Console.Clear();
         Console.WriteLine("");
         Console.WriteLine("");
         Console.WriteLine("");
@@ -82,12 +89,14 @@ while (true)
         Console.WriteLine("");
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
+        Console.Clear();
         Console.WriteLine("Lady Elara> Greetings " + nameofP1 + " we have summoned you, from your world because we need your help!");
         Console.WriteLine("");
         Console.WriteLine("");
         Console.WriteLine("");
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
+        Console.Clear();
         Console.WriteLine("");
         Console.WriteLine("");
         Console.WriteLine("");
@@ -105,6 +114,7 @@ while (true)
         ConsoleKeyInfo decition2 = Console.ReadKey(true);
         while (decition2.KeyChar == '1')
         {
+            Console.Clear();
             Console.WriteLine("Lady Elara> I understand the question " + nameofP1 + " ,there is a prophecy about this labyrinth that says 'Nobody in this world shall carry the Heart of Ebony out of the Labyrinth', and so we have decided to summon someone from another world to help us! ... Can you?");
             Console.WriteLine("");
             Console.WriteLine("");
@@ -114,6 +124,7 @@ while (true)
             decition2 = Console.ReadKey(true);
             if (decition2.KeyChar != '2')
             {
+                Console.Clear();
                 Console.WriteLine("");
                 Console.WriteLine("");
                 Console.WriteLine("");
@@ -121,6 +132,8 @@ while (true)
                 Console.WriteLine("");
                 Console.WriteLine("");
                 Console.WriteLine("");
+                Console.WriteLine("(press a key to continue)");
+                Console.ReadKey(true);
                 continue;
             }
             break;
@@ -131,6 +144,7 @@ while (true)
         }
         if (decition2.KeyChar == '2')
         {
+            Console.Clear();
             Console.WriteLine("Lady Elara> Thank you " + nameofP1 + " ! Your quest would be to go inside the Labyrinth of the Linked Worlds and get the Heart of Ebony, dont worry, you will not be alone, you will be leading a party of brave heroes of our kingdom, you can personally choose them!");
         }
         Console.WriteLine("");
@@ -163,6 +177,7 @@ while (true)
         Console.WriteLine("");
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
+        Console.Clear();
 
 
     }
