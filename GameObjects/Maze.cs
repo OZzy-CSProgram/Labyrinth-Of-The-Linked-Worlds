@@ -1,3 +1,4 @@
+using Spectre.Console;
 namespace GameObjects
 {
     public class Maze
@@ -52,6 +53,40 @@ namespace GameObjects
         public virtual void CastSpell()
         {
             Console.WriteLine("Casting Spell");
+        }
+        public static void PrintMaze(int [,] maze)
+        {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            var table = new Table();
+            table.AddColumn("Maze");
+
+            for (int i = 0; i < size; i++)
+            {
+                string rowMarkup = "";
+                var row = new Markup("");
+                for (int j = 0; j < size; j++)
+                {
+                    string cellMarkup;
+                    switch (maze[i, j])
+                    {
+                    case 1: // wall
+                        cellMarkup = "[#3A6089]██[/]"; // Wall blue
+                        break;
+                    case 0: // Camino libre
+                        cellMarkup = "[#232324]██[/]"; // Gray Pathes
+                        break;
+                    case 3: // Trampa
+                        cellMarkup = "[red]XX[/]"; // Red Trap
+                        break;
+                    default:
+                        cellMarkup = "[transparent]██[/]";
+                        break;
+                    }
+                    rowMarkup += cellMarkup;
+                }
+                table.AddRow(new Markup(rowMarkup));
+            }
+            AnsiConsole.Render(table);
         }
     }
 

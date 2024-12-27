@@ -1,4 +1,5 @@
 ﻿using GameObjects;
+using Spectre.Console;
 while (true)
 {
     Console.WriteLine("WELCOME TO MY MAZE GAME!!");
@@ -19,6 +20,7 @@ while (true)
         Console.WriteLine("");
         Console.WriteLine("Genering The Maze...");
         int[,] maze = Maze.Generator();
+        Maze.PrintMaze(maze);
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
         Console.WriteLine("");
@@ -129,7 +131,7 @@ while (true)
         }
         if (decition2.KeyChar == '2')
         {
-            Console.WriteLine("Lady Elara> Thank you " + nameofP1 + " ! Your quest would be to go inside the Labyrinth of the Linked Worlds and get the Heart of Ebony, dont worry, you wont be alone, you will be leading a party of brave heroes of our kingdom, you can personally choose them!");
+            Console.WriteLine("Lady Elara> Thank you " + nameofP1 + " ! Your quest would be to go inside the Labyrinth of the Linked Worlds and get the Heart of Ebony, dont worry, you will not be alone, you will be leading a party of brave heroes of our kingdom, you can personally choose them!");
         }
         Console.WriteLine("");
         Console.WriteLine("");
