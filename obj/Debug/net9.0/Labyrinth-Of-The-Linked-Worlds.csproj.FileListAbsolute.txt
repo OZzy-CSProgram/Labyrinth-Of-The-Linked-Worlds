@@ -1,0 +1,14 @@
+D:\My Projects\Labyrinth-Of-The-Linked-Worlds\bin\Debug\net9.0\Labyrinth-Of-The-Linked-Worlds.exe
+D:\My Projects\Labyrinth-Of-The-Linked-Worlds\bin\Debug\net9.0\Labyrinth-Of-The-Linked-Worlds.deps.json
+D:\My Projects\Labyrinth-Of-The-Linked-Worlds\bin\Debug\net9.0\Labyrinth-Of-The-Linked-Worlds.runtimeconfig.json
+D:\My Projects\Labyrinth-Of-The-Linked-Worlds\bin\Debug\net9.0\Labyrinth-Of-The-Linked-Worlds.dll
+D:\My Projects\Labyrinth-Of-The-Linked-Worlds\bin\Debug\net9.0\Labyrinth-Of-The-Linked-Worlds.pdb
+D:\My Projects\Labyrinth-Of-The-Linked-Worlds\obj\Debug\net9.0\Labyrinth-Of-The-Linked-Worlds.GeneratedMSBuildEditorConfig.editorconfig
+D:\My Projects\Labyrinth-Of-The-Linked-Worlds\obj\Debug\net9.0\Labyrinth-Of-The-Linked-Worlds.AssemblyInfoInputs.cache
+D:\My Projects\Labyrinth-Of-The-Linked-Worlds\obj\Debug\net9.0\Labyrinth-Of-The-Linked-Worlds.AssemblyInfo.cs
+D:\My Projects\Labyrinth-Of-The-Linked-Worlds\obj\Debug\net9.0\Labyrinth-Of-The-Linked-Worlds.csproj.CoreCompileInputs.cache
+D:\My Projects\Labyrinth-Of-The-Linked-Worlds\obj\Debug\net9.0\Labyrinth-Of-The-Linked-Worlds.dll
+D:\My Projects\Labyrinth-Of-The-Linked-Worlds\obj\Debug\net9.0\refint\Labyrinth-Of-The-Linked-Worlds.dll
+D:\My Projects\Labyrinth-Of-The-Linked-Worlds\obj\Debug\net9.0\Labyrinth-Of-The-Linked-Worlds.pdb
+D:\My Projects\Labyrinth-Of-The-Linked-Worlds\obj\Debug\net9.0\Labyrinth-Of-The-Linked-Worlds.genruntimeconfig.cache
+D:\My Projects\Labyrinth-Of-The-Linked-Worlds\obj\Debug\net9.0\ref\Labyrinth-Of-The-Linked-Worlds.dll
