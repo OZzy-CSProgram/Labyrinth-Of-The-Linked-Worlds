@@ -1,4 +1,6 @@
-﻿using GameObjects;
+﻿using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
+using GameObjects;
 using Spectre.Console;
 while (true)
 {
@@ -459,6 +461,57 @@ while (true)
         Player2.turn = false;
         while (true)
         {
+            static ConsoleKeyInfo ValidPosition(ConsoleKeyInfo action, int[,] map, string name)
+            {
+                while (action.KeyChar != 'w' && action.KeyChar != 'a' && action.KeyChar != 's' && action.KeyChar != 'd' && action.KeyChar != 'r')
+                {
+                    Console.Clear();
+
+                    Console.WriteLine("thats not a valid action)");
+                    Console.WriteLine("(press a key to continue)");
+                    Console.ReadKey(true);
+
+                    Console.Clear();
+                    Maze.PrintMaze(map, $" {name}'s Turn! ");
+                    Console.WriteLine("Define your action!");
+                    Console.WriteLine("═════════════════════");
+                    Console.WriteLine("W to move up");
+                    Console.WriteLine("A to move left");
+                    Console.WriteLine("S to move down");
+                    Console.WriteLine("D to move right");
+                    Console.WriteLine("R to activate the Super!");
+                    Console.WriteLine("═════════════════════");
+                    action = Console.ReadKey(true);
+
+                    if (action.KeyChar == 'w' || action.KeyChar == 'a' || action.KeyChar == 's' || action.KeyChar == 'd')
+                    {
+                        break;
+                    }
+                }
+                return action;
+            }
+            static ConsoleKeyInfo CantMoveThere(int[,] map, string name)
+            {
+                Console.Clear();
+                Console.WriteLine("You can't move in that direction mate! :/");
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("(press a key to continue)");
+                Console.ReadKey(true);
+                Console.Clear();
+                Maze.PrintMaze(map, $" {name}'s Turn! ");
+                Console.WriteLine("Define your action!");
+                Console.WriteLine("═════════════════════");
+                Console.WriteLine("W to move up");
+                Console.WriteLine("A to move left");
+                Console.WriteLine("S to move down");
+                Console.WriteLine("D to move right");
+                Console.WriteLine("R to activate the Super!");
+                Console.WriteLine("═════════════════════");
+                ConsoleKeyInfo action = Console.ReadKey(true);
+                action = ValidPosition(action, map, name);
+                return action;
+            }
             Maze.PrintMaze(map, $" {nameofP1}'s Turn! ");
             while (Player1.turn == true)
             {
@@ -481,43 +534,14 @@ while (true)
                 Console.WriteLine("R to activate the Super!");
                 Console.WriteLine("═════════════════════");
                 ConsoleKeyInfo action = Console.ReadKey(true);
-                while (action.KeyChar != 'w' && action.KeyChar != 'a' && action.KeyChar != 's' && action.KeyChar != 'd' && action.KeyChar != 'r')
-                {
-                    Console.Clear();
-
-                    Console.WriteLine("thats not a valid action)");
-                    Console.WriteLine("(press a key to continue)");
-                    Console.ReadKey(true);
-
-                    Console.Clear();
-                    Maze.PrintMaze(map, $" {nameofP1}'s Turn! ");
-                    Console.WriteLine("Define your action!");
-                    Console.WriteLine("═════════════════════");
-                    Console.WriteLine("W to move up");
-                    Console.WriteLine("A to move left");
-                    Console.WriteLine("S to move down");
-                    Console.WriteLine("D to move right");
-                    Console.WriteLine("R to activate the Super!");
-                    Console.WriteLine("═════════════════════");
-                    action = Console.ReadKey(true);
-
-                    if (action.KeyChar == 'w' || action.KeyChar == 'a' || action.KeyChar == 's' || action.KeyChar == 'd')
-                    {
-                        break;
-                    }
-                }
+                action = ValidPosition(action, map, nameofP1);
                 while (true)
                 {
                     if (action.KeyChar == 'w')
                     {
                         if (map[choice1.location[0] - 1, choice1.location[1]] == 1)
                         {
-                            Console.Clear();
-                            Console.WriteLine("You can't move in that direction mate! :/");
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine("(press a key to continue)");
-                            Console.ReadKey(true);
+                            action = CantMoveThere(map, nameofP2);
                             continue;
 
                         }
@@ -530,12 +554,7 @@ while (true)
                     {
                         if (map[choice1.location[0], choice1.location[1] - 1] == 1)
                         {
-                            Console.Clear();
-                            Console.WriteLine("You can't move in that direction mate! :/");
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine("(press a key to continue)");
-                            Console.ReadKey(true);
+                            action = CantMoveThere(map, nameofP2);
                             continue;
                         }
                         map[choice1.location[0], choice1.location[1]] = 0;
@@ -547,12 +566,7 @@ while (true)
                     {
                         if (map[choice1.location[0] + 1, choice1.location[1]] == 1)
                         {
-                            Console.Clear();
-                            Console.WriteLine("You can't move in that direction mate! :/");
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine("(press a key to continue)");
-                            Console.ReadKey(true);
+                            action = CantMoveThere(map, nameofP2);
                             continue;
                         }
                         map[choice1.location[0], choice1.location[1]] = 0;
@@ -564,12 +578,7 @@ while (true)
                     {
                         if (map[choice1.location[0], choice1.location[1] + 1] == 1)
                         {
-                            Console.Clear();
-                            Console.WriteLine("You can't move in that direction mate! :/");
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine("(press a key to continue)");
-                            Console.ReadKey(true);
+                            action = CantMoveThere(map, nameofP2);
                             continue;
                         }
                         map[choice1.location[0], choice1.location[1]] = 0;
@@ -618,44 +627,16 @@ while (true)
                 Console.WriteLine("R to activate the Super!");
                 Console.WriteLine("═════════════════════");
                 ConsoleKeyInfo action = Console.ReadKey(true);
-                while (action.KeyChar != 'w' && action.KeyChar != 'a' && action.KeyChar != 's' && action.KeyChar != 'd' && action.KeyChar != 'r')
-                {
-                    Console.Clear();
+                action = ValidPosition(action, map, nameofP2);
 
-                    Console.WriteLine("thats not a valid action)");
-                    Console.WriteLine("(press a key to continue)");
-                    Console.ReadKey(true);
 
-                    Console.Clear();
-                    Maze.PrintMaze(map, $" {nameofP2}'s Turn! ");
-                    Console.WriteLine("Define your action!");
-                    Console.WriteLine("═════════════════════");
-                    Console.WriteLine("W to move up");
-                    Console.WriteLine("A to move left");
-                    Console.WriteLine("S to move down");
-                    Console.WriteLine("D to move right");
-                    Console.WriteLine("R to activate the Super!");
-                    Console.WriteLine("═════════════════════");
-                    action = Console.ReadKey(true);
-
-                    if (action.KeyChar == 'w' || action.KeyChar == 'a' || action.KeyChar == 's' || action.KeyChar == 'd')
-                    {
-                        break;
-                    }
-                }
                 while (true)
                 {
-                    
                     if (action.KeyChar == 'w')
                     {
                         if (map[choice2.location[0] - 1, choice2.location[1]] == 1)
                         {
-                            Console.Clear();
-                            Console.WriteLine("You can't move in that direction mate! :/");
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine("(press a key to continue)");
-                            Console.ReadKey(true);
+                            action = CantMoveThere(map, nameofP2);
                             continue;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -667,12 +648,7 @@ while (true)
                     {
                         if (map[choice2.location[0], choice2.location[1] - 1] == 1)
                         {
-                            Console.Clear();
-                            Console.WriteLine("You can't move in that direction mate! :/");
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine("(press a key to continue)");
-                            Console.ReadKey(true);
+                            action = CantMoveThere(map, nameofP2);
                             continue;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -684,12 +660,7 @@ while (true)
                     {
                         if (map[choice2.location[0] + 1, choice2.location[1]] == 1)
                         {
-                            Console.Clear();
-                            Console.WriteLine("You can't move in that direction mate! :/");
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine("(press a key to continue)");
-                            Console.ReadKey(true);
+                            action = CantMoveThere(map, nameofP2);
                             continue;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -702,12 +673,7 @@ while (true)
                     {
                         if (map[choice2.location[0], choice2.location[1] + 1] == 1)
                         {
-                            Console.Clear();
-                            Console.WriteLine("You can't move in that direction mate! :/");
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine("(press a key to continue)");
-                            Console.ReadKey(true);
+                            action = CantMoveThere(map, nameofP2);
                             continue;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
