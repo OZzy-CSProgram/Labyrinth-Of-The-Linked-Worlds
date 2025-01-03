@@ -5,7 +5,8 @@ namespace GameObjects
     class Player
     {
         public string Name;
-        public static List<Hero> Heroes = new List<Hero>();
+        public bool turn;
+        public List<Hero> Party = new List<Hero>();
         public Player(string name)
         {
             Name = name;
@@ -26,7 +27,22 @@ namespace GameObjects
         }
         public void Greet()
         {
-            Console.WriteLine("(Valid name," + Name + "!!!)");
+            Console.Write("            ✅(Valid name," + Name + "!!!)");
+        }
+        public static Hero GetPlayerChoice(List<Hero> list)
+        {
+            while (true)
+            {
+                Console.Write("Write the number of the Hero you want for your party: ");
+                string input = Console.ReadLine();
+
+                if (int.TryParse(input, out int index) && index > 0 && index <= list.Count)
+                {
+                    return list[index - 1]; // Retorna el token elegido
+                }
+
+                Console.WriteLine("Invalid choice. Please Try Again.");
+            }
         }
     }
 }
