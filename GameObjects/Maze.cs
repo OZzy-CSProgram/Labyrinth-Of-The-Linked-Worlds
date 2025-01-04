@@ -134,7 +134,7 @@ namespace GameObjects
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             var table = new Table();
-            table.AddColumn("              ✣  " + a + "  ✣");
+            table.AddColumn("     ✣  " + a + "  ✣");
 
             for (int i = 0; i < size; i++)
             {

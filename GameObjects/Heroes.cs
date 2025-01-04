@@ -29,50 +29,23 @@ namespace GameObjects
         /////methods/////
         public int[] moveright(int[] location, int[,] Maze)
         {
-            if (Maze[location[0], location[1] + 1] == 1)
-            {
-                Console.WriteLine("You can't move in that direction mate! :/");
-            }
-            else
-            {
-                location[1]++;
-            }
+            location[1]++;
             return location;
         }
         public int[] moveleft(int[] location, int[,] Maze)
         {
-            if (Maze[location[0], location[1] - 1] == 1)
-            {
-                Console.WriteLine("You can't move in that direction mate! :/");
-            }
-            else
-            {
-                location[1]--;
-            }
+            location[1]--;
             return location;
         }
         public int[] moveup(int[] location, int[,] Maze)
         {
-            if (Maze[location[0] - 1, location[1]] == 1)
-            {
-                Console.WriteLine("You can't move in that direction mate! :/");
-            }
-            else
-            {
-                location[0]--;
-            }
+
+            location[0]--;
             return location;
         }
         public int[] movedown(int[] location, int[,] Maze)
         {
-            if (Maze[location[0] + 1, location[1]] == 1)
-            {
-                Console.WriteLine("You can't move in that direction mate! :/");
-            }
-            else
-            {
-                location[0]++;
-            }
+            location[0]++;
             return location;
         }
         public static void DisplayList(List<Hero> list)
@@ -91,88 +64,88 @@ namespace GameObjects
                 Console.WriteLine("╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
             }
         }
-    
+
         public virtual void CastSpell()
         {
-        Console.WriteLine("Casting Spell");
+            Console.WriteLine("Casting Spell");
         }
     }
 
 
-class Teleporter : Hero
-{
-    //Constructor for Teleporter//
-    public Teleporter(int id, string name, string info, int health, int attack, int cooldown, int[,] maze) : base(id,name, info, health, attack, cooldown, maze)
-    //Call to base constructor
+    class Teleporter : Hero
     {
-    }
-    public override void CastSpell()
-    {
-        Console.WriteLine(name + ": Thou cannot reach my magic! .. Teleporting");
-        int[] receptor = Maze.GetRandomPath();
-        while (receptor[0] == location[0] && receptor[0] == location[0])
+        //Constructor for Teleporter//
+        public Teleporter(int id, string name, string info, int health, int attack, int cooldown, int[,] maze) : base(id, name, info, health, attack, cooldown, maze)
+        //Call to base constructor
         {
-            receptor = Maze.GetRandomPath();
         }
-        Console.WriteLine(name + " Teleports to " + location);
-    }
-}
-class WallBreaker : Hero
-{
-    //Constructor for WallBreaker//
-    public WallBreaker(int id,string name, string info, int health, int attack, int cooldown, int[,] maze) : base(id,name, info, health, attack, cooldown, maze)//Call to base constructor
-    {
-    }
-    public override void CastSpell()
-    {
-        // Console.WriteLine(Name + "The bigger the wall is, the easier it falls down :D");
-        while (true)
+        public override void CastSpell()
         {
-            Console.WriteLine("Which wall would you like " + name + " to destroy");
-            //================================================================================================================ PENDIENTE! decirle al usuario q para arriba presione w, para abajo s, a izq, derecha d,
-            ConsoleKeyInfo Direction = Console.ReadKey(true);
-            if (Direction.KeyChar == 'w')
+            Console.WriteLine(name + ": Thou cannot reach my magic! .. Teleporting");
+            int[] receptor = Maze.GetRandomPath();
+            while (receptor[0] == location[0] && receptor[0] == location[0])
             {
-                if (!HandleWallBreaking(-1, 0))
-                    continue;
+                receptor = Maze.GetRandomPath();
             }
-            else if (Direction.KeyChar == 's')
-            {
-                if (!HandleWallBreaking(1, 0))
-                    continue;
-            }
-            else if (Direction.KeyChar == 'a')
-            {
-                if (!HandleWallBreaking(0, -1))
-                    continue;
-            }
-            else if (Direction.KeyChar == 'd')
-            {
-                if (!HandleWallBreaking(0, 1))
-                    continue;
-            }
-            break;
+            Console.WriteLine(name + " Teleports to " + location);
         }
     }
-    private bool HandleWallBreaking(int dirRow, int dirCol)
+    class WallBreaker : Hero
     {
-        if (!Maze.isValidLocation(location[0] + dirRow, location[1] + dirCol))
+        //Constructor for WallBreaker//
+        public WallBreaker(int id, string name, string info, int health, int attack, int cooldown, int[,] maze) : base(id, name, info, health, attack, cooldown, maze)//Call to base constructor
         {
-            Console.WriteLine("You can not break in that direction!");
-            System.Console.ReadKey();
-            return false;
         }
-        if (map[location[0] + dirRow, location[1] + dirCol] != 1)
+        public override void CastSpell()
         {
-            Console.WriteLine("There is no wall there mate, was your head on the clouds?!");
-            return false;
+            // Console.WriteLine(Name + "The bigger the wall is, the easier it falls down :D");
+            while (true)
+            {
+                Console.WriteLine("Which wall would you like " + name + " to destroy");
+                //================================================================================================================ PENDIENTE! decirle al usuario q para arriba presione w, para abajo s, a izq, derecha d,
+                ConsoleKeyInfo Direction = Console.ReadKey(true);
+                if (Direction.KeyChar == 'w')
+                {
+                    if (!HandleWallBreaking(-1, 0))
+                        continue;
+                }
+                else if (Direction.KeyChar == 's')
+                {
+                    if (!HandleWallBreaking(1, 0))
+                        continue;
+                }
+                else if (Direction.KeyChar == 'a')
+                {
+                    if (!HandleWallBreaking(0, -1))
+                        continue;
+                }
+                else if (Direction.KeyChar == 'd')
+                {
+                    if (!HandleWallBreaking(0, 1))
+                        continue;
+                }
+                break;
+            }
         }
-        BreakWall(location[0] + dirRow, location[1] + dirCol);
-        return true;
+        private bool HandleWallBreaking(int dirRow, int dirCol)
+        {
+            if (!Maze.isValidLocation(location[0] + dirRow, location[1] + dirCol))
+            {
+                Console.WriteLine("You can not break in that direction!");
+                System.Console.ReadKey();
+                return false;
+            }
+            if (map[location[0] + dirRow, location[1] + dirCol] != 1)
+            {
+                Console.WriteLine("There is no wall there mate, was your head on the clouds?!");
+                return false;
+            }
+            BreakWall(location[0] + dirRow, location[1] + dirCol);
+            return true;
+        }
+        private void BreakWall(int row, int col)
+        {
+            //=============================================================================================== PENDIENTE!!
+        }
     }
-    private void BreakWall(int row, int col)
-    {
-        //=============================================================================================== PENDIENTE!!
-    }
-}
 }
