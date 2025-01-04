@@ -6,7 +6,7 @@ while (true)
 {
     ///////////////////      MAIN MENU         /////////////
     Console.Clear();
-    Console.WriteLine("Welcome to Labyrinth Of The Linked Worlds!!!");
+    Console.WriteLine("🟦🟦🟦  Welcome to Labyrinth Of The Linked Worlds!!!  🟦🟦🟦");
 
     Console.WriteLine();
     Console.WriteLine();
@@ -291,14 +291,13 @@ while (true)
         Console.WriteLine();
         Console.WriteLine();
         Console.WriteLine();
-        Hero.DisplayList(Heroes);
+        Hero.DisplayList(Heroes, $"{nameofP1} , ITS YOUR TURN! Write the number of the hero you want for your party !!!");
         Console.WriteLine();
         Console.WriteLine();
         Console.WriteLine();
         while (Heroes.Count > 0)
         {
             ////Player 1 Choose
-            Console.WriteLine($"{nameofP1} , ITS YOUR TURN! Write the number of the hero you want for your party !!!");
             Console.WriteLine();
             Console.WriteLine();
             Hero choice1 = Player.GetPlayerChoice(Heroes);
@@ -330,11 +329,10 @@ while (true)
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
-            Hero.DisplayList(Heroes);
+            Hero.DisplayList(Heroes, $"{nameofP2} , ITS YOUR TURN! Write the number of the hero you want for your party !!!");
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine($"{nameofP2} , ITS YOUR TURN! Write the number of the hero you want for your party !!!");
             Console.WriteLine();
             Console.WriteLine();
             Hero choice2 = Player.GetPlayerChoice(Heroes);
@@ -473,13 +471,13 @@ while (true)
                     Console.ReadKey(true);
 
                     Console.Clear();
-                    Maze.PrintMaze(map, $" {name}'s Turn!                  Hero ➧           {hero.name}    Selected! ");
+                    Maze.PrintMaze(map, $" {name}'s Turn!                            Hero ➧     {hero.name}  Selected! ");
                     //Console.WriteLine("╔════════════════╦══════════════════╦══════════════════╦═══════════════════╦══════════════════════╗");
-                    Console.WriteLine("║ W > to move up ║ A > to move left ║ S > to move down ║ D > to move right ║ R > to activate Super ║");
-                    Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩═══════════════════════╝");
+                    Console.WriteLine("║   W > move up  ║   A > move left  ║   S > move down  ║   D > move right  ║  R > activate Super ║");
+                    Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩═════════════════════╝");
                     action = Console.ReadKey(true);
 
-                    if (action.KeyChar == 'w' || action.KeyChar == 'W' || action.KeyChar == 'a' || action.KeyChar == 'A' || action.KeyChar == 's' || action.KeyChar == 'S' ||action.KeyChar == 'd' || action.KeyChar == 'D')
+                    if (action.KeyChar == 'w' || action.KeyChar == 'W' || action.KeyChar == 'a' || action.KeyChar == 'A' || action.KeyChar == 's' || action.KeyChar == 'S' || action.KeyChar == 'd' || action.KeyChar == 'D')
                     {
                         break;
                     }
@@ -495,10 +493,10 @@ while (true)
                 Console.WriteLine("(press a key to continue)");
                 Console.ReadKey(true);
                 Console.Clear();
-                Maze.PrintMaze(map, $" {name}'s Turn!                  Hero ➧           {hero.name}    Selected! ");
+                Maze.PrintMaze(map, $" {name}'s Turn!                            Hero ➧     {hero.name}  Selected! ");
                 //Console.WriteLine("╔════════════════╦══════════════════╦══════════════════╦═══════════════════╦══════════════════════╗");
-                Console.WriteLine("║ W > to move up ║ A > to move left ║ S > to move down ║ D > to move right ║ R > to activate Super ║");
-                Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩═══════════════════════╝");
+                Console.WriteLine("║   W > move up  ║   A > move left  ║   S > move down  ║   D > move right  ║  R > activate Super ║");
+                Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩═════════════════════╝");
                 ConsoleKeyInfo action = Console.ReadKey(true);
                 action = ValidPosition(action, map, name, hero);
                 return action;
@@ -507,18 +505,18 @@ while (true)
             while (Player1.turn == true)
             {
                 Console.Clear();
-                Console.WriteLine($"{nameofP1} IS YOUR TURN! Select the player in your party you want to play with!");
-                Console.WriteLine($"            {nameofP1}'s Party!");
-                Hero.DisplayList(Player1.Party);
+                Console.WriteLine($"{nameofP1} IS YOUR TURN!");
+                Hero.DisplayList(Player1.Party, $"            {nameofP1}'s Party!");
                 Hero choice1 = Player.GetPlayerChoice(Player1.Party);
-                Console.WriteLine("Hero selected! Correctly");
+                Console.WriteLine();
+                Console.WriteLine($"Hero {choice1.name} selected correctly !");
                 Console.WriteLine("(press a key to continue)");
                 Console.ReadKey(true);
                 Console.Clear();
-                Maze.PrintMaze(map, $" {nameofP1}'s Turn!!!                  Hero ➧           {choice1.name}    Selected! ");
+                Maze.PrintMaze(map, $" {nameofP1}'s Turn!!!                      Hero ➧     {choice1.name}  Selected! ");
                 //Console.WriteLine("╔════════════════╦══════════════════╦══════════════════╦═══════════════════╦══════════════════════╗");
-                Console.WriteLine("║ W > to move up ║ A > to move left ║ S > to move down ║ D > to move right ║ R > to activate Super ║");
-                Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩═══════════════════════╝");
+                Console.WriteLine("║   W > move up  ║   A > move left  ║   S > move down  ║   D > move right  ║  R > activate Super ║");
+                Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩═════════════════════╝");
                 ConsoleKeyInfo action = Console.ReadKey(true);
                 action = ValidPosition(action, map, nameofP1, choice1);
                 while (true)
@@ -630,10 +628,10 @@ while (true)
                     break;
                 }
                 Console.Clear();
-                Maze.PrintMaze(map, $" {nameofP1}, Press a key to finish your Turn! ");
+                Maze.PrintMaze(map, $"         {nameofP1},       Press a key to finish your Turn! ");
                 //Console.WriteLine("╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
                 Console.WriteLine($"║ {nameofP1} Has moved {choice1.name} to [{choice1.location[0]},{choice1.location[1]}] ║      Press a Key to finish your turn");
-                Console.WriteLine("╚════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
+                Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
                 Console.ReadKey(true);
                 Player1.turn = false;
                 Player2.turn = true;
@@ -642,18 +640,18 @@ while (true)
             while (Player2.turn == true)
             {
                 Console.Clear();
-                Console.WriteLine($"{nameofP2} IS YOUR TURN! Select the player in your party you want to play with!");
-                Console.WriteLine($"            {nameofP2}'s Party!");
-                Hero.DisplayList(Player2.Party);
+                Console.WriteLine($"{nameofP2} IS YOUR TURN!");
+                Hero.DisplayList(Player2.Party, $"            {nameofP2}'s Party!");
                 Hero choice2 = Player.GetPlayerChoice(Player2.Party);
-                Console.WriteLine("Hero selected! Correctly");
+                Console.WriteLine();
+                Console.WriteLine($"Hero {choice2.name} selected correctly !");
                 Console.WriteLine("(press a key to continue)");
                 Console.ReadKey(true);
                 Console.Clear();
-                Maze.PrintMaze(map, $" {nameofP2}'s Turn!                  Hero ➧           {choice2.name}    Selected! ");
+                Maze.PrintMaze(map, $" {nameofP2}'s Turn!!!                      Hero ➧     {choice2.name}  Selected! ");
                 //Console.WriteLine("╔════════════════╦══════════════════╦══════════════════╦═══════════════════╦══════════════════════╗");
-                Console.WriteLine("║ W > to move up ║ A > to move left ║ S > to move down ║ D > to move right ║ R > to activate Super ║");
-                Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩═══════════════════════╝");
+                Console.WriteLine("║   W > move up  ║   A > move left  ║   S > move down  ║   D > move right  ║  R > activate Super ║");
+                Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩═════════════════════╝");
                 ConsoleKeyInfo action = Console.ReadKey(true);
                 action = ValidPosition(action, map, nameofP2, choice2);
 
@@ -688,7 +686,7 @@ while (true)
                     {
                         if (map[choice2.location[0], choice2.location[1] - 1] == 1)
                         {
-                            action = CantMoveThere(map, nameofP2,choice2);
+                            action = CantMoveThere(map, nameofP2, choice2);
                             continue;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -700,7 +698,7 @@ while (true)
                     {
                         if (map[choice2.location[0], choice2.location[1] - 1] == 1)
                         {
-                            action = CantMoveThere(map, nameofP2,choice2);
+                            action = CantMoveThere(map, nameofP2, choice2);
                             continue;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -712,7 +710,7 @@ while (true)
                     {
                         if (map[choice2.location[0] + 1, choice2.location[1]] == 1)
                         {
-                            action = CantMoveThere(map, nameofP2,choice2);
+                            action = CantMoveThere(map, nameofP2, choice2);
                             continue;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -724,7 +722,7 @@ while (true)
                     {
                         if (map[choice2.location[0] + 1, choice2.location[1]] == 1)
                         {
-                            action = CantMoveThere(map, nameofP2,choice2);
+                            action = CantMoveThere(map, nameofP2, choice2);
                             continue;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -736,7 +734,7 @@ while (true)
                     {
                         if (map[choice2.location[0], choice2.location[1] + 1] == 1)
                         {
-                            action = CantMoveThere(map, nameofP2,choice2);
+                            action = CantMoveThere(map, nameofP2, choice2);
                             continue;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -748,7 +746,7 @@ while (true)
                     {
                         if (map[choice2.location[0], choice2.location[1] + 1] == 1)
                         {
-                            action = CantMoveThere(map, nameofP2,choice2);
+                            action = CantMoveThere(map, nameofP2, choice2);
                             continue;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -765,10 +763,10 @@ while (true)
                     break;
                 }
                 Console.Clear();
-                Maze.PrintMaze(map, $" {nameofP2}, Press a key to finish your Turn! ");
+                Maze.PrintMaze(map, $" {nameofP2},       Press a key to finish your Turn! ");
                 //Console.WriteLine("╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine($" {nameofP1} Has moved {choice2.name} to [{choice2.location[0]},{choice2.location[1]}] ║      Press a Key to finish your turn");
-                Console.WriteLine("╚════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
+                Console.WriteLine($" {nameofP2} Has moved {choice2.name} to [{choice2.location[0]},{choice2.location[1]}] ║      Press a Key to finish your turn");
+                Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
                 Console.ReadKey(true);
                 Player2.turn = false;
                 Player1.turn = true;

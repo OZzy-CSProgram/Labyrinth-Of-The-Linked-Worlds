@@ -48,19 +48,24 @@ namespace GameObjects
             location[0]++;
             return location;
         }
-        public static void DisplayList(List<Hero> list)
-        {
+        public static void DisplayList(List<Hero> list, string s)
+        {   
+            var table = new Table();
+            table.AddColumn(s);
+            table.AddRow("");
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             for (int i = 0; i < list.Count; i++)
             {
-                var table = new Table();
-                table.AddColumn("Heroe number " + (i + 1) + " >>>   " + list[i].name );
-                table.AddRow(" 📜 Info      >  " + list[i].info);
-                table.AddRow(" 💗 Health    >  " + list[i].health);
-                table.AddRow(" 🔪 Attack   >  " + list[i].attack);
-                table.AddRow(" 💠 Cooldown >  " + list[i].cooldown);
-                AnsiConsole.Write(table);
+                var table1 = new Table();
+                table1.AddColumn("Heroe number " + (i + 1) + " >>>   " + list[i].name );
+                table1.AddRow(" 📜 Info      >  " + list[i].info);
+                table1.AddRow(" 💗 Health    >  " + list[i].health);
+                table1.AddRow(" 🔪 Attack   >  " + list[i].attack);
+                table1.AddRow(" 💠 Cooldown >  " + list[i].cooldown);
+                table.AddRow(table1);
             }
+            table.AddRow("");
+            AnsiConsole.Write(table);
         }
 
         public virtual void CastSpell()
