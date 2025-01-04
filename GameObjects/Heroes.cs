@@ -1,6 +1,6 @@
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.ExceptionServices;
-
+using Spectre.Console;
 namespace GameObjects
 {
     class Hero
@@ -50,18 +50,16 @@ namespace GameObjects
         }
         public static void DisplayList(List<Hero> list)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             for (int i = 0; i < list.Count; i++)
             {
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine("╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine("║  Heroe number " + (i + 1) + " >>>   " + list[i].name);
-                Console.WriteLine("╠═════════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
-                Console.WriteLine("║  📜 Info      >  " + list[i].info);
-                Console.WriteLine("║  💗 Health    >  " + list[i].health);
-                Console.WriteLine("║  🔪 Attack   >  " + list[i].attack);
-                Console.WriteLine("║  💠 Cooldown >  " + list[i].cooldown);
-                Console.WriteLine("╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
+                var table = new Table();
+                table.AddColumn("Heroe number " + (i + 1) + " >>>   " + list[i].name );
+                table.AddRow(" 📜 Info      >  " + list[i].info);
+                table.AddRow(" 💗 Health    >  " + list[i].health);
+                table.AddRow(" 🔪 Attack   >  " + list[i].attack);
+                table.AddRow(" 💠 Cooldown >  " + list[i].cooldown);
+                AnsiConsole.Write(table);
             }
         }
 

@@ -475,8 +475,8 @@ while (true)
                     Console.Clear();
                     Maze.PrintMaze(map, $" {name}'s Turn!                  Hero ➧           {hero.name}    Selected! ");
                     //Console.WriteLine("╔════════════════╦══════════════════╦══════════════════╦═══════════════════╦══════════════════════╗");
-                    Console.WriteLine("║ W > to move up ║ A > to move left ║ S > to move down ║ D > to move right ║ R > to activate Super║");
-                    Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩══════════════════════╝");
+                    Console.WriteLine("║ W > to move up ║ A > to move left ║ S > to move down ║ D > to move right ║ R > to activate Super ║");
+                    Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩═══════════════════════╝");
                     action = Console.ReadKey(true);
 
                     if (action.KeyChar == 'w' || action.KeyChar == 'W' || action.KeyChar == 'a' || action.KeyChar == 'A' || action.KeyChar == 's' || action.KeyChar == 'S' ||action.KeyChar == 'd' || action.KeyChar == 'D')
@@ -497,8 +497,8 @@ while (true)
                 Console.Clear();
                 Maze.PrintMaze(map, $" {name}'s Turn!                  Hero ➧           {hero.name}    Selected! ");
                 //Console.WriteLine("╔════════════════╦══════════════════╦══════════════════╦═══════════════════╦══════════════════════╗");
-                Console.WriteLine("║ W > to move up ║ A > to move left ║ S > to move down ║ D > to move right ║ R > to activate Super║");
-                Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩══════════════════════╝");
+                Console.WriteLine("║ W > to move up ║ A > to move left ║ S > to move down ║ D > to move right ║ R > to activate Super ║");
+                Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩═══════════════════════╝");
                 ConsoleKeyInfo action = Console.ReadKey(true);
                 action = ValidPosition(action, map, name, hero);
                 return action;
@@ -517,8 +517,8 @@ while (true)
                 Console.Clear();
                 Maze.PrintMaze(map, $" {nameofP1}'s Turn!!!                  Hero ➧           {choice1.name}    Selected! ");
                 //Console.WriteLine("╔════════════════╦══════════════════╦══════════════════╦═══════════════════╦══════════════════════╗");
-                Console.WriteLine("║ W > to move up ║ A > to move left ║ S > to move down ║ D > to move right ║ R > to activate Super║");
-                Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩══════════════════════╝");
+                Console.WriteLine("║ W > to move up ║ A > to move left ║ S > to move down ║ D > to move right ║ R > to activate Super ║");
+                Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩═══════════════════════╝");
                 ConsoleKeyInfo action = Console.ReadKey(true);
                 action = ValidPosition(action, map, nameofP1, choice1);
                 while (true)
@@ -652,8 +652,8 @@ while (true)
                 Console.Clear();
                 Maze.PrintMaze(map, $" {nameofP2}'s Turn!                  Hero ➧           {choice2.name}    Selected! ");
                 //Console.WriteLine("╔════════════════╦══════════════════╦══════════════════╦═══════════════════╦══════════════════════╗");
-                Console.WriteLine("║ W > to move up ║ A > to move left ║ S > to move down ║ D > to move right ║ R > to activate Super║");
-                Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩══════════════════════╝");
+                Console.WriteLine("║ W > to move up ║ A > to move left ║ S > to move down ║ D > to move right ║ R > to activate Super ║");
+                Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩═══════════════════════╝");
                 ConsoleKeyInfo action = Console.ReadKey(true);
                 action = ValidPosition(action, map, nameofP2, choice2);
 
