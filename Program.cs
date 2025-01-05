@@ -6,7 +6,7 @@ while (true)
 {
     ///////////////////      MAIN MENU         /////////////
     Console.Clear();
-    Console.WriteLine("🟦🟦🟦  Welcome to Labyrinth Of The Linked Worlds!!!  🟦🟦🟦");
+    Console.WriteLine("🔹🔷🟦🟦🟦  Welcome to Labyrinth Of The Linked Worlds!!!  🟦🟦🟦🔷🔹");
 
     Console.WriteLine();
     Console.WriteLine();
@@ -42,25 +42,13 @@ while (true)
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
 
-        //// MAP GENERATION
         Console.Clear();
         Console.WriteLine();
         Console.WriteLine();
         Console.WriteLine();
 
-        Console.WriteLine("Genering The Map...");
-        int[,] map = Maze.Generator();
-
-        Console.WriteLine("(press a key to continue)");
-        Console.ReadKey(true);
-
-        ////Clear//////
-        Console.Clear();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-
-        Console.WriteLine("For The Player 1");
+        //Phase 1
+        Console.WriteLine("                   For The Player 1");
         Console.WriteLine("(The Player 1 should be the one playing, at this current time!)");
 
         Console.WriteLine();
@@ -70,87 +58,74 @@ while (true)
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
 
-        ////Clear//////
         Console.Clear();
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
+        
+        //Roleplay
         Console.WriteLine("(you wake up in a stranger place!)");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
-        ////Clear//////
+
         Console.Clear();
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
+
+        //More Roleplay
         Console.WriteLine("Lady Elara> We have been waiting for you warrior!");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
-        ////Clear//////
+
         Console.Clear();
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
         Console.WriteLine("Lady Elara> Wait, We have not properly meet, What is your name?!");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.Write("(Enter your name to continue) : ");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.Write("(Enter your name to continue) ▶ ");
         string nameofP1 = Player.intname(Console.ReadLine());
         Player Player1 = new Player(nameofP1);
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
         Player1.Greet();
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
-        ////Clear//////
-        Console.Clear();
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("Lady Elara> Greetings " + nameofP1 + " we have summoned you, from your world because we need your help!");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("(press a key to continue)");
-        Console.ReadKey(true);
-        ////Clear//////
-        Console.Clear();
 
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
+        Console.Clear();
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine("Lady Elara> Greetings " + nameofP1 + " we have summoned you, from your world because we need your help!");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine("(press a key to continue)");
+        Console.ReadKey(true);
+
+        Console.Clear();
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
         Console.WriteLine("Lady Elara> I have had a vision of a future where darkness consumes all of my world, I have seen in my visions that the only way to stop the darkness from spreading is by using an ancient and lost artifact called The Heart of Ebony... ");
         Console.WriteLine("Lady Elara> A group of our elder mages has discover that this artifact lays in a dangerous place called 'The Labyrinth of The Linked Worlds' So... Can you help us " + nameofP1 + " ?");
-        Console.WriteLine("");
-        Console.WriteLine("");
+        Console.WriteLine();
+        Console.WriteLine();
         Console.WriteLine("(Choose your answer)");
-        Console.WriteLine("");
+        Console.WriteLine();
         Console.WriteLine("1 Why me?");
         Console.WriteLine("2 What exactly do you want me to do!");
         ConsoleKeyInfo decition2 = Console.ReadKey(true);
@@ -186,36 +161,34 @@ while (true)
         }
         while (decition2.KeyChar == '1')
         {
-            ////Clear//////
             Console.Clear();
             Console.WriteLine("Lady Elara> I understand the question " + nameofP1 + " ,there is a prophecy about this labyrinth that says 'Nobody in this world shall carry the Heart of Ebony out of the Labyrinth', and so we have decided to summon someone from another world to help us! ... Can you?");
-            Console.WriteLine("");
-            Console.WriteLine("");
+            Console.WriteLine();
+            Console.WriteLine();
             Console.WriteLine("(Choose your answer)");
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.WriteLine("2 What exactly do you want me to do!");
             decition2 = Console.ReadKey(true);
 
             if (decition2.KeyChar != '2')
             {
-                ////Clear//////
                 Console.Clear();
-                Console.WriteLine("");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine();
                 Console.WriteLine("(thats not a valid answer)");
-                Console.WriteLine("");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine();
                 Console.WriteLine("(press a key to continue)");
                 Console.ReadKey(true);
-                ////Clear//////
+
                 Console.Clear();
                 Console.WriteLine("Lady Elara> I understand the question " + nameofP1 + " ,there is a prophecy about this labyrinth that says 'Nobody in this world shall carry the Heart of Ebony out of the Labyrinth', and so we have decided to summon someone from another world to help us! ... Can you?");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                Console.WriteLine();
+                Console.WriteLine();
                 Console.WriteLine("(Choose your answer)");
-                Console.WriteLine("");
+                Console.WriteLine();
                 Console.WriteLine("2 What exactly do you want me to do!");
                 continue;
             }
@@ -234,31 +207,61 @@ while (true)
         Console.ReadKey(true);
         Console.Clear();
 
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("For The Player 2");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
+
+        //Phase 2
+        Console.WriteLine("                    For The Player 2");
         Console.WriteLine("(The Player 2 should be the one playing, at this current time!)");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("Lady Elara> Wait, We have not properly meet, What is your name?!");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine("Lord Kaelg> Wake up!, You are now under my command traveler!!!");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine("(press a key to continue)");
+        Console.ReadKey(true);
+        
+        Console.Clear();
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine("Lord Kaelg> If you want to get back to your miserable world you shall first serve me well!!!");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
+
+        Console.Clear();
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine("Lord Kaelg> Tell me what your name is!!!");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
         Console.Write("(Enter your name to continue) : ");
         string nameofP2 = Player.intname(Console.ReadLine());
         Player Player2 = new Player(nameofP2);
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
         Player2.Greet();
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
         Console.Clear();
+        //// MAP GENERATION
+        Console.Clear();
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
+
+        Console.WriteLine("Genering The Map...");
+        int[,] map = Maze.Generator();
         ///////////////////////////////////////////////////////////////////////////////////
         //////////////////////////      Heroes Selection         //////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////
@@ -291,7 +294,7 @@ while (true)
         Console.WriteLine();
         Console.WriteLine();
         Console.WriteLine();
-        Hero.DisplayList(Heroes, $"{nameofP1} , ITS YOUR TURN! Write the number of the hero you want for your party !!!");
+        Hero.DisplayList(Heroes, $"{nameofP1} , ITS YOUR TURN !!!");
         Console.WriteLine();
         Console.WriteLine();
         Console.WriteLine();
@@ -329,7 +332,7 @@ while (true)
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
-            Hero.DisplayList(Heroes, $"{nameofP2} , ITS YOUR TURN! Write the number of the hero you want for your party !!!");
+            Hero.DisplayList(Heroes, $"{nameofP2} , ITS YOUR TURN !!!");
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
@@ -359,6 +362,12 @@ while (true)
         Console.WriteLine();
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
+        //Creating Trap List
+        List<Trap> Traps = new List<Trap>();
+        Trap1 Back5 = new Trap1();
+        Traps.Add(Back5);
+        Trap2 Back10 = new Trap2();
+        Traps.Add(Back10);
         ///Heroes Spwans
         //                       Player 1
         //Spawn of First Hero
@@ -393,9 +402,11 @@ while (true)
         {
             case nameof(Teleporter): // wall
                 map[spawn1p1[0], spawn1p1[1]] = Mediv.id;
+                Mediv.locationlog.Add(new int[] { spawn1p1[0], spawn1p1[1] });
                 break;
             case nameof(WallBreaker): // wall
                 map[spawn1p1[0], spawn1p1[1]] = Eledron.id;
+                Eledron.locationlog.Add(new int[] { spawn1p1[0], spawn1p1[1] });
                 break;
             default:
                 break;
@@ -427,9 +438,11 @@ while (true)
         {
             case nameof(Teleporter): // wall
                 map[spawn1p2[0], spawn1p2[1]] = Mediv.id;
+                Mediv.locationlog.Add(new int[] { spawn1p2[0], spawn1p2[1] });
                 break;
             case nameof(WallBreaker): // wall
                 map[spawn1p2[0], spawn1p2[1]] = Eledron.id;
+                Eledron.locationlog.Add(new int[] { spawn1p2[0], spawn1p2[1] });
                 break;
             default:
                 break;
@@ -501,10 +514,10 @@ while (true)
                 action = ValidPosition(action, map, name, hero);
                 return action;
             }
-            Maze.PrintMaze(map, $" {nameofP1}'s Turn! ");
             while (Player1.turn == true)
             {
                 Console.Clear();
+
                 Console.WriteLine($"{nameofP1} IS YOUR TURN!");
                 Hero.DisplayList(Player1.Party, $"            {nameofP1}'s Party!");
                 Hero choice1 = Player.GetPlayerChoice(Player1.Party);
@@ -529,9 +542,33 @@ while (true)
                             continue;
 
                         }
+                        if (map[choice1.location[0] - 1, choice1.location[1]] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            // Make Trap Position equals 0
+                            map[choice1.location[0] - 1, choice1.location[1]] = 0;
+                            //execute move method, in case the trap does not affect your position
+                            choice1.moveup(choice1.location, map);
+                            //change the value in the map of the new position so the hero is displayed there
+                            map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            //add new position to the log
+                            choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
+                            Random randomTrap = new Random();
+                            int index = randomTrap.Next(Traps.Count);
+                            Console.Clear();
+                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                            Console.WriteLine("");
+                            Console.WriteLine("(press a key to proceed :( )");
+                            Console.ReadKey(true);
+                            Traps[index].CastTrap(choice1, map);
+                            break;
+                        }
                         map[choice1.location[0], choice1.location[1]] = 0;
                         choice1.moveup(choice1.location, map);
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
+                        choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                         break;
                     }
                     if (action.KeyChar == 'W')
@@ -542,9 +579,33 @@ while (true)
                             continue;
 
                         }
+                        if (map[choice1.location[0] - 1, choice1.location[1]] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            // Make Trap Position equals 0
+                            map[choice1.location[0] - 1, choice1.location[1]] = 0;
+                            //execute move method, in case the trap does not affect your position
+                            choice1.moveup(choice1.location, map);
+                            //change the value in the map of the new position so the hero is displayed there
+                            map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            //add new position to the log
+                            choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
+                            Random randomTrap = new Random();
+                            int index = randomTrap.Next(Traps.Count);
+                            Console.Clear();
+                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                            Console.WriteLine("");
+                            Console.WriteLine("(press a key to proceed :( )");
+                            Console.ReadKey(true);
+                            Traps[index].CastTrap(choice1, map);
+                            break;
+                        }
                         map[choice1.location[0], choice1.location[1]] = 0;
                         choice1.moveup(choice1.location, map);
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
+                        choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                         break;
                     }
                     if (action.KeyChar == 'a')
@@ -554,9 +615,33 @@ while (true)
                             action = CantMoveThere(map, nameofP1, choice1);
                             continue;
                         }
+                        if (map[choice1.location[0], choice1.location[1] - 1] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            // Make Trap Position equals 0
+                            map[choice1.location[0], choice1.location[1] - 1] = 0;
+                            //execute move method, in case the trap does not affect your position
+                            choice1.moveleft(choice1.location, map);
+                            //change the value in the map of the new position so the hero is displayed there
+                            map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            //add new position to the log
+                            choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
+                            Random randomTrap = new Random();
+                            int index = randomTrap.Next(Traps.Count);
+                            Console.Clear();
+                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                            Console.WriteLine("");
+                            Console.WriteLine("(press a key to proceed :( )");
+                            Console.ReadKey(true);
+                            Traps[index].CastTrap(choice1, map);
+                            break;
+                        }
                         map[choice1.location[0], choice1.location[1]] = 0;
                         choice1.moveleft(choice1.location, map);
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
+                        choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                         break;
                     }
                     if (action.KeyChar == 'A')
@@ -566,9 +651,33 @@ while (true)
                             action = CantMoveThere(map, nameofP1, choice1);
                             continue;
                         }
+                        if (map[choice1.location[0], choice1.location[1] - 1] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            // Make Trap Position equals 0
+                            map[choice1.location[0], choice1.location[1] - 1] = 0;
+                            //execute move method, in case the trap does not affect your position
+                            choice1.moveleft(choice1.location, map);
+                            //change the value in the map of the new position so the hero is displayed there
+                            map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            //add new position to the log
+                            choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
+                            Random randomTrap = new Random();
+                            int index = randomTrap.Next(Traps.Count);
+                            Console.Clear();
+                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                            Console.WriteLine("");
+                            Console.WriteLine("(press a key to proceed :( )");
+                            Console.ReadKey(true);
+                            Traps[index].CastTrap(choice1, map);
+                            break;
+                        }
                         map[choice1.location[0], choice1.location[1]] = 0;
                         choice1.moveleft(choice1.location, map);
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
+                        choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                         break;
                     }
                     if (action.KeyChar == 's')
@@ -578,9 +687,33 @@ while (true)
                             action = CantMoveThere(map, nameofP1, choice1);
                             continue;
                         }
+                        if (map[choice1.location[0] + 1, choice1.location[1]] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            // Make Trap Position equals 0
+                            map[choice1.location[0] + 1, choice1.location[1]] = 0;
+                            //execute move method, in case the trap does not affect your position
+                            choice1.movedown(choice1.location, map);
+                            //change the value in the map of the new position so the hero is displayed there
+                            map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            //add new position to the log
+                            choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
+                            Random randomTrap = new Random();
+                            int index = randomTrap.Next(Traps.Count);
+                            Console.Clear();
+                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                            Console.WriteLine("");
+                            Console.WriteLine("(press a key to proceed :( )");
+                            Console.ReadKey(true);
+                            Traps[index].CastTrap(choice1, map);
+                            break;
+                        }
                         map[choice1.location[0], choice1.location[1]] = 0;
                         choice1.movedown(choice1.location, map);
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
+                        choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                         break;
                     }
                     if (action.KeyChar == 'S')
@@ -590,9 +723,33 @@ while (true)
                             action = CantMoveThere(map, nameofP1, choice1);
                             continue;
                         }
+                        if (map[choice1.location[0] + 1, choice1.location[1]] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            // Make Trap Position equals 0
+                            map[choice1.location[0] + 1, choice1.location[1]] = 0;
+                            //execute move method, in case the trap does not affect your position
+                            choice1.movedown(choice1.location, map);
+                            //change the value in the map of the new position so the hero is displayed there
+                            map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            //add new position to the log
+                            choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
+                            Random randomTrap = new Random();
+                            int index = randomTrap.Next(Traps.Count);
+                            Console.Clear();
+                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                            Console.WriteLine("");
+                            Console.WriteLine("(press a key to proceed :( )");
+                            Console.ReadKey(true);
+                            Traps[index].CastTrap(choice1, map);
+                            break;
+                        }
                         map[choice1.location[0], choice1.location[1]] = 0;
                         choice1.movedown(choice1.location, map);
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
+                        choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                         break;
                     }
                     if (action.KeyChar == 'd')
@@ -602,9 +759,33 @@ while (true)
                             action = CantMoveThere(map, nameofP1, choice1);
                             continue;
                         }
+                        if (map[choice1.location[0], choice1.location[1] + 1] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            // Make Trap Position equals 0
+                            map[choice1.location[0], choice1.location[1] + 1] = 0;
+                            //execute move method, in case the trap does not affect your position
+                            choice1.moveright(choice1.location, map);
+                            //change the value in the map of the new position so the hero is displayed there
+                            map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            //add new position to the log
+                            choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
+                            Random randomTrap = new Random();
+                            int index = randomTrap.Next(Traps.Count);
+                            Console.Clear();
+                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                            Console.WriteLine("");
+                            Console.WriteLine("(press a key to proceed :( )");
+                            Console.ReadKey(true);
+                            Traps[index].CastTrap(choice1, map);
+                            break;
+                        }
                         map[choice1.location[0], choice1.location[1]] = 0;
                         choice1.moveright(choice1.location, map);
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
+                        choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                         break;
                     }
                     if (action.KeyChar == 'D')
@@ -614,9 +795,33 @@ while (true)
                             action = CantMoveThere(map, nameofP1, choice1);
                             continue;
                         }
+                        if (map[choice1.location[0], choice1.location[1] + 1] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            // Make Trap Position equals 0
+                            map[choice1.location[0], choice1.location[1] + 1] = 0;
+                            //execute move method, in case the trap does not affect your position
+                            choice1.moveright(choice1.location, map);
+                            //change the value in the map of the new position so the hero is displayed there
+                            map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            //add new position to the log
+                            choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
+                            Random randomTrap = new Random();
+                            int index = randomTrap.Next(Traps.Count);
+                            Console.Clear();
+                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                            Console.WriteLine("");
+                            Console.WriteLine("(press a key to proceed :( )");
+                            Console.ReadKey(true);
+                            Traps[index].CastTrap(choice1, map);
+                            break;
+                        }
                         map[choice1.location[0], choice1.location[1]] = 0;
                         choice1.moveright(choice1.location, map);
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
+                        choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                         break;
                     }
                     if (action.KeyChar == 'r')
@@ -665,9 +870,33 @@ while (true)
                             action = CantMoveThere(map, nameofP2, choice2);
                             continue;
                         }
+                        if (map[choice2.location[0] - 1, choice2.location[1]] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            // Make Trap Position equals 0
+                            map[choice2.location[0] - 1, choice2.location[1]] = 0;
+                            //execute move method, in case the trap does not affect your position
+                            choice2.moveup(choice2.location, map);
+                            //change the value in the map of the new position so the hero is displayed there
+                            map[choice2.location[0], choice2.location[1]] = choice2.id;
+                            //add new position to the log
+                            choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
+                            Random randomTrap = new Random();
+                            int index = randomTrap.Next(Traps.Count);
+                            Console.Clear();
+                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                            Console.WriteLine("");
+                            Console.WriteLine("(press a key to proceed :( )");
+                            Console.ReadKey(true);
+                            Traps[index].CastTrap(choice2, map);
+                            break;
+                        }
                         map[choice2.location[0], choice2.location[1]] = 0;
                         choice2.moveup(choice2.location, map);
                         map[choice2.location[0], choice2.location[1]] = choice2.id;
+                        choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                         break;
                     }
                     if (action.KeyChar == 'W')
@@ -677,9 +906,33 @@ while (true)
                             action = CantMoveThere(map, nameofP2, choice2);
                             continue;
                         }
+                        if (map[choice2.location[0] - 1, choice2.location[1]] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            // Make Trap Position equals 0
+                            map[choice2.location[0] - 1, choice2.location[1]] = 0;
+                            //execute move method, in case the trap does not affect your position
+                            choice2.moveup(choice2.location, map);
+                            //change the value in the map of the new position so the hero is displayed there
+                            map[choice2.location[0], choice2.location[1]] = choice2.id;
+                            //add new position to the log
+                            choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
+                            Random randomTrap = new Random();
+                            int index = randomTrap.Next(Traps.Count);
+                            Console.Clear();
+                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                            Console.WriteLine("");
+                            Console.WriteLine("(press a key to proceed :( )");
+                            Console.ReadKey(true);
+                            Traps[index].CastTrap(choice2, map);
+                            break;
+                        }
                         map[choice2.location[0], choice2.location[1]] = 0;
                         choice2.moveup(choice2.location, map);
                         map[choice2.location[0], choice2.location[1]] = choice2.id;
+                        choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                         break;
                     }
                     if (action.KeyChar == 'a')
@@ -689,9 +942,33 @@ while (true)
                             action = CantMoveThere(map, nameofP2, choice2);
                             continue;
                         }
+                        if (map[choice2.location[0], choice2.location[1] - 1] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            // Make Trap Position equals 0
+                            map[choice2.location[0], choice2.location[1] - 1] = 0;
+                            //execute move method, in case the trap does not affect your position
+                            choice2.moveleft(choice2.location, map);
+                            //change the value in the map of the new position so the hero is displayed there
+                            map[choice2.location[0], choice2.location[1]] = choice2.id;
+                            //add new position to the log
+                            choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
+                            Random randomTrap = new Random();
+                            int index = randomTrap.Next(Traps.Count);
+                            Console.Clear();
+                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                            Console.WriteLine("");
+                            Console.WriteLine("(press a key to proceed :( )");
+                            Console.ReadKey(true);
+                            Traps[index].CastTrap(choice2, map);
+                            break;
+                        }
                         map[choice2.location[0], choice2.location[1]] = 0;
                         choice2.moveleft(choice2.location, map);
                         map[choice2.location[0], choice2.location[1]] = choice2.id;
+                        choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                         break;
                     }
                     if (action.KeyChar == 'A')
@@ -701,9 +978,33 @@ while (true)
                             action = CantMoveThere(map, nameofP2, choice2);
                             continue;
                         }
+                        if (map[choice2.location[0], choice2.location[1] - 1] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            // Make Trap Position equals 0
+                            map[choice2.location[0], choice2.location[1] - 1] = 0;
+                            //execute move method, in case the trap does not affect your position
+                            choice2.moveleft(choice2.location, map);
+                            //change the value in the map of the new position so the hero is displayed there
+                            map[choice2.location[0], choice2.location[1]] = choice2.id;
+                            //add new position to the log
+                            choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
+                            Random randomTrap = new Random();
+                            int index = randomTrap.Next(Traps.Count);
+                            Console.Clear();
+                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                            Console.WriteLine("");
+                            Console.WriteLine("(press a key to proceed :( )");
+                            Console.ReadKey(true);
+                            Traps[index].CastTrap(choice2, map);
+                            break;
+                        }
                         map[choice2.location[0], choice2.location[1]] = 0;
                         choice2.moveleft(choice2.location, map);
                         map[choice2.location[0], choice2.location[1]] = choice2.id;
+                        choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                         break;
                     }
                     if (action.KeyChar == 's')
@@ -713,9 +1014,33 @@ while (true)
                             action = CantMoveThere(map, nameofP2, choice2);
                             continue;
                         }
+                        if (map[choice2.location[0] + 1, choice2.location[1]] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            // Make Trap Position equals 0
+                            map[choice2.location[0] + 1, choice2.location[1]] = 0;
+                            //execute move method, in case the trap does not affect your position
+                            choice2.movedown(choice2.location, map);
+                            //change the value in the map of the new position so the hero is displayed there
+                            map[choice2.location[0], choice2.location[1]] = choice2.id;
+                            //add new position to the log
+                            choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
+                            Random randomTrap = new Random();
+                            int index = randomTrap.Next(Traps.Count);
+                            Console.Clear();
+                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                            Console.WriteLine("");
+                            Console.WriteLine("(press a key to proceed :( )");
+                            Console.ReadKey(true);
+                            Traps[index].CastTrap(choice2, map);
+                            break;
+                        }
                         map[choice2.location[0], choice2.location[1]] = 0;
                         choice2.movedown(choice2.location, map);
                         map[choice2.location[0], choice2.location[1]] = choice2.id;
+                        choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                         break;
                     }
                     if (action.KeyChar == 'S')
@@ -725,9 +1050,33 @@ while (true)
                             action = CantMoveThere(map, nameofP2, choice2);
                             continue;
                         }
+                        if (map[choice2.location[0] + 1, choice2.location[1]] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            // Make Trap Position equals 0
+                            map[choice2.location[0] + 1, choice2.location[1]] = 0;
+                            //execute move method, in case the trap does not affect your position
+                            choice2.movedown(choice2.location, map);
+                            //change the value in the map of the new position so the hero is displayed there
+                            map[choice2.location[0], choice2.location[1]] = choice2.id;
+                            //add new position to the log
+                            choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
+                            Random randomTrap = new Random();
+                            int index = randomTrap.Next(Traps.Count);
+                            Console.Clear();
+                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                            Console.WriteLine("");
+                            Console.WriteLine("(press a key to proceed :( )");
+                            Console.ReadKey(true);
+                            Traps[index].CastTrap(choice2, map);
+                            break;
+                        }
                         map[choice2.location[0], choice2.location[1]] = 0;
                         choice2.movedown(choice2.location, map);
                         map[choice2.location[0], choice2.location[1]] = choice2.id;
+                        choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                         break;
                     }
                     if (action.KeyChar == 'd')
@@ -737,9 +1086,33 @@ while (true)
                             action = CantMoveThere(map, nameofP2, choice2);
                             continue;
                         }
+                        if (map[choice2.location[0], choice2.location[1] + 1] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            // Make Trap Position equals 0
+                            map[choice2.location[0], choice2.location[1] + 1] = 0;
+                            //execute move method, in case the trap does not affect your position
+                            choice2.moveright(choice2.location, map);
+                            //change the value in the map of the new position so the hero is displayed there
+                            map[choice2.location[0], choice2.location[1]] = choice2.id;
+                            //add new position to the log
+                            choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
+                            Random randomTrap = new Random();
+                            int index = randomTrap.Next(Traps.Count);
+                            Console.Clear();
+                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                            Console.WriteLine("");
+                            Console.WriteLine("(press a key to proceed :( )");
+                            Console.ReadKey(true);
+                            Traps[index].CastTrap(choice2, map);
+                            break;
+                        }
                         map[choice2.location[0], choice2.location[1]] = 0;
                         choice2.moveright(choice2.location, map);
                         map[choice2.location[0], choice2.location[1]] = choice2.id;
+                        choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                         break;
                     }
                     if (action.KeyChar == 'D')
@@ -749,9 +1122,33 @@ while (true)
                             action = CantMoveThere(map, nameofP2, choice2);
                             continue;
                         }
+                        if (map[choice2.location[0], choice2.location[1] + 1] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            // Make Trap Position equals 0
+                            map[choice2.location[0], choice2.location[1] + 1] = 0;
+                            //execute move method, in case the trap does not affect your position
+                            choice2.moveright(choice2.location, map);
+                            //change the value in the map of the new position so the hero is displayed there
+                            map[choice2.location[0], choice2.location[1]] = choice2.id;
+                            //add new position to the log
+                            choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
+                            Random randomTrap = new Random();
+                            int index = randomTrap.Next(Traps.Count);
+                            Console.Clear();
+                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                            Console.WriteLine("");
+                            Console.WriteLine("(press a key to proceed :( )");
+                            Console.ReadKey(true);
+                            Traps[index].CastTrap(choice2, map);
+                            break;
+                        }
                         map[choice2.location[0], choice2.location[1]] = 0;
                         choice2.moveright(choice2.location, map);
                         map[choice2.location[0], choice2.location[1]] = choice2.id;
+                        choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                         break;
                     }
                     if (action.KeyChar == 'r')
@@ -773,36 +1170,43 @@ while (true)
                 continue;
             }
         }
-        //////////////////// Close game////////////////
-        if (decition.KeyChar == '2')
-        {
-            Console.WriteLine("I was not expecting that mate! but see you next time");
-            Console.ReadKey();
-            break;
-        }
-        if (decition.KeyChar != '2' && decition.KeyChar != '1')
-        {
-            Console.WriteLine("MARCEEEEEELLOOO WHAT you doing!!!!");
-            Console.ReadKey();
-        }
-        // int desire = int.Parse(Console.ReadLine());
-        // if (desire == 1)
-        // {
-        //     Console.WriteLine("Letsss goooo!!!");
-        //     Console.ReadKey();
-        //     Console.WriteLine("Genering The Maze!!")
-        //     int[,] maze = Maze.Generator();
-
-        // }
-        // if (desire == 2)
-        // {
-        //     Console.WriteLine("I was not expecting that mate! but see you next time");
-        //     Console.ReadKey();
-        //     break;
-        // }
-        // if (desire != 1 && desire != 2)
-        // {
-        //     Console.WriteLine("MARCEEEEEELLOOO WHAT you doing!!!!");
-        //     Console.ReadKey();
     }
+    //////////////////// Close game////////////////
+    if (decition.KeyChar == '2')
+    {
+        Console.Clear();
+        Console.WriteLine("🔹🔷 I was not expecting that mate! but see you next time ...🔷🔹");
+        Console.WriteLine();
+        Console.WriteLine("press a key to exit game '-'");
+        Console.ReadKey(true);
+        break;
+    }
+    if (decition.KeyChar != '2' && decition.KeyChar != '1')
+    {
+        Console.Clear();
+        Console.WriteLine("MARCEEEEEELLOOO WHAT you doing!!!!");
+        Console.WriteLine();
+        Console.WriteLine("(press a key to go back");
+        Console.ReadKey(true);
+        continue;
+    }
+    // int desire = int.Parse(Console.ReadLine());
+    // if (desire == 1)
+    // {
+    //     Console.WriteLine("Letsss goooo!!!");
+    //     Console.ReadKey();
+    //     Console.WriteLine("Genering The Maze!!")
+    //     int[,] maze = Maze.Generator();
+
+    // }
+    // if (desire == 2)
+    // {
+    //     Console.WriteLine("I was not expecting that mate! but see you next time");
+    //     Console.ReadKey();
+    //     break;
+    // }
+    // if (desire != 1 && desire != 2)
+    // {
+    //     Console.WriteLine("MARCEEEEEELLOOO WHAT you doing!!!!");
+    //     Console.ReadKey();
 }

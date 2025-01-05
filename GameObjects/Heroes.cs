@@ -3,7 +3,7 @@ using System.Runtime.ExceptionServices;
 using Spectre.Console;
 namespace GameObjects
 {
-    class Hero
+    public class Hero
     {
         ////propeties////
         public string name;
@@ -12,6 +12,7 @@ namespace GameObjects
         public int health;
         public int attack;
         public int cooldown;
+        public List<int[]> locationlog = new List<int[]>();
         public int[,] map;
         public int[] location = new int[2];
         /////constructor////
@@ -51,7 +52,7 @@ namespace GameObjects
         public static void DisplayList(List<Hero> list, string s)
         {   
             var table = new Table();
-            table.AddColumn(s);
+            table.AddColumn(new TableColumn(s).Centered());
             table.AddRow("");
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             for (int i = 0; i < list.Count; i++)
@@ -63,9 +64,21 @@ namespace GameObjects
                 table1.AddRow(" 🔪 Attack   >  " + list[i].attack);
                 table1.AddRow(" 💠 Cooldown >  " + list[i].cooldown);
                 table.AddRow(table1);
+                table1.BorderColor(Color.DarkGoldenrod);
             }
             table.AddRow("");
+            table.BorderColor(Color.SlateBlue1);
             AnsiConsole.Write(table);
+        }
+        public static void FallInTrap(Hero hero, int[,] map)
+        {
+            Console.Clear();
+            Console.WriteLine("Upppss!! It seems like you have fell in a trap");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("(press a key to proceed)");
+            Console.ReadKey(true);
+            Console.Clear();
         }
 
         public virtual void CastSpell()
@@ -75,7 +88,7 @@ namespace GameObjects
     }
 
 
-    class Teleporter : Hero
+    public class Teleporter : Hero
     {
         //Constructor for Teleporter//
         public Teleporter(int id, string name, string info, int health, int attack, int cooldown, int[,] maze) : base(id, name, info, health, attack, cooldown, maze)
@@ -93,7 +106,7 @@ namespace GameObjects
             Console.WriteLine(name + " Teleports to " + location);
         }
     }
-    class WallBreaker : Hero
+    public class WallBreaker : Hero
     {
         //Constructor for WallBreaker//
         public WallBreaker(int id, string name, string info, int health, int attack, int cooldown, int[,] maze) : base(id, name, info, health, attack, cooldown, maze)//Call to base constructor
