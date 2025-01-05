@@ -62,7 +62,7 @@ while (true)
         Console.WriteLine();
         Console.WriteLine();
         Console.WriteLine();
-        
+
         //Roleplay
         Console.WriteLine("(you wake up in a stranger place!)");
         Console.WriteLine();
@@ -223,7 +223,7 @@ while (true)
         Console.WriteLine();
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
-        
+
         Console.Clear();
         Console.WriteLine();
         Console.WriteLine();
@@ -826,9 +826,28 @@ while (true)
                     }
                     if (action.KeyChar == 'r')
                     {
+                        Console.Clear();
+                        Console.WriteLine($"Activating the Super of {choice1.name}!");
+                        Console.WriteLine();
+                        Console.WriteLine("Press a key to continue...");
+                        Console.ReadKey(true);
+                        choice1.CastSpell(map);
+                        Console.WriteLine();
+                        Console.WriteLine("Press a key to continue...");
+                        Console.ReadKey(true);
+
                     }
                     if (action.KeyChar == 'R')
                     {
+                        Console.Clear();
+                        Console.WriteLine($"Activating the Super of {choice1.name}!");
+                        Console.WriteLine();
+                        Console.WriteLine("Press a key to continue...");
+                        Console.ReadKey(true);
+                        choice1.CastSpell(map);
+                        Console.WriteLine();
+                        Console.WriteLine("Press a key to continue...");
+                        Console.ReadKey(true);
                     }
                     break;
                 }
@@ -1153,9 +1172,25 @@ while (true)
                     }
                     if (action.KeyChar == 'r')
                     {
+                        Console.Clear();
+                        Console.WriteLine($"Activating the Super of {choice2.name}!");
+                        Console.WriteLine();
+                        Console.WriteLine("Press a key to continue...");
+                        Console.ReadKey(true);
+                        choice2.CastSpell(map);
+                        Console.WriteLine();
+                        Console.ReadKey(true);
                     }
                     if (action.KeyChar == 'R')
                     {
+                        Console.Clear();
+                        Console.WriteLine($"Activating the Super of {choice2.name}!");
+                        Console.WriteLine();
+                        Console.WriteLine("Press a key to continue...");
+                        Console.ReadKey(true);
+                        choice2.CastSpell(map);
+                        Console.WriteLine();
+                        Console.ReadKey(true);
                     }
                     break;
                 }

@@ -8,7 +8,7 @@ namespace GameObjects
         public int Trap;
         public int Path;
         public int obstacle;
-        public static List<int[]> FreePath = new List<int[]>();
+        public static List< int[]> FreePath = new List<int[]>();
         public static void GetPathes(int[,] maze)
         {
             for (int i = 0; i < size; i++)

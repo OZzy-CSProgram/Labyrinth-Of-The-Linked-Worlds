@@ -50,7 +50,7 @@ namespace GameObjects
             return location;
         }
         public static void DisplayList(List<Hero> list, string s)
-        {   
+        {
             var table = new Table();
             table.AddColumn(new TableColumn(s).Centered());
             table.AddRow("");
@@ -58,7 +58,7 @@ namespace GameObjects
             for (int i = 0; i < list.Count; i++)
             {
                 var table1 = new Table();
-                table1.AddColumn("Heroe number " + (i + 1) + " >>>   " + list[i].name );
+                table1.AddColumn("Heroe number " + (i + 1) + " >>>   " + list[i].name);
                 table1.AddRow(" 📜 Info      >  " + list[i].info);
                 table1.AddRow(" 💗 Health    >  " + list[i].health);
                 table1.AddRow(" 🔪 Attack   >  " + list[i].attack);
@@ -81,7 +81,7 @@ namespace GameObjects
             Console.Clear();
         }
 
-        public virtual void CastSpell()
+        public virtual void CastSpell(int[,] map)
         {
             Console.WriteLine("Casting Spell");
         }
@@ -95,15 +95,24 @@ namespace GameObjects
         //Call to base constructor
         {
         }
-        public override void CastSpell()
+        public override void CastSpell(int[,] map)
         {
-            Console.WriteLine(name + ": Thou cannot reach my magic! .. Teleporting");
+            Console.Clear();
+            Console.WriteLine(name + " >> Thou cannot reach my magic! .... Teleporting");
             int[] receptor = Maze.GetRandomPath();
-            while (receptor[0] == location[0] && receptor[0] == location[0])
+            map[location[0], location[1]] = 0;
+            while (receptor[0] == location[0] && receptor[1] == location[1])
             {
                 receptor = Maze.GetRandomPath();
             }
-            Console.WriteLine(name + " Teleports to " + location);
+            location[0] = receptor[0];
+            location[1] = receptor[1];
+            map[location[0], location[1]] = id;
+            Console.WriteLine();
+            Console.WriteLine("Press a key to continue...");
+            Console.ReadKey(true);
+            Console.Clear();
+            Console.WriteLine($"{name} has Teleported to  [  {location[0]}  ,  {location[1]}  ]");
         }
     }
     public class WallBreaker : Hero
@@ -112,55 +121,167 @@ namespace GameObjects
         public WallBreaker(int id, string name, string info, int health, int attack, int cooldown, int[,] maze) : base(id, name, info, health, attack, cooldown, maze)//Call to base constructor
         {
         }
-        public override void CastSpell()
+        public override void CastSpell(int[,] map)
         {
             // Console.WriteLine(Name + "The bigger the wall is, the easier it falls down :D");
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("Which wall would you like " + name + " to destroy");
-                //================================================================================================================ PENDIENTE! decirle al usuario q para arriba presione w, para abajo s, a izq, derecha d,
+                Console.WriteLine("                  ╔════════════════════╗                   ");
+                Console.WriteLine("                  ║   W > Break above  ║                   ");
+                Console.WriteLine("                  ╚════════════════════╝                   ");
+                Console.WriteLine("╔══════════════════╦══════════════════╦═══════════════════╗");
+                Console.WriteLine("║   A > Break left ║  S > Break below ║  D > Break right  ║");
+                Console.WriteLine("╚══════════════════╩══════════════════╩═══════════════════╝");
                 ConsoleKeyInfo Direction = Console.ReadKey(true);
-                if (Direction.KeyChar == 'w')
+
+                while (Direction.KeyChar != 'w' && Direction.KeyChar != 'W' && Direction.KeyChar != 'a' && Direction.KeyChar != 'A' && Direction.KeyChar != 's' && Direction.KeyChar != 'S' && Direction.KeyChar != 'd' && Direction.KeyChar != 'D' && Direction.KeyChar != 'r' && Direction.KeyChar != 'R')
                 {
-                    if (!HandleWallBreaking(-1, 0))
+                    Console.Clear();
+
+                    Console.WriteLine("thats not a valid Direction)");
+                    Console.WriteLine("(press a key to continue)");
+                    Console.ReadKey(true);
+
+                    Console.Clear();
+                    Console.WriteLine("Which wall would you like " + name + " to destroy");
+                    Console.WriteLine("                  ╔════════════════════╗                   ");
+                    Console.WriteLine("                  ║   W > Break above  ║                   ");
+                    Console.WriteLine("                  ╚════════════════════╝                   ");
+                    Console.WriteLine("╔══════════════════╦══════════════════╦═══════════════════╗");
+                    Console.WriteLine("║   A > Break left ║  S > Break below ║  D > Break right  ║");
+                    Console.WriteLine("╚══════════════════╩══════════════════╩═══════════════════╝");
+                    Direction = Console.ReadKey(true);
+
+                    if (Direction.KeyChar == 'w' || Direction.KeyChar == 'W' || Direction.KeyChar == 'a' || Direction.KeyChar == 'A' || Direction.KeyChar == 's' || Direction.KeyChar == 'S' || Direction.KeyChar == 'd' || Direction.KeyChar == 'D')
+                    {
+                        break;
+                    }
+                }
+
+                if (Direction.KeyChar == 'w' || Direction.KeyChar == 'W')
+                {
+                    if (!HandleWallBreaking(-1, 0, map))
                         continue;
                 }
-                else if (Direction.KeyChar == 's')
+                else if (Direction.KeyChar == 's' || Direction.KeyChar == 'S')
                 {
-                    if (!HandleWallBreaking(1, 0))
+                    if (!HandleWallBreaking(1, 0, map))
                         continue;
                 }
-                else if (Direction.KeyChar == 'a')
+                else if (Direction.KeyChar == 'a' || Direction.KeyChar == 'A')
                 {
-                    if (!HandleWallBreaking(0, -1))
+                    if (!HandleWallBreaking(0, -1, map))
                         continue;
                 }
-                else if (Direction.KeyChar == 'd')
+                else if (Direction.KeyChar == 'd' || Direction.KeyChar == 'D')
                 {
-                    if (!HandleWallBreaking(0, 1))
+                    if (!HandleWallBreaking(0, 1, map))
                         continue;
                 }
                 break;
             }
         }
-        private bool HandleWallBreaking(int dirRow, int dirCol)
+        private bool HandleWallBreaking(int dirRow, int dirCol, int[,] map)
         {
-            if (!Maze.isValidLocation(location[0] + dirRow, location[1] + dirCol))
+            if (location[0] + dirRow == 0 || location[0] + dirRow == Maze.size - 1 || location[1] + dirCol == 0 || location[1] + dirCol == Maze.size - 1)
             {
-                Console.WriteLine("You can not break in that direction!");
-                System.Console.ReadKey();
+                Console.Clear();
+                Console.WriteLine("You can not break in that Direction, Thats the edge of the map!");
+                Console.WriteLine();
+                Console.WriteLine("Press a key to continue...");
+                Console.ReadKey();
                 return false;
             }
             if (map[location[0] + dirRow, location[1] + dirCol] != 1)
             {
+                Console.Clear();
                 Console.WriteLine("There is no wall there mate, was your head on the clouds?!");
+                Console.WriteLine();
+                Console.WriteLine("Press a key to continue...");
+                System.Console.ReadKey();
                 return false;
             }
-            BreakWall(location[0] + dirRow, location[1] + dirCol);
+            map[location[0] + dirRow, location[1] + dirCol] = 0;
+            Maze.FreePath.Add(new int[] {location[0] + dirRow, location[1] + dirCol});
             return true;
         }
         private void BreakWall(int row, int col)
         {
+            map[row, col] = 0;
+            
+        }
+        private int[] GetADirection()
+        {
+            // public ConsoleKeyInfo ValidDirection(ConsoleKeyInfo action);
+            {
+                ConsoleKeyInfo Direction;
+                int[] arr = new int[2];
+                while (true)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Which wall would you like " + name + " to destroy");
+                    Console.WriteLine("                  ╔════════════════════╗                   ");
+                    Console.WriteLine("                  ║   W > Break above  ║                   ");
+                    Console.WriteLine("                  ╚════════════════════╝                   ");
+                    Console.WriteLine("╔══════════════════╦══════════════════╦═══════════════════╗");
+                    Console.WriteLine("║   A > Break left ║  S > Break below ║  D > Break right  ║");
+                    Console.WriteLine("╚══════════════════╩══════════════════╩═══════════════════╝");
+                    Direction = Console.ReadKey(true);
+
+                    while (Direction.KeyChar != 'w' && Direction.KeyChar != 'W' && Direction.KeyChar != 'a' && Direction.KeyChar != 'A' && Direction.KeyChar != 's' && Direction.KeyChar != 'S' && Direction.KeyChar != 'd' && Direction.KeyChar != 'D' && Direction.KeyChar != 'r' && Direction.KeyChar != 'R')
+                    {
+                        Console.Clear();
+
+                        Console.WriteLine("thats not a valid Direction)");
+                        Console.WriteLine("(press a key to continue)");
+                        Console.ReadKey(true);
+
+                        Console.Clear();
+                        Console.WriteLine("Which wall would you like " + name + " to destroy");
+                        Console.WriteLine("                  ╔════════════════════╗                   ");
+                        Console.WriteLine("                  ║   W > Break above  ║                   ");
+                        Console.WriteLine("                  ╚════════════════════╝                   ");
+                        Console.WriteLine("╔══════════════════╦══════════════════╦═══════════════════╗");
+                        Console.WriteLine("║   A > Break left ║  S > Break below ║  D > Break right  ║");
+                        Console.WriteLine("╚══════════════════╩══════════════════╩═══════════════════╝");
+                        Direction = Console.ReadKey(true);
+
+                        if (Direction.KeyChar == 'w' || Direction.KeyChar == 'W' || Direction.KeyChar == 'a' || Direction.KeyChar == 'A' || Direction.KeyChar == 's' || Direction.KeyChar == 'S' || Direction.KeyChar == 'd' || Direction.KeyChar == 'D')
+                        {
+                            break;
+                        }
+                    }
+                    break;
+                }
+                if (Direction.KeyChar == 'w' || Direction.KeyChar == 'W')
+                {
+                    arr[0] = -1;
+                    arr[1] = 0;
+                    return arr;
+                }
+                else if (Direction.KeyChar == 's' || Direction.KeyChar == 'S')
+                {
+                    arr[0] = 1;
+                    arr[1] = 0;
+                    return arr;
+                }
+                else if (Direction.KeyChar == 'a' || Direction.KeyChar == 'A')
+                {
+                    arr[0] = 0;
+                    arr[1] = -1;
+                    return arr;
+
+                }
+                else if (Direction.KeyChar == 'd' || Direction.KeyChar == 'D')
+                {
+                    arr[0] = 0;
+                    arr[1] = 1;
+                    return arr;
+                }
+                return arr;
+            }
             //=============================================================================================== PENDIENTE!!
         }
     }
