@@ -85,6 +85,75 @@ namespace GameObjects
         {
             Console.WriteLine("Casting Spell");
         }
+        public static int[] GetADirection(int[,] map)
+        {
+            // public ConsoleKeyInfo ValidDirection(ConsoleKeyInfo action);
+            {
+                ConsoleKeyInfo Direction;
+                int[] arr = new int[2];
+                while (true)
+                {
+                    Console.WriteLine("                  ╔════════════════════╗                   ");
+                    Console.WriteLine("                  ║   W > Break above  ║                   ");
+                    Console.WriteLine("                  ╚════════════════════╝                   ");
+                    Console.WriteLine("╔══════════════════╦══════════════════╦═══════════════════╗");
+                    Console.WriteLine("║   A > Break left ║  S > Break below ║  D > Break right  ║");
+                    Console.WriteLine("╚══════════════════╩══════════════════╩═══════════════════╝");
+                    Direction = Console.ReadKey(true);
+
+                    while (Direction.KeyChar != 'w' && Direction.KeyChar != 'W' && Direction.KeyChar != 'a' && Direction.KeyChar != 'A' && Direction.KeyChar != 's' && Direction.KeyChar != 'S' && Direction.KeyChar != 'd' && Direction.KeyChar != 'D' && Direction.KeyChar != 'r' && Direction.KeyChar != 'R')
+                    {
+                        Console.Clear();
+
+                        Console.WriteLine("thats not a valid Direction)");
+                        Console.WriteLine("(press a key to continue)");
+                        Console.ReadKey(true);
+
+                        Console.Clear();
+                        Maze.PrintMaze(map, "Select A valid Direction !");
+                        Console.WriteLine("                  ╔════════════════════╗                   ");
+                        Console.WriteLine("                  ║   W > Break above  ║                   ");
+                        Console.WriteLine("                  ╚════════════════════╝                   ");
+                        Console.WriteLine("╔══════════════════╦══════════════════╦═══════════════════╗");
+                        Console.WriteLine("║   A > Break left ║  S > Break below ║  D > Break right  ║");
+                        Console.WriteLine("╚══════════════════╩══════════════════╩═══════════════════╝");
+                        Direction = Console.ReadKey(true);
+
+                        if (Direction.KeyChar == 'w' || Direction.KeyChar == 'W' || Direction.KeyChar == 'a' || Direction.KeyChar == 'A' || Direction.KeyChar == 's' || Direction.KeyChar == 'S' || Direction.KeyChar == 'd' || Direction.KeyChar == 'D')
+                        {
+                            break;
+                        }
+                    }
+                    break;
+                }
+                if (Direction.KeyChar == 'w' || Direction.KeyChar == 'W')
+                {
+                    arr[0] = -1;
+                    arr[1] = 0;
+                    return arr;
+                }
+                else if (Direction.KeyChar == 's' || Direction.KeyChar == 'S')
+                {
+                    arr[0] = 1;
+                    arr[1] = 0;
+                    return arr;
+                }
+                else if (Direction.KeyChar == 'a' || Direction.KeyChar == 'A')
+                {
+                    arr[0] = 0;
+                    arr[1] = -1;
+                    return arr;
+
+                }
+                else if (Direction.KeyChar == 'd' || Direction.KeyChar == 'D')
+                {
+                    arr[0] = 0;
+                    arr[1] = 1;
+                    return arr;
+                }
+                return arr;
+            }
+        }
     }
 
 
@@ -115,6 +184,99 @@ namespace GameObjects
             Console.WriteLine($"{name} has Teleported to  [  {location[0]}  ,  {location[1]}  ]");
         }
     }
+    public class Traveler : Hero
+    {
+        //Constructor for Teleporter//
+        public Traveler(int id, string name, string info, int health, int attack, int cooldown, int[,] maze) : base(id, name, info, health, attack, cooldown, maze)
+        //Call to base constructor
+        {
+        }
+        public override void CastSpell(int[,] map)
+        {
+            Console.Clear();
+            Console.WriteLine(name + " >> Thou cannot reach my magic! .... Teleporting");
+            int[] receptor = Maze.GetRandomPath();
+            map[location[0], location[1]] = 0;
+            while (receptor[0] == location[0] && receptor[1] == location[1])
+            {
+                receptor = Maze.GetRandomPath();
+            }
+            location[0] = receptor[0];
+            location[1] = receptor[1];
+            map[location[0], location[1]] = id;
+            Console.WriteLine();
+            Console.WriteLine("Press a key to continue...");
+            Console.ReadKey(true);
+            Console.Clear();
+            Console.WriteLine($"{name} has Teleported to  [  {location[0]}  ,  {location[1]}  ]");
+        }
+    }
+    public class Jumper : Hero
+    {
+        //Constructor for Teleporter//
+        public Jumper(int id, string name, string info, int health, int attack, int cooldown, int[,] maze) : base(id, name, info, health, attack, cooldown, maze)
+        //Call to base constructor
+        {
+        }
+        public override void CastSpell(int[,] map)
+        {
+            Console.Clear();
+            Console.WriteLine(name + " >> Nobody can jump like I can! .... Ahahahaha");
+            Console.WriteLine();
+            Console.WriteLine("Press a key to continue...");
+            Console.ReadKey(true);
+
+            Console.Clear();
+            Maze.PrintMaze(map, "What direction should I you want to jump?");
+
+            map[location[0], location[1]] = 0;
+            int[] Dir = Hero.GetADirection(map);
+
+            if (map[location[0] + Dir[0], location[1] + Dir[1]] != 1)
+            {
+                if (map[location[0] + Dir[0] + Dir[0], location[1] + Dir[1] + Dir[1]] != 1)
+                {
+                    if (map[location[0] + Dir[0] + Dir[0] + Dir[0], location[1] + Dir[1] + Dir[1] + Dir[1]] != 1)
+                    {
+                        location[0] = location[0] + Dir[0] + Dir[0] + Dir[0];
+                        location[1] = location[1] + Dir[1] + Dir[1] + Dir[1];
+                        map[location[0], location[1]] = id;
+                        Console.Clear();
+                        Maze.PrintMaze(map, "Super Activated successfully!");
+                        Console.WriteLine($"{name} >> It's amazing!, my jump reached the maximum distance :D");
+                        Console.WriteLine();
+                        Console.WriteLine("Press a key to continue...");
+                        Console.ReadKey(true);
+                    }
+                    else
+                    {
+                        location[0] = location[0] + Dir[0] + Dir[0];
+                        location[1] = location[1] + Dir[1] + Dir[1];
+                        map[location[0], location[1]] = id;
+                        Console.Clear();
+                        Maze.PrintMaze(map, "Super Activated successfully!");
+                        Console.WriteLine($"{name} >> I could have jumped a higher distance but my jump was interruped due to an obstacle :(");
+                        Console.WriteLine();
+                        Console.WriteLine("Press a key to continue...");
+                        Console.ReadKey(true);
+                    }
+                }
+                else
+                {
+                    location[0] = location[0] + Dir[0];
+                    location[1] = location[1] + Dir[1];
+                    map[location[0], location[1]] = id;
+                    Console.Clear();
+                    Maze.PrintMaze(map, "Super Activated successfully!");
+                    Console.WriteLine($"{name} >> I could have jumped a higher distance but my jump was interruped due to an obstacle :(");
+                    Console.WriteLine();
+                    Console.WriteLine("Press a key to continue...");
+                    Console.ReadKey(true);
+                }
+            }
+            map[location[0], location[1]] = id;
+        }
+    }
     public class WallBreaker : Hero
     {
         //Constructor for WallBreaker//
@@ -135,7 +297,6 @@ namespace GameObjects
                 Console.WriteLine("║   A > Break left ║  S > Break below ║  D > Break right  ║");
                 Console.WriteLine("╚══════════════════╩══════════════════╩═══════════════════╝");
                 ConsoleKeyInfo Direction = Console.ReadKey(true);
-
                 while (Direction.KeyChar != 'w' && Direction.KeyChar != 'W' && Direction.KeyChar != 'a' && Direction.KeyChar != 'A' && Direction.KeyChar != 's' && Direction.KeyChar != 'S' && Direction.KeyChar != 'd' && Direction.KeyChar != 'D' && Direction.KeyChar != 'r' && Direction.KeyChar != 'R')
                 {
                     Console.Clear();
@@ -204,85 +365,13 @@ namespace GameObjects
                 return false;
             }
             map[location[0] + dirRow, location[1] + dirCol] = 0;
-            Maze.FreePath.Add(new int[] {location[0] + dirRow, location[1] + dirCol});
+            Maze.FreePath.Add(new int[] { location[0] + dirRow, location[1] + dirCol });
             return true;
         }
         private void BreakWall(int row, int col)
         {
             map[row, col] = 0;
-            
-        }
-        private int[] GetADirection()
-        {
-            // public ConsoleKeyInfo ValidDirection(ConsoleKeyInfo action);
-            {
-                ConsoleKeyInfo Direction;
-                int[] arr = new int[2];
-                while (true)
-                {
-                    Console.Clear();
-                    Console.WriteLine("Which wall would you like " + name + " to destroy");
-                    Console.WriteLine("                  ╔════════════════════╗                   ");
-                    Console.WriteLine("                  ║   W > Break above  ║                   ");
-                    Console.WriteLine("                  ╚════════════════════╝                   ");
-                    Console.WriteLine("╔══════════════════╦══════════════════╦═══════════════════╗");
-                    Console.WriteLine("║   A > Break left ║  S > Break below ║  D > Break right  ║");
-                    Console.WriteLine("╚══════════════════╩══════════════════╩═══════════════════╝");
-                    Direction = Console.ReadKey(true);
 
-                    while (Direction.KeyChar != 'w' && Direction.KeyChar != 'W' && Direction.KeyChar != 'a' && Direction.KeyChar != 'A' && Direction.KeyChar != 's' && Direction.KeyChar != 'S' && Direction.KeyChar != 'd' && Direction.KeyChar != 'D' && Direction.KeyChar != 'r' && Direction.KeyChar != 'R')
-                    {
-                        Console.Clear();
-
-                        Console.WriteLine("thats not a valid Direction)");
-                        Console.WriteLine("(press a key to continue)");
-                        Console.ReadKey(true);
-
-                        Console.Clear();
-                        Console.WriteLine("Which wall would you like " + name + " to destroy");
-                        Console.WriteLine("                  ╔════════════════════╗                   ");
-                        Console.WriteLine("                  ║   W > Break above  ║                   ");
-                        Console.WriteLine("                  ╚════════════════════╝                   ");
-                        Console.WriteLine("╔══════════════════╦══════════════════╦═══════════════════╗");
-                        Console.WriteLine("║   A > Break left ║  S > Break below ║  D > Break right  ║");
-                        Console.WriteLine("╚══════════════════╩══════════════════╩═══════════════════╝");
-                        Direction = Console.ReadKey(true);
-
-                        if (Direction.KeyChar == 'w' || Direction.KeyChar == 'W' || Direction.KeyChar == 'a' || Direction.KeyChar == 'A' || Direction.KeyChar == 's' || Direction.KeyChar == 'S' || Direction.KeyChar == 'd' || Direction.KeyChar == 'D')
-                        {
-                            break;
-                        }
-                    }
-                    break;
-                }
-                if (Direction.KeyChar == 'w' || Direction.KeyChar == 'W')
-                {
-                    arr[0] = -1;
-                    arr[1] = 0;
-                    return arr;
-                }
-                else if (Direction.KeyChar == 's' || Direction.KeyChar == 'S')
-                {
-                    arr[0] = 1;
-                    arr[1] = 0;
-                    return arr;
-                }
-                else if (Direction.KeyChar == 'a' || Direction.KeyChar == 'A')
-                {
-                    arr[0] = 0;
-                    arr[1] = -1;
-                    return arr;
-
-                }
-                else if (Direction.KeyChar == 'd' || Direction.KeyChar == 'D')
-                {
-                    arr[0] = 0;
-                    arr[1] = 1;
-                    return arr;
-                }
-                return arr;
-            }
-            //=============================================================================================== PENDIENTE!!
         }
     }
 }

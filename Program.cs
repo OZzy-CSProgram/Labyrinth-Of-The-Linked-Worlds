@@ -262,6 +262,8 @@ while (true)
 
         Console.WriteLine("Genering The Map...");
         int[,] map = Maze.Generator();
+        Console.WriteLine("(press a key to continue)");
+        Console.ReadKey(true);
         ///////////////////////////////////////////////////////////////////////////////////
         //////////////////////////      Heroes Selection         //////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////
@@ -279,28 +281,33 @@ while (true)
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
         List<Hero> Heroes = new List<Hero>();
-        Teleporter Mediv = new Teleporter(11, "Mediv The Guardian", "A powerfull mage with the magical power of teleporting to a random position in the maze!", 110, 140, 10, map);
+        Teleporter Mediv = new Teleporter(11, "Mediv The Guardian", "A powerfull mage with the magical power of teleporting to a random position in the maze!", 160, 90, 10, map);
         Heroes.Add(Mediv);
-        WallBreaker Eledron = new WallBreaker(13, "Eledron The WallBreaker", "A strong Dwarv with a big Hammer,He has got the ability to break walls!", 160, 90, 10, map);
+        WallBreaker Eledron = new WallBreaker(13, "Eledron The WallBreaker", "A strong Dwarv with a big Hammer,He has got the ability to break walls!", 110, 140, 10, map);
         Heroes.Add(Eledron);
+        Jumper Monkinho = new Jumper(15, "Monkinho The Jumper", "A monkey with the ability to jump 3 cells in front of him, but obstacles can interrupt his jump!", 100, 170, 10, map);
+        Heroes.Add(Monkinho);
+        Traveler Travelero = new Traveler(17, "Travelero The Jumper", "A monkey with the ability to jump 3 cells in front of him, but obstacles can interrupt his jump!", 100, 170, 10, map);
+        Heroes.Add(Travelero);
 
-        Console.Clear();
-        Console.WriteLine(" _____                        _____     _         _   _         ");
-        Console.WriteLine("|  |  |___ ___ ___ ___ ___   |   __|___| |___ ___| |_|_|___ ___ ");
-        Console.WriteLine("|     | -_|  _| . | -_|_ -|  |__   | -_| | -_|  _|  _| | . |   |");
-        Console.WriteLine("|__|__|___|_| |___|___|___|  |_____|___|_|___|___|_| |_|___|_|_|");
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Hero.DisplayList(Heroes, $"{nameofP1} , ITS YOUR TURN !!!");
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
+
         while (Heroes.Count > 0)
         {
             ////Player 1 Choose
+            Console.Clear();
+            Console.WriteLine(" _____                        _____     _         _   _         ");
+            Console.WriteLine("|  |  |___ ___ ___ ___ ___   |   __|___| |___ ___| |_|_|___ ___ ");
+            Console.WriteLine("|     | -_|  _| . | -_|_ -|  |__   | -_| | -_|  _|  _| | . |   |");
+            Console.WriteLine("|__|__|___|_| |___|___|___|  |_____|___|_|___|___|_| |_|___|_|_|");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Hero.DisplayList(Heroes, $"{nameofP1} , ITS YOUR TURN !!!");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
             Hero choice1 = Player.GetPlayerChoice(Heroes);
@@ -352,6 +359,7 @@ while (true)
                 Console.WriteLine("(press a key to continue)");
                 Console.ReadKey(true);
             }
+            continue;
         }
         Console.Clear();
         Console.WriteLine();
@@ -374,10 +382,10 @@ while (true)
         Player1.Party[0].location[0] = 1;
         Player1.Party[0].location[1] = 1;
         int[] spawn1p1 = new int[] { 1, 1 };
-        // //Spawn of Second Hero
-        // Player1.Party[1].location[0] = 1;
-        // Player1.Party[1].location[1] = Maze.size / 2 + 1;
-        // int[] spawn2p1 = new int[] { 1, Maze.size / 2 + 1 };
+        //Spawn of Second Hero
+        Player1.Party[1].location[0] = 1;
+        Player1.Party[1].location[1] = Maze.size / 2 ;
+        int[] spawn2p1 = new int[] { 1, Maze.size / 2 };
         // //Spawn of Third Hero
         // Player1.Party[2].location[0] = 1;
         // Player1.Party[2].location[1] = Maze.size - 1;
@@ -387,10 +395,10 @@ while (true)
         Player2.Party[0].location[0] = Maze.size - 2;
         Player2.Party[0].location[1] = 1;
         int[] spawn1p2 = new int[] { Maze.size - 2, 1 };
-        // //Spawn of Second Hero
-        // Player2.Party[1].location[0] = Maze.size - 1;
-        // Player2.Party[1].location[1] = Maze.size/2 + 1;
-        // int[] spawn2p2 = new int[] { Maze.size - 1, Maze.size / 2 + 1 };
+        //Spawn of Second Hero
+        Player2.Party[1].location[0] = Maze.size - 2;
+        Player2.Party[1].location[1] = Maze.size / 2 ;
+        int[] spawn2p2 = new int[] { Maze.size - 2, Maze.size / 2 };
         // //Spawn of Third Hero
         // Player2.Party[2].location[0] = Maze.size - 1;
         // Player2.Party[2].location[1] = Maze.size - 1;
@@ -408,20 +416,38 @@ while (true)
                 map[spawn1p1[0], spawn1p1[1]] = Eledron.id;
                 Eledron.locationlog.Add(new int[] { spawn1p1[0], spawn1p1[1] });
                 break;
+            case nameof(Jumper): // wall
+                map[spawn1p1[0], spawn1p1[1]] = Monkinho.id;
+                Monkinho.locationlog.Add(new int[] { spawn1p1[0], spawn1p1[1] });
+                break;
+            case nameof(Traveler): // wall
+                map[spawn1p1[0], spawn1p1[1]] = Travelero.id;
+                Travelero.locationlog.Add(new int[] { spawn1p1[0], spawn1p1[1] });
+                break;
             default:
                 break;
         }
-        // switch (Player1.Party[1].GetType().Name)
-        // {
-        //     case nameof(Teleporter): // wall
-        //         map[spawn2p1[0], spawn2p1[1]] = 11;
-        //         break;
-        //     case nameof(WallBreaker): // wall
-        //         map[spawn2p1[0], spawn2p1[1]] = 13;
-        //         break;
-        //     default:
-        //         break;
-        // }
+        switch (Player1.Party[1].GetType().Name)
+        {
+            case nameof(Teleporter): // wall
+                map[spawn2p1[0], spawn2p1[1]] = Mediv.id;
+                Mediv.locationlog.Add(new int[] { spawn2p1[0], spawn2p1[1] });
+                break;
+            case nameof(WallBreaker): // wall
+                map[spawn2p1[0], spawn2p1[1]] = Eledron.id;
+                Eledron.locationlog.Add(new int[] { spawn2p1[0], spawn2p1[1] });
+                break;
+            case nameof(Jumper): // wall
+                map[spawn2p1[0], spawn2p1[1]] = Monkinho.id;
+                Monkinho.locationlog.Add(new int[] { spawn2p1[0], spawn2p1[1] });
+                break;
+            case nameof(Traveler): // wall
+                map[spawn2p1[0], spawn2p1[1]] = Travelero.id;
+                Travelero.locationlog.Add(new int[] { spawn2p1[0], spawn2p1[1] });
+                break;
+            default:
+                break;
+        }
         // switch (Player1.Party[2].GetType().Name)
         // {
         //     case nameof(Teleporter): // wall
@@ -444,20 +470,38 @@ while (true)
                 map[spawn1p2[0], spawn1p2[1]] = Eledron.id;
                 Eledron.locationlog.Add(new int[] { spawn1p2[0], spawn1p2[1] });
                 break;
+            case nameof(Jumper): // wall
+                map[spawn1p2[0], spawn1p2[1]] = Monkinho.id;
+                Monkinho.locationlog.Add(new int[] { spawn1p2[0], spawn1p2[1] });
+                break;
+            case nameof(Traveler): // wall
+                map[spawn1p2[0], spawn1p2[1]] = Travelero.id;
+                Travelero.locationlog.Add(new int[] { spawn1p2[0], spawn1p2[1] });
+                break;
             default:
                 break;
         }
-        // switch (Player2.Party[1].GetType().Name)
-        // {
-        //     case nameof(Teleporter): // wall
-        //         map[spawn2p2[0], spawn2p2[1]] = 11;
-        //         break;
-        //     case nameof(WallBreaker): // wall
-        //         map[spawn2p2[0], spawn2p2[1]] = 13;
-        //         break;
-        //     default:
-        //         break;
-        // }
+        switch (Player2.Party[1].GetType().Name)
+        {
+            case nameof(Teleporter): // wall
+                map[spawn2p2[0], spawn2p2[1]] = Mediv.id;
+                Mediv.locationlog.Add(new int[] { spawn2p2[0], spawn2p2[1] });
+                break;
+            case nameof(WallBreaker): // wall
+                map[spawn2p2[0], spawn2p2[1]] = Eledron.id;
+                Eledron.locationlog.Add(new int[] { spawn2p2[0], spawn2p2[1] });
+                break;
+            case nameof(Jumper): // wall
+                map[spawn2p2[0], spawn2p2[1]] = Monkinho.id;
+                Monkinho.locationlog.Add(new int[] { spawn2p2[0], spawn2p2[1] });
+                break;
+            case nameof(Traveler): // wall
+                map[spawn2p2[0], spawn2p2[1]] = Travelero.id;
+                Travelero.locationlog.Add(new int[] { spawn2p2[0], spawn2p2[1] });
+                break;
+            default:
+                break;
+        }
         // switch (Player2.Party[2].GetType().Name)
         // {
         //     case nameof(Teleporter): // wall
