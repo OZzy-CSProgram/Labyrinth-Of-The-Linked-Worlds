@@ -9,20 +9,25 @@ namespace GameObjects
         public string name;
         public string info;
         public int id;
+
+        public string icon;
         public int health;
         public int attack;
+        public int mana;
         public int cooldown;
         public List<int[]> locationlog = new List<int[]>();
         public int[,] map;
         public int[] location = new int[2];
         /////constructor////
-        public Hero(int id, string name, string info, int health, int attack, int cooldown, int[,] maze)
+        public Hero(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze)
         {
             this.id = id;
+            this.icon = icon;
             this.name = name;
             this.info = info;
             this.health = health;
             this.attack = attack;
+            this.mana = mana;
             this.cooldown = cooldown;
             this.map = maze;
 
@@ -58,17 +63,45 @@ namespace GameObjects
             for (int i = 0; i < list.Count; i++)
             {
                 var table1 = new Table();
-                table1.AddColumn("Heroe number " + (i + 1) + " >>>   " + list[i].name);
-                table1.AddRow(" 📜 Info      >  " + list[i].info);
-                table1.AddRow(" 💗 Health    >  " + list[i].health);
-                table1.AddRow(" 🔪 Attack   >  " + list[i].attack);
-                table1.AddRow(" 💠 Cooldown >  " + list[i].cooldown);
+                table1.AddColumn("[bold red] " + (i + 1) + "[/][yellow] >>[/]  [bold] " + list[i].name + "[/]");
+                table1.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
+                table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
+                table1.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
+                table1.AddRow(" 💠 [bold]Cooldown[/] >  " + list[i].cooldown);
+                table1.AddRow(" 💙 [bold] Max Mana[/] >  20");
                 table.AddRow(table1);
                 table1.BorderColor(Color.DarkGoldenrod);
             }
             table.AddRow("");
             table.BorderColor(Color.SlateBlue1);
+            table.Centered();
             AnsiConsole.Write(table);
+        }
+        public static void DisplayList2(List<Hero> list, string s, int[,] map)
+        {
+            var print = new Table();
+            var table = new Table();
+            table.AddColumn(new TableColumn(s).Centered());
+            table.AddRow("");
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var table1 = new Table();
+                table1.AddColumn("[bold red] " + (i + 1) + "[/][yellow] >>[/]  [bold] "+ list[i].icon +" " + list[i].name + "[/]");
+                table1.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
+                table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
+                table1.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
+                table1.AddRow(" 💠 [bold]Cooldown[/] >  " + list[i].cooldown);
+                table1.AddRow(" 💙 [bold] Max Mana[/] >  20");
+                table.AddRow(table1);
+                table1.BorderColor(Color.DarkGoldenrod);
+            }
+            table.AddRow("");
+            table.BorderColor(Color.SlateBlue1);
+            print.AddColumn(new TableColumn("")).HideHeaders();
+            print.AddColumn(new TableColumn("")).HideHeaders();
+            print.AddRow(Maze.PrintMaze(map," MAP "), table);
+            AnsiConsole.Write(print);
         }
         public static void FallInTrap(Hero hero, int[,] map)
         {
@@ -160,7 +193,7 @@ namespace GameObjects
     public class Teleporter : Hero
     {
         //Constructor for Teleporter//
-        public Teleporter(int id, string name, string info, int health, int attack, int cooldown, int[,] maze) : base(id, name, info, health, attack, cooldown, maze)
+        public Teleporter(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, mana, cooldown,maze)
         //Call to base constructor
         {
         }
@@ -187,7 +220,7 @@ namespace GameObjects
     public class Traveler : Hero
     {
         //Constructor for Teleporter//
-        public Traveler(int id, string name, string info, int health, int attack, int cooldown, int[,] maze) : base(id, name, info, health, attack, cooldown, maze)
+        public Traveler(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, mana, cooldown, maze)
         //Call to base constructor
         {
         }
@@ -214,7 +247,7 @@ namespace GameObjects
     public class Jumper : Hero
     {
         //Constructor for Teleporter//
-        public Jumper(int id, string name, string info, int health, int attack, int cooldown, int[,] maze) : base(id, name, info, health, attack, cooldown, maze)
+        public Jumper(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, mana, cooldown, maze)
         //Call to base constructor
         {
         }
@@ -280,7 +313,7 @@ namespace GameObjects
     public class WallBreaker : Hero
     {
         //Constructor for WallBreaker//
-        public WallBreaker(int id, string name, string info, int health, int attack, int cooldown, int[,] maze) : base(id, name, info, health, attack, cooldown, maze)//Call to base constructor
+        public WallBreaker(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, mana, cooldown, maze)//Call to base constructor
         {
         }
         public override void CastSpell(int[,] map)
@@ -325,21 +358,37 @@ namespace GameObjects
                 {
                     if (!HandleWallBreaking(-1, 0, map))
                         continue;
+                    else
+                    {
+                        break;
+                    }
                 }
                 else if (Direction.KeyChar == 's' || Direction.KeyChar == 'S')
                 {
                     if (!HandleWallBreaking(1, 0, map))
                         continue;
+                    else
+                    {
+                        break;
+                    }
                 }
                 else if (Direction.KeyChar == 'a' || Direction.KeyChar == 'A')
                 {
                     if (!HandleWallBreaking(0, -1, map))
                         continue;
+                    else
+                    {
+                        break;
+                    }
                 }
                 else if (Direction.KeyChar == 'd' || Direction.KeyChar == 'D')
                 {
                     if (!HandleWallBreaking(0, 1, map))
                         continue;
+                    else
+                    {
+                        break;
+                    }
                 }
                 break;
             }
@@ -367,11 +416,6 @@ namespace GameObjects
             map[location[0] + dirRow, location[1] + dirCol] = 0;
             Maze.FreePath.Add(new int[] { location[0] + dirRow, location[1] + dirCol });
             return true;
-        }
-        private void BreakWall(int row, int col)
-        {
-            map[row, col] = 0;
-
         }
     }
 }

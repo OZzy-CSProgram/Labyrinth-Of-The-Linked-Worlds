@@ -2,7 +2,7 @@ using System.Net.Security;
 
 namespace GameObjects
 {
-    class Player
+    public class Player
     {
         public string Name;
         public bool turn;
@@ -33,7 +33,7 @@ namespace GameObjects
         {
             while (true)
             {
-                Console.Write("Write the number of the Hero you want for your party: ");
+                Console.Write("Write the number of the Hero you want to choose: ");
                 string input = Console.ReadLine();
 
                 if (int.TryParse(input, out int index) && index > 0 && index <= list.Count)

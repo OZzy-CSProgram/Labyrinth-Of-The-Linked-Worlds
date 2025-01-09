@@ -6,6 +6,7 @@ while (true)
 {
     ///////////////////      MAIN MENU         /////////////
     Console.Clear();
+    Console.Beep();
     Console.WriteLine("🔹🔷🟦🟦🟦  Welcome to Labyrinth Of The Linked Worlds!!!  🟦🟦🟦🔷🔹");
 
     Console.WriteLine();
@@ -194,7 +195,6 @@ while (true)
             }
             break;
         }
-        if (decition2.KeyChar == '2')
         {
             Console.Clear();
             Console.WriteLine("Lady Elara> Thank you " + nameofP1 + " ! Your quest would be to go inside the Labyrinth of the Linked Worlds and get the Heart of Ebony, dont worry, you will not be alone, you will be leading a party of brave heroes of our kingdom, you can personally choose them!");
@@ -262,11 +262,17 @@ while (true)
 
         Console.WriteLine("Genering The Map...");
         int[,] map = Maze.Generator();
+
+        //spawn artifact
+        map[Maze.size / 2, Maze.size / 2 - 1] = 4;
+        var mapprinted = Maze.PrintMaze(map, "  Generated Map !");
+        AnsiConsole.Write(mapprinted);
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
         ///////////////////////////////////////////////////////////////////////////////////
         //////////////////////////      Heroes Selection         //////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////
+        Console.Clear();
         Console.WriteLine(" _____                        _____     _         _   _         ");
         Console.WriteLine("|  |  |___ ___ ___ ___ ___   |   __|___| |___ ___| |_|_|___ ___ ");
         Console.WriteLine("|     | -_|  _| . | -_|_ -|  |__   | -_| | -_|  _|  _| | . |   |");
@@ -281,13 +287,13 @@ while (true)
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
         List<Hero> Heroes = new List<Hero>();
-        Teleporter Mediv = new Teleporter(11, "Mediv The Guardian", "A powerfull mage with the magical power of teleporting to a random position in the maze!", 160, 90, 10, map);
+        Teleporter Mediv = new Teleporter(11, "🧙🏻‍♂️", "Mediv The Guardian", "A powerfull mage with the magical power \n of teleporting to a random position in the maze!", 10, 6, 0, 12, map);
         Heroes.Add(Mediv);
-        WallBreaker Eledron = new WallBreaker(13, "Eledron The WallBreaker", "A strong Dwarv with a big Hammer,He has got the ability to break walls!", 110, 140, 10, map);
+        WallBreaker Eledron = new WallBreaker(13, "👳‍♂️", "Eledron The WallBreaker", "A strong Dwarv with a big Hammer\n He has got the ability to break walls!", 15, 4, 0, 10, map);
         Heroes.Add(Eledron);
-        Jumper Monkinho = new Jumper(15, "Monkinho The Jumper", "A monkey with the ability to jump 3 cells in front of him, but obstacles can interrupt his jump!", 100, 170, 10, map);
+        Jumper Monkinho = new Jumper(15, "🐵", "Monkinho The Jumper", "A monkey with the ability to jump 3 cells \n in front of him, but obstacles can interrupt his jump!", 12, 5, 0, 8, map);
         Heroes.Add(Monkinho);
-        Traveler Travelero = new Traveler(17, "Travelero The Jumper", "A monkey with the ability to jump 3 cells in front of him, but obstacles can interrupt his jump!", 100, 170, 10, map);
+        Traveler Travelero = new Traveler(17, "🧞", "Travelero The Jumper", "A monkey with the ability to jump 3 cells \n in front of him, but obstacles can interrupt his jump!", 10, 10, 0, 10, map);
         Heroes.Add(Travelero);
 
 
@@ -384,8 +390,8 @@ while (true)
         int[] spawn1p1 = new int[] { 1, 1 };
         //Spawn of Second Hero
         Player1.Party[1].location[0] = 1;
-        Player1.Party[1].location[1] = Maze.size / 2 ;
-        int[] spawn2p1 = new int[] { 1, Maze.size / 2 };
+        Player1.Party[1].location[1] = Maze.size / 2 - 1;
+        int[] spawn2p1 = new int[] { 1, Maze.size / 2 - 1 };
         // //Spawn of Third Hero
         // Player1.Party[2].location[0] = 1;
         // Player1.Party[2].location[1] = Maze.size - 1;
@@ -397,8 +403,8 @@ while (true)
         int[] spawn1p2 = new int[] { Maze.size - 2, 1 };
         //Spawn of Second Hero
         Player2.Party[1].location[0] = Maze.size - 2;
-        Player2.Party[1].location[1] = Maze.size / 2 ;
-        int[] spawn2p2 = new int[] { Maze.size - 2, Maze.size / 2 };
+        Player2.Party[1].location[1] = Maze.size / 2 - 1;
+        int[] spawn2p2 = new int[] { Maze.size - 2, Maze.size / 2 - 1 };
         // //Spawn of Third Hero
         // Player2.Party[2].location[0] = Maze.size - 1;
         // Player2.Party[2].location[1] = Maze.size - 1;
@@ -522,18 +528,45 @@ while (true)
                 while (action.KeyChar != 'w' && action.KeyChar != 'W' && action.KeyChar != 'a' && action.KeyChar != 'A' && action.KeyChar != 's' && action.KeyChar != 'S' && action.KeyChar != 'd' && action.KeyChar != 'D' && action.KeyChar != 'r' && action.KeyChar != 'R')
                 {
                     Console.Clear();
-
                     Console.WriteLine("thats not a valid action)");
                     Console.WriteLine("(press a key to continue)");
                     Console.ReadKey(true);
-
                     Console.Clear();
-                    Maze.PrintMaze(map, $" {name}'s Turn!                            Hero ➧     {hero.name}  Selected! ");
-                    //Console.WriteLine("╔════════════════╦══════════════════╦══════════════════╦═══════════════════╦══════════════════════╗");
-                    Console.WriteLine("║   W > move up  ║   A > move left  ║   S > move down  ║   D > move right  ║  R > activate Super ║");
-                    Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩═════════════════════╝");
-                    action = Console.ReadKey(true);
+                    Console.Clear();
+                    var table = new Table();
 
+                    var w = new Table()
+                    .Border(TableBorder.Double)
+                    .BorderColor(Color.SandyBrown)
+                    .AddColumn(new TableColumn("W ⬆ ").Centered());
+
+                    var a = new Table()
+                    .Border(TableBorder.Double)
+                    .BorderColor(Color.SandyBrown)
+                    .AddColumn(new TableColumn("A ⬅ ").Centered());
+
+                    var s = new Table()
+                    .Border(TableBorder.Double)
+                    .BorderColor(Color.SandyBrown)
+                    .AddColumn(new TableColumn("S ⬇ ").Centered());
+
+                    var d = new Table()
+                    .Border(TableBorder.Double)
+                    .BorderColor(Color.SandyBrown)
+                    .AddColumn(new TableColumn("D ➡ ").Centered());
+
+                    var r = new Table()
+                    .Border(TableBorder.Double)
+                    .BorderColor(Color.Red)
+                    .AddColumn(new TableColumn("R > Super Power! ").Centered());
+                    table.AddColumn(new TableColumn("").Centered()).NoBorder();
+                    table.AddColumn(new TableColumn(w).Centered()).NoBorder();
+                    table.AddColumn(new TableColumn("").Centered()).NoBorder();
+                    table.AddColumn(new TableColumn(r).Centered()).NoBorder();
+
+                    table.AddRow(a.Centered(), s.Centered(), d.Centered());
+                    Maze.PrintMaze2(map, $" {name}'s Turn!!!         ", table, hero);
+                    action = Console.ReadKey(true);
                     if (action.KeyChar == 'w' || action.KeyChar == 'W' || action.KeyChar == 'a' || action.KeyChar == 'A' || action.KeyChar == 's' || action.KeyChar == 'S' || action.KeyChar == 'd' || action.KeyChar == 'D')
                     {
                         break;
@@ -541,48 +574,89 @@ while (true)
                 }
                 return action;
             }
-            static ConsoleKeyInfo CantMoveThere(int[,] map, string name, Hero hero)
+            static ConsoleKeyInfo GetAction(int[,] map, string name, Hero hero)
             {
                 Console.Clear();
-                Console.WriteLine("You can't move in that direction mate! :/");
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine("(press a key to continue)");
-                Console.ReadKey(true);
-                Console.Clear();
-                Maze.PrintMaze(map, $" {name}'s Turn!                            Hero ➧     {hero.name}  Selected! ");
-                //Console.WriteLine("╔════════════════╦══════════════════╦══════════════════╦═══════════════════╦══════════════════════╗");
-                Console.WriteLine("║   W > move up  ║   A > move left  ║   S > move down  ║   D > move right  ║  R > activate Super ║");
-                Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩═════════════════════╝");
+                var table = new Table();
+
+                var w = new Table()
+                .Border(TableBorder.Double)
+                .BorderColor(Color.SandyBrown)
+                .AddColumn(new TableColumn("W ⬆ ").Centered());
+
+                var a = new Table()
+                .Border(TableBorder.Double)
+                .BorderColor(Color.SandyBrown)
+                .AddColumn(new TableColumn("A ⬅ ").Centered());
+
+                var s = new Table()
+                .Border(TableBorder.Double)
+                .BorderColor(Color.SandyBrown)
+                .AddColumn(new TableColumn("S ⬇ ").Centered());
+
+                var d = new Table()
+                .Border(TableBorder.Double)
+                .BorderColor(Color.SandyBrown)
+                .AddColumn(new TableColumn("D ➡ ").Centered());
+
+                var r = new Table()
+                .Border(TableBorder.Double)
+                .BorderColor(Color.Red)
+                .AddColumn(new TableColumn("R > Super Power! ").Centered());
+                table.AddColumn(new TableColumn("").Centered()).NoBorder();
+                table.AddColumn(new TableColumn(w).Centered()).NoBorder();
+                table.AddColumn(new TableColumn("").Centered()).NoBorder();
+                table.AddColumn(new TableColumn(r).Centered()).NoBorder();
+
+                table.AddRow(a.Centered(), s.Centered(), d.Centered());
+                Maze.PrintMaze2(map, $" {name}'s Turn!!!         ", table, hero);
                 ConsoleKeyInfo action = Console.ReadKey(true);
                 action = ValidPosition(action, map, name, hero);
                 return action;
             }
-            while (Player1.turn == true)
+            static void PassTurn(int[,] map, string name, Hero hero)
             {
                 Console.Clear();
+                var table = new Table();
+                // table.AddColumn(new TableColumn($"{name} Has moved {hero.name} to [  {hero.location[0]}  ,  {hero.location[1]}  ] ").Centered());
+                table.AddColumn(new TableColumn("Press a key to finish your turn").Centered());
+                Maze.PrintMaze2(map, $" {name}'s Turn!!!         ", table, hero);
+                Console.ReadKey(true);
+            }
+            while (Player1.turn == true)
+            {
+                if (Player1.Party[0].mana < 20)
+                {
+                    Player1.Party[0].mana++;
+                }
+                if (Player1.Party[1].mana < 20)
+                {
+                    Player1.Party[1].mana++;
+                }
 
+                Console.Clear();
                 Console.WriteLine($"{nameofP1} IS YOUR TURN!");
-                Hero.DisplayList(Player1.Party, $"            {nameofP1}'s Party!");
+                Hero.DisplayList2(Player1.Party, $"            {nameofP1}'s Party!", map);
                 Hero choice1 = Player.GetPlayerChoice(Player1.Party);
                 Console.WriteLine();
                 Console.WriteLine($"Hero {choice1.name} selected correctly !");
                 Console.WriteLine("(press a key to continue)");
                 Console.ReadKey(true);
-                Console.Clear();
-                Maze.PrintMaze(map, $" {nameofP1}'s Turn!!!                      Hero ➧     {choice1.name}  Selected! ");
-                //Console.WriteLine("╔════════════════╦══════════════════╦══════════════════╦═══════════════════╦══════════════════════╗");
-                Console.WriteLine("║   W > move up  ║   A > move left  ║   S > move down  ║   D > move right  ║  R > activate Super ║");
-                Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩═════════════════════╝");
-                ConsoleKeyInfo action = Console.ReadKey(true);
-                action = ValidPosition(action, map, nameofP1, choice1);
+                ConsoleKeyInfo action;
+                action = GetAction(map, nameofP1, choice1);
                 while (true)
                 {
                     if (action.KeyChar == 'w')
                     {
                         if (map[choice1.location[0] - 1, choice1.location[1]] == 1)
                         {
-                            action = CantMoveThere(map, nameofP1, choice1);
+                            Console.Clear();
+                            Console.WriteLine("You can't move in that direction mate! :/");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP1, choice1);
                             continue;
 
                         }
@@ -596,6 +670,7 @@ while (true)
                             choice1.moveup(choice1.location, map);
                             //change the value in the map of the new position so the hero is displayed there
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            choice1.mana++;
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             //select a random trap in the trap list, to execute to the hero
@@ -613,13 +688,20 @@ while (true)
                         choice1.moveup(choice1.location, map);
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
                         choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                        choice1.mana++;
                         break;
                     }
                     if (action.KeyChar == 'W')
                     {
                         if (map[choice1.location[0] - 1, choice1.location[1]] == 1)
                         {
-                            action = CantMoveThere(map, nameofP1, choice1);
+                            Console.Clear();
+                            Console.WriteLine("You can't move in that direction mate! :/");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP1, choice1);
                             continue;
 
                         }
@@ -633,6 +715,7 @@ while (true)
                             choice1.moveup(choice1.location, map);
                             //change the value in the map of the new position so the hero is displayed there
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            choice1.mana++;
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             //select a random trap in the trap list, to execute to the hero
@@ -650,13 +733,20 @@ while (true)
                         choice1.moveup(choice1.location, map);
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
                         choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                        choice1.mana++;
                         break;
                     }
                     if (action.KeyChar == 'a')
                     {
                         if (map[choice1.location[0], choice1.location[1] - 1] == 1)
                         {
-                            action = CantMoveThere(map, nameofP1, choice1);
+                            Console.Clear();
+                            Console.WriteLine("You can't move in that direction mate! :/");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP1, choice1);
                             continue;
                         }
                         if (map[choice1.location[0], choice1.location[1] - 1] == 3)
@@ -669,6 +759,7 @@ while (true)
                             choice1.moveleft(choice1.location, map);
                             //change the value in the map of the new position so the hero is displayed there
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            choice1.mana++;
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             //select a random trap in the trap list, to execute to the hero
@@ -686,13 +777,20 @@ while (true)
                         choice1.moveleft(choice1.location, map);
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
                         choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                        choice1.mana++;
                         break;
                     }
                     if (action.KeyChar == 'A')
                     {
                         if (map[choice1.location[0], choice1.location[1] - 1] == 1)
                         {
-                            action = CantMoveThere(map, nameofP1, choice1);
+                            Console.Clear();
+                            Console.WriteLine("You can't move in that direction mate! :/");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP1, choice1);
                             continue;
                         }
                         if (map[choice1.location[0], choice1.location[1] - 1] == 3)
@@ -728,7 +826,13 @@ while (true)
                     {
                         if (map[choice1.location[0] + 1, choice1.location[1]] == 1)
                         {
-                            action = CantMoveThere(map, nameofP1, choice1);
+                            Console.Clear();
+                            Console.WriteLine("You can't move in that direction mate! :/");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP1, choice1);
                             continue;
                         }
                         if (map[choice1.location[0] + 1, choice1.location[1]] == 3)
@@ -741,6 +845,7 @@ while (true)
                             choice1.movedown(choice1.location, map);
                             //change the value in the map of the new position so the hero is displayed there
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            choice1.mana++;
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             //select a random trap in the trap list, to execute to the hero
@@ -764,7 +869,13 @@ while (true)
                     {
                         if (map[choice1.location[0] + 1, choice1.location[1]] == 1)
                         {
-                            action = CantMoveThere(map, nameofP1, choice1);
+                            Console.Clear();
+                            Console.WriteLine("You can't move in that direction mate! :/");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP1, choice1);
                             continue;
                         }
                         if (map[choice1.location[0] + 1, choice1.location[1]] == 3)
@@ -779,6 +890,7 @@ while (true)
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            choice1.mana++;
                             //select a random trap in the trap list, to execute to the hero
                             Random randomTrap = new Random();
                             int index = randomTrap.Next(Traps.Count);
@@ -800,7 +912,13 @@ while (true)
                     {
                         if (map[choice1.location[0], choice1.location[1] + 1] == 1)
                         {
-                            action = CantMoveThere(map, nameofP1, choice1);
+                            Console.Clear();
+                            Console.WriteLine("You can't move in that direction mate! :/");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP1, choice1);
                             continue;
                         }
                         if (map[choice1.location[0], choice1.location[1] + 1] == 3)
@@ -815,6 +933,7 @@ while (true)
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            choice1.mana++;
                             //select a random trap in the trap list, to execute to the hero
                             Random randomTrap = new Random();
                             int index = randomTrap.Next(Traps.Count);
@@ -836,7 +955,13 @@ while (true)
                     {
                         if (map[choice1.location[0], choice1.location[1] + 1] == 1)
                         {
-                            action = CantMoveThere(map, nameofP1, choice1);
+                            Console.Clear();
+                            Console.WriteLine("You can't move in that direction mate! :/");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP1, choice1);
                             continue;
                         }
                         if (map[choice1.location[0], choice1.location[1] + 1] == 3)
@@ -851,6 +976,7 @@ while (true)
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            choice1.mana++;
                             //select a random trap in the trap list, to execute to the hero
                             Random randomTrap = new Random();
                             int index = randomTrap.Next(Traps.Count);
@@ -870,58 +996,85 @@ while (true)
                     }
                     if (action.KeyChar == 'r')
                     {
-                        Console.Clear();
-                        Console.WriteLine($"Activating the Super of {choice1.name}!");
-                        Console.WriteLine();
-                        Console.WriteLine("Press a key to continue...");
-                        Console.ReadKey(true);
-                        choice1.CastSpell(map);
-                        Console.WriteLine();
-                        Console.WriteLine("Press a key to continue...");
-                        Console.ReadKey(true);
+                        if (choice1.mana >= choice1.cooldown)
+                        {
+                            choice1.mana = choice1.mana - choice1.cooldown;
+                            Console.Clear();
+                            Console.WriteLine($"Activating the Super of {choice1.name}!");
+                            Console.WriteLine();
+                            Console.WriteLine("Press a key to continue...");
+                            Console.ReadKey(true);
+                            choice1.CastSpell(map);
+                            Console.WriteLine();
+                            Console.WriteLine("Press a key to continue...");
+                            Console.ReadKey(true);
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine($"{choice1.name} >> I cant do that yet, I need at least {choice1.cooldown} points of mana to use my power!");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP1, choice1);
+                        }
 
                     }
                     if (action.KeyChar == 'R')
                     {
-                        Console.Clear();
-                        Console.WriteLine($"Activating the Super of {choice1.name}!");
-                        Console.WriteLine();
-                        Console.WriteLine("Press a key to continue...");
-                        Console.ReadKey(true);
-                        choice1.CastSpell(map);
-                        Console.WriteLine();
-                        Console.WriteLine("Press a key to continue...");
-                        Console.ReadKey(true);
+                        if (choice1.mana >= choice1.cooldown)
+                        {
+                            choice1.mana = choice1.mana - choice1.cooldown;
+                            Console.Clear();
+                            Console.WriteLine($"Activating the Super of {choice1.name}!");
+                            Console.WriteLine();
+                            Console.WriteLine("Press a key to continue...");
+                            Console.ReadKey(true);
+                            choice1.CastSpell(map);
+                            Console.WriteLine();
+                            Console.WriteLine("Press a key to continue...");
+                            Console.ReadKey(true);
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine($"{choice1.name} >> I cant do that yet, I need at least {choice1.cooldown} points of mana to use my power!");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP1, choice1);
+                        }
                     }
                     break;
                 }
-                Console.Clear();
-                Maze.PrintMaze(map, $"         {nameofP1},       Press a key to finish your Turn! ");
-                //Console.WriteLine("╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine($"║ {nameofP1} Has moved {choice1.name} to [{choice1.location[0]},{choice1.location[1]}] ║      Press a Key to finish your turn");
-                Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
-                Console.ReadKey(true);
+                PassTurn(map, nameofP1, choice1);
                 Player1.turn = false;
                 Player2.turn = true;
                 continue;
             }
             while (Player2.turn == true)
             {
+                if (Player2.Party[0].mana < 20)
+                {
+                    Player2.Party[0].mana++;
+                }
+                if (Player2.Party[1].mana < 20)
+                {
+                    Player2.Party[1].mana++;
+                }
+
                 Console.Clear();
                 Console.WriteLine($"{nameofP2} IS YOUR TURN!");
-                Hero.DisplayList(Player2.Party, $"            {nameofP2}'s Party!");
+                Hero.DisplayList2(Player2.Party, $"            {nameofP2}'s Party!",map);
                 Hero choice2 = Player.GetPlayerChoice(Player2.Party);
                 Console.WriteLine();
                 Console.WriteLine($"Hero {choice2.name} selected correctly !");
                 Console.WriteLine("(press a key to continue)");
                 Console.ReadKey(true);
-                Console.Clear();
-                Maze.PrintMaze(map, $" {nameofP2}'s Turn!!!                      Hero ➧     {choice2.name}  Selected! ");
-                //Console.WriteLine("╔════════════════╦══════════════════╦══════════════════╦═══════════════════╦══════════════════════╗");
-                Console.WriteLine("║   W > move up  ║   A > move left  ║   S > move down  ║   D > move right  ║  R > activate Super ║");
-                Console.WriteLine("╚════════════════╩══════════════════╩══════════════════╩═══════════════════╩═════════════════════╝");
-                ConsoleKeyInfo action = Console.ReadKey(true);
-                action = ValidPosition(action, map, nameofP2, choice2);
+                ConsoleKeyInfo action;
+                action = GetAction(map, nameofP2, choice2);
 
 
                 while (true)
@@ -930,7 +1083,13 @@ while (true)
                     {
                         if (map[choice2.location[0] - 1, choice2.location[1]] == 1)
                         {
-                            action = CantMoveThere(map, nameofP2, choice2);
+                            Console.Clear();
+                            Console.WriteLine("You can't move in that direction mate! :/");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP2, choice2);
                             continue;
                         }
                         if (map[choice2.location[0] - 1, choice2.location[1]] == 3)
@@ -966,7 +1125,13 @@ while (true)
                     {
                         if (map[choice2.location[0] - 1, choice2.location[1]] == 1)
                         {
-                            action = CantMoveThere(map, nameofP2, choice2);
+                            Console.Clear();
+                            Console.WriteLine("You can't move in that direction mate! :/");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP2, choice2);
                             continue;
                         }
                         if (map[choice2.location[0] - 1, choice2.location[1]] == 3)
@@ -1002,7 +1167,13 @@ while (true)
                     {
                         if (map[choice2.location[0], choice2.location[1] - 1] == 1)
                         {
-                            action = CantMoveThere(map, nameofP2, choice2);
+                            Console.Clear();
+                            Console.WriteLine("You can't move in that direction mate! :/");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP2, choice2);
                             continue;
                         }
                         if (map[choice2.location[0], choice2.location[1] - 1] == 3)
@@ -1038,7 +1209,13 @@ while (true)
                     {
                         if (map[choice2.location[0], choice2.location[1] - 1] == 1)
                         {
-                            action = CantMoveThere(map, nameofP2, choice2);
+                            Console.Clear();
+                            Console.WriteLine("You can't move in that direction mate! :/");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP2, choice2);
                             continue;
                         }
                         if (map[choice2.location[0], choice2.location[1] - 1] == 3)
@@ -1074,7 +1251,13 @@ while (true)
                     {
                         if (map[choice2.location[0] + 1, choice2.location[1]] == 1)
                         {
-                            action = CantMoveThere(map, nameofP2, choice2);
+                            Console.Clear();
+                            Console.WriteLine("You can't move in that direction mate! :/");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP2, choice2);
                             continue;
                         }
                         if (map[choice2.location[0] + 1, choice2.location[1]] == 3)
@@ -1110,7 +1293,13 @@ while (true)
                     {
                         if (map[choice2.location[0] + 1, choice2.location[1]] == 1)
                         {
-                            action = CantMoveThere(map, nameofP2, choice2);
+                            Console.Clear();
+                            Console.WriteLine("You can't move in that direction mate! :/");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP2, choice2);
                             continue;
                         }
                         if (map[choice2.location[0] + 1, choice2.location[1]] == 3)
@@ -1146,7 +1335,13 @@ while (true)
                     {
                         if (map[choice2.location[0], choice2.location[1] + 1] == 1)
                         {
-                            action = CantMoveThere(map, nameofP2, choice2);
+                            Console.Clear();
+                            Console.WriteLine("You can't move in that direction mate! :/");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP2, choice2);
                             continue;
                         }
                         if (map[choice2.location[0], choice2.location[1] + 1] == 3)
@@ -1182,7 +1377,13 @@ while (true)
                     {
                         if (map[choice2.location[0], choice2.location[1] + 1] == 1)
                         {
-                            action = CantMoveThere(map, nameofP2, choice2);
+                            Console.Clear();
+                            Console.WriteLine("You can't move in that direction mate! :/");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP2, choice2);
                             continue;
                         }
                         if (map[choice2.location[0], choice2.location[1] + 1] == 3)
@@ -1216,36 +1417,63 @@ while (true)
                     }
                     if (action.KeyChar == 'r')
                     {
-                        Console.Clear();
-                        Console.WriteLine($"Activating the Super of {choice2.name}!");
-                        Console.WriteLine();
-                        Console.WriteLine("Press a key to continue...");
-                        Console.ReadKey(true);
-                        choice2.CastSpell(map);
-                        Console.WriteLine();
-                        Console.ReadKey(true);
+                        if (choice2.mana >= choice2.cooldown)
+                        {
+                            choice2.mana = choice2.mana - choice2.cooldown;
+                            Console.Clear();
+                            Console.WriteLine($"Activating the Super of {choice2.name}!");
+                            Console.WriteLine();
+                            Console.WriteLine("Press a key to continue...");
+                            Console.ReadKey(true);
+                            choice2.CastSpell(map);
+                            Console.WriteLine();
+                            Console.WriteLine("Press a key to continue...");
+                            Console.ReadKey(true);
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine($"{choice2.name} >> I cant do that yet, I need at least {choice2.cooldown} points of mana to use my power!");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP1, choice2);
+                        }
                     }
                     if (action.KeyChar == 'R')
                     {
-                        Console.Clear();
-                        Console.WriteLine($"Activating the Super of {choice2.name}!");
-                        Console.WriteLine();
-                        Console.WriteLine("Press a key to continue...");
-                        Console.ReadKey(true);
-                        choice2.CastSpell(map);
-                        Console.WriteLine();
-                        Console.ReadKey(true);
+                        if (choice2.mana >= choice2.cooldown)
+                        {
+                            choice2.mana = choice2.mana - choice2.cooldown;
+                            Console.Clear();
+                            Console.WriteLine($"Activating the Super of {choice2.name}!");
+                            Console.WriteLine();
+                            Console.WriteLine("Press a key to continue...");
+                            Console.ReadKey(true);
+                            choice2.CastSpell(map);
+                            Console.WriteLine();
+                            Console.WriteLine("Press a key to continue...");
+                            Console.ReadKey(true);
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine($"{choice2.name} >> I cant do that yet, I need at least {choice2.cooldown} points of mana to use my power!");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("(press a key to continue)");
+                            Console.ReadKey(true);
+                            action = GetAction(map, nameofP1, choice2);
+                        }
                     }
                     break;
+
                 }
                 Console.Clear();
-                Maze.PrintMaze(map, $" {nameofP2},       Press a key to finish your Turn! ");
-                //Console.WriteLine("╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine($" {nameofP2} Has moved {choice2.name} to [{choice2.location[0]},{choice2.location[1]}] ║      Press a Key to finish your turn");
-                Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
-                Console.ReadKey(true);
-                Player2.turn = false;
+                PassTurn(map, nameofP2, choice2);
                 Player1.turn = true;
+                Player2.turn = false;
                 continue;
             }
         }
