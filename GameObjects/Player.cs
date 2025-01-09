@@ -5,6 +5,9 @@ namespace GameObjects
     public class Player
     {
         public string Name;
+
+        public static bool play = true;
+        public static bool exit = false;
         public bool turn;
         public List<Hero> Party = new List<Hero>();
         public Player(string name)

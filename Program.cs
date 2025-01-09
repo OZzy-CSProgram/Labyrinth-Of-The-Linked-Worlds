@@ -7,29 +7,68 @@ while (true)
     ///////////////////      MAIN MENU         /////////////
     Console.Clear();
     Console.Beep();
-    Console.WriteLine("🔹🔷🟦🟦🟦  Welcome to Labyrinth Of The Linked Worlds!!!  🟦🟦🟦🔷🔹");
+    var gamemenu = new Table();
 
-    Console.WriteLine();
-    Console.WriteLine();
-    Console.WriteLine();
-    Console.WriteLine();
+    var gametitle = new Table()
+    .BorderColor(Color.Black);
 
-    Console.WriteLine("1  Play");
-    Console.WriteLine("(Letsss gooo!)");
+    gametitle.AddColumn(new TableColumn("[bold #012df4] ___      _______  _______  __   __  ______    ___   __    _  _______  __   __      _______  _______    _______  __   __  _______ [/]\n[bold #4b01f4]|   |    |   _   ||  _    ||  | |  ||    _ |  |   | |  |  | ||       ||  | |  |    |       ||       |  |       ||  | |  ||       |[/]\n[bold #7701f4]|   |    |  |_|  || |_|   ||  |_|  ||   | ||  |   | |   |_| ||_     _||  |_|  |    |   _   ||    ___|  |_     _||  |_|  ||    ___|[/]\n[bold #9101f4]|   |    |       ||       ||       ||   |_||_ |   | |       |  |   |  |       |    |  | |  ||   |___     |   |  |       ||   |___ [/]\n[bold #ae01f4]|   |___ |       ||  _   | |_     _||    __  ||   | |  _    |  |   |  |       |    |  |_|  ||    ___|    |   |  |       ||    ___|[/]\n[bold #c801f4]|       ||   _   || |_|   |  |   |  |   |  | ||   | | | |   |  |   |  |   _   |    |       ||   |        |   |  |   _   ||   |___ [/]\n[bold #e201f4]|_______||__| |__||_______|  |___|  |___|  |_||___| |_|  |__|  |___|  |__| |__|    |_______||___|        |___|  |__| |__||_______|[/]\n \n[bold #f401da] ___      ___   __    _  ___   _  _______  ______       _     _  _______  ______    ___      ______   _______ [/]\n[bold #f40186]|   |    |   | |  |  | ||   | | ||       ||      |     | | _ | ||       ||    _ |  |   |    |      | |       |[/]\n[bold #f40186]|   |    |   | |   |_| ||   |_| ||    ___||  _    |    | || || ||   _   ||   | ||  |   |    |  _    ||  _____|[/]\n[bold #f4016f]|   |    |   | |       ||      _||   |___ | | |   |    |       ||  | |  ||   |_||_ |   |    | | |   || |_____ [/]\n[bold #f40156]|   |___ |   | |  _    ||     |_ |    ___|| |_|   |    |       ||  |_|  ||    __  ||   |___ | |_|   ||_____  |[/]\n[bold #f40138]|       ||   | | | |   ||    _  ||   |___ |       |    |   _   ||       ||   |  | ||       ||       | _____| |[/]\n[bold #f40101]|_______||___| |_|  |__||___| |_||_______||______|     |__| |__||_______||___|  |_||_______||______| |_______|[/]\n")).Centered();
+    gamemenu.AddColumn(new TableColumn(gametitle)).Centered();
+    gamemenu.Expand();
+    
 
-    Console.WriteLine();
-    Console.WriteLine();
+    //Play or Exit
+    var gameplayselected = new Table()
+    .Border(TableBorder.Double)
+    .BorderColor(Color.Red);
+    gameplayselected.AddColumn(new TableColumn("[bold] _____ __    _____ __ __ [/]\n[bold]|  _  |  |  |  _  |  |  |[/]\n[bold]|   __|  |__|     |_   _|[/]\n[bold]|__|  |_____|__|__| |_|  [/]\n ")).Centered();
+ 
+    var gameplay = new Table()
+    .Border(TableBorder.Double)
+    .BorderColor(Color.SteelBlue);
+    gameplay.AddColumn(new TableColumn("[bold] _____ __    _____ __ __ [/]\n[bold]|  _  |  |  |  _  |  |  |[/]\n[bold]|   __|  |__|     |_   _|[/]\n[bold]|__|  |_____|__|__| |_|  [/]\n ")).Centered();
 
-    Console.WriteLine("2 Exit Game!");
-    Console.WriteLine("(U scared? :'(  )");
+    var gameexitselected = new Table()
+    .Border(TableBorder.Double)
+    .BorderColor(Color.Red);
+    gameexitselected.AddColumn(new TableColumn("[bold] _____ __ __ _____ _____ [/]\n[bold]|   __|  |  |     |_   _|[/]\n[bold]|   __|-   -|-   -| | |  [/]\n[bold]|_____|__|__|_____| |_|  [/]\n ")).Centered();
+    
+    var gameexit = new Table()
+    .Border(TableBorder.Rounded)
+    .BorderColor(Color.SteelBlue);
+    gameexit.AddColumn(new TableColumn("[bold] _____ __ __ _____ _____ [/]\n[bold]|   __|  |  |     |_   _|[/]\n[bold]|   __|-   -|-   -| | |  [/]\n[bold]|_____|__|__|_____| |_|  [/]\n ")).Centered();
 
-    Console.WriteLine();
-    Console.WriteLine();
 
-    Console.WriteLine("(Type 1 or 2 according to what you want to do!)");
-
-    ConsoleKeyInfo decition = Console.ReadKey(true);
-    if (decition.KeyChar == '1')
+    gamemenu.AddEmptyRow();
+    gamemenu.AddEmptyRow();
+    if(Player.play ==true)
+    {
+    gamemenu.AddRow(gameplayselected);
+    gamemenu.AddEmptyRow();
+    gamemenu.AddRow(gameexit);
+    AnsiConsole.Write(gamemenu);
+    }
+    if(Player.exit==true)
+    {
+    gamemenu.AddRow(gameplay);
+    gamemenu.AddEmptyRow();
+    gamemenu.AddRow(gameexitselected);
+    AnsiConsole.Write(gamemenu);
+    }
+    ConsoleKeyInfo Selection = Console.ReadKey(true);
+    if(Selection.KeyChar == 's')
+    {
+    Player.exit = true;
+    Player.play = false;
+    continue;
+    }
+    if(Selection.KeyChar == 'w')
+    {
+    Player.exit = false;
+    Player.play = true;
+    continue;
+    }
+    if (Selection.KeyChar == (char)13 && Player.play == true)
     {
 
         ///////////////////      PLAY- Choise   Setting Players   Generating Maze    ///////////////////////
@@ -102,7 +141,7 @@ while (true)
         roleplay1.AddRow(@"         |       |       ");
         roleplay1.AddRow(@"         |       |       ");
         roleplay1.AddRow(@"     w * W * W * W * w   ");
-        
+
         var instance1 = new Table();
         instance1.AddColumn(new TableColumn("")).HideHeaders();
         instance1.AddRow("Lady Elara> We have been waiting for you warrior!").Centered();
@@ -114,7 +153,7 @@ while (true)
         forP1.Centered();
         AnsiConsole.Write(forP1);
         Console.ReadKey(true);
-        
+
         Console.Clear();
         Console.WriteLine();
         Console.WriteLine();
@@ -1510,7 +1549,7 @@ while (true)
         }
     }
     //////////////////// Close game////////////////
-    if (decition.KeyChar == '2')
+    if (Selection.KeyChar == (char)13 && Player.play == false)
     {
         Console.Clear();
         Console.WriteLine("🔹🔷 I was not expecting that mate! but see you next time ...🔷🔹");
@@ -1518,15 +1557,6 @@ while (true)
         Console.WriteLine("press a key to exit game '-'");
         Console.ReadKey(true);
         break;
-    }
-    if (decition.KeyChar != '2' && decition.KeyChar != '1')
-    {
-        Console.Clear();
-        Console.WriteLine("MARCEEEEEELLOOO WHAT you doing!!!!");
-        Console.WriteLine();
-        Console.WriteLine("(press a key to go back");
-        Console.ReadKey(true);
-        continue;
     }
     // int desire = int.Parse(Console.ReadLine());
     // if (desire == 1)
