@@ -78,13 +78,43 @@ while (true)
         Console.WriteLine();
 
         //More Roleplay
-        Console.WriteLine("Lady Elara> We have been waiting for you warrior!");
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine("(press a key to continue)");
+        var forP1 = new Table();
+        forP1.AddColumn(new TableColumn("")).HideHeaders();
+        forP1.AddColumn(new TableColumn("")).HideHeaders();
+        var roleplay1 = new Table();
+        roleplay1.AddColumn(new TableColumn("[bold]LADY ELARA [/]")).Centered();
+        roleplay1.AddRow(@"         w*W*W*W*w       ");
+        roleplay1.AddRow(@"          \'.'.'/        ");
+        roleplay1.AddRow(@"           //`\\         ");
+        roleplay1.AddRow(@"          (/a a\)        ");
+        roleplay1.AddRow(@"          (\_-_/)        ");
+        roleplay1.AddRow(@"         .-~'='~-.       ");
+        roleplay1.AddRow(@"        /`~`'Y'`~`\      ");
+        roleplay1.AddRow(@"       / /(_ * _)\ \     ");
+        roleplay1.AddRow(@"      / /  )   (  \ \    ");
+        roleplay1.AddRow(@"      \ \_/\\_//\_/ /    ");
+        roleplay1.AddRow(@"       \/_) '*' (_\/     ");
+        roleplay1.AddRow(@"         |       |       ");
+        roleplay1.AddRow(@"         |       |       ");
+        roleplay1.AddRow(@"         |       |       ");
+        roleplay1.AddRow(@"         |       |       ");
+        roleplay1.AddRow(@"         |       |       ");
+        roleplay1.AddRow(@"         |       |       ");
+        roleplay1.AddRow(@"         |       |       ");
+        roleplay1.AddRow(@"     w * W * W * W * w   ");
+        
+        var instance1 = new Table();
+        instance1.AddColumn(new TableColumn("")).HideHeaders();
+        instance1.AddRow("Lady Elara> We have been waiting for you warrior!").Centered();
+        instance1.AddEmptyRow();
+        instance1.AddEmptyRow();
+        instance1.AddEmptyRow();
+        instance1.AddRow("(press a key to continue)").Centered();
+        forP1.AddRow(roleplay1, instance1);
+        forP1.Centered();
+        AnsiConsole.Write(forP1);
         Console.ReadKey(true);
-
+        
         Console.Clear();
         Console.WriteLine();
         Console.WriteLine();
@@ -262,6 +292,7 @@ while (true)
 
         Console.WriteLine("Genering The Map...");
         int[,] map = Maze.Generator();
+        Trap.SpawnTraps(map);
 
         //spawn artifact
         map[Maze.size / 2, Maze.size / 2 - 1] = 4;
@@ -1067,7 +1098,7 @@ while (true)
 
                 Console.Clear();
                 Console.WriteLine($"{nameofP2} IS YOUR TURN!");
-                Hero.DisplayList2(Player2.Party, $"            {nameofP2}'s Party!",map);
+                Hero.DisplayList2(Player2.Party, $"            {nameofP2}'s Party!", map);
                 Hero choice2 = Player.GetPlayerChoice(Player2.Party);
                 Console.WriteLine();
                 Console.WriteLine($"Hero {choice2.name} selected correctly !");

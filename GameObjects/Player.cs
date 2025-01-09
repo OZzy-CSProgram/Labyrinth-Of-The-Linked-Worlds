@@ -1,5 +1,5 @@
 using System.Net.Security;
-
+using Spectre.Console;
 namespace GameObjects
 {
     public class Player
@@ -43,6 +43,33 @@ namespace GameObjects
 
                 Console.WriteLine("Invalid choice. Please Try Again.");
             }
+        }
+        public static void Roleplay1()
+        {
+            // var roleplay1 = new Table();
+            // roleplay1.AddColumn(new TableColumn("LADY ELARA"));
+            // roleplay1.AddColumn(new TableColumn(""));
+            // roleplay1.AddRow("         w*W*W*W*w       ");
+            // roleplay1.AddRow("          \'.'.'/        ");
+            // roleplay1.AddRow("           //`\\         ");
+            // roleplay1.AddRow("          (/a a\)        ");
+            // roleplay1.AddRow("          (\_-_/)        ");
+            // roleplay1.AddRow("         .-~'='~-.       ");
+            // roleplay1.AddRow("        /`~`'Y'`~`\      ");
+            // roleplay1.AddRow("       / /(_ * _)\ \     ");
+            // roleplay1.AddRow("      / /  )   (  \ \    ");
+            // roleplay1.AddRow("      \ \_/\\_//\_/ /    ");
+            // roleplay1.AddRow("       \/_) '*' (_\/     ");
+            // roleplay1.AddRow("         |       |       ");
+            // roleplay1.AddRow("         |       |       ");
+            // roleplay1.AddRow("         |       |       ");
+            // roleplay1.AddRow("         |       |       ");
+            // roleplay1.AddRow("         |       |       ");
+            // roleplay1.AddRow("         |       |       ");
+            // roleplay1.AddRow("         |       |       ");
+            // roleplay1.AddRow("     w * W * W * W * w   ");
+
+            // roleplay1.AddRow("", "a");
         }
     }
 }
