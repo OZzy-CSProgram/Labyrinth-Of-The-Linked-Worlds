@@ -14,6 +14,10 @@ namespace GameObjects
         public int health;
         public int attack;
         public int mana;
+
+        public bool trapped = false;
+        public bool OnCentre = false;
+        public int toughness;
         public int cooldown;
         public List<int[]> locationlog = new List<int[]>();
         public int[,] map;
@@ -68,7 +72,7 @@ namespace GameObjects
                 table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
                 table1.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
                 table1.AddRow(" 💠 [bold]Cooldown[/] >  " + list[i].cooldown);
-                table1.AddRow(" 💙 [bold] Max Mana[/] >  20");
+                table1.AddRow(" 💙 [bold] Mana[/] >  " + list[i].mana + " / 20");
                 table.AddRow(table1);
                 table1.BorderColor(Color.DarkGoldenrod);
             }
@@ -87,12 +91,12 @@ namespace GameObjects
             for (int i = 0; i < list.Count; i++)
             {
                 var table1 = new Table();
-                table1.AddColumn("[bold red] " + (i + 1) + "[/][yellow] >>[/]  [bold] "+ list[i].icon +" " + list[i].name + "[/]");
+                table1.AddColumn("[bold red] " + (i + 1) + "[/][yellow] >>[/]  [bold] " + list[i].icon + " " + list[i].name + "[/]");
                 table1.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
                 table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
+                table1.AddRow(" 💙 [bold] Mana[/] >  " + list[i].mana + " / 20");
                 table1.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
                 table1.AddRow(" 💠 [bold]Cooldown[/] >  " + list[i].cooldown);
-                table1.AddRow(" 💙 [bold] Max Mana[/] >  20");
                 table.AddRow(table1);
                 table1.BorderColor(Color.DarkGoldenrod);
             }
@@ -100,7 +104,7 @@ namespace GameObjects
             table.BorderColor(Color.SlateBlue1);
             print.AddColumn(new TableColumn("")).HideHeaders();
             print.AddColumn(new TableColumn("")).HideHeaders();
-            print.AddRow(Maze.PrintMaze(map," MAP "), table);
+            print.AddRow(Maze.PrintMaze(map, " MAP "), table);
             AnsiConsole.Write(print);
         }
         public static void FallInTrap(Hero hero, int[,] map)
@@ -114,7 +118,7 @@ namespace GameObjects
             Console.Clear();
         }
 
-        public virtual void CastSpell(int[,] map)
+        public virtual void CastSpell(int[,] map, Player otherplayer)
         {
             Console.WriteLine("Casting Spell");
         }
@@ -193,11 +197,11 @@ namespace GameObjects
     public class Teleporter : Hero
     {
         //Constructor for Teleporter//
-        public Teleporter(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, mana, cooldown,maze)
+        public Teleporter(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, mana, cooldown, maze)
         //Call to base constructor
         {
         }
-        public override void CastSpell(int[,] map)
+        public override void CastSpell(int[,] map, Player otherplayer)
         {
             Console.Clear();
             Console.WriteLine(name + " >> Thou cannot reach my magic! .... Teleporting");
@@ -217,31 +221,38 @@ namespace GameObjects
             Console.WriteLine($"{name} has Teleported to  [  {location[0]}  ,  {location[1]}  ]");
         }
     }
-    public class Traveler : Hero
+    public class Switcher : Hero
     {
         //Constructor for Teleporter//
-        public Traveler(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, mana, cooldown, maze)
+        public Switcher(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, mana, cooldown, maze)
         //Call to base constructor
         {
         }
-        public override void CastSpell(int[,] map)
+        public override void CastSpell(int[,] map, Player otherplayer)
         {
             Console.Clear();
-            Console.WriteLine(name + " >> Thou cannot reach my magic! .... Teleporting");
-            int[] receptor = Maze.GetRandomPath();
-            map[location[0], location[1]] = 0;
-            while (receptor[0] == location[0] && receptor[1] == location[1])
-            {
-                receptor = Maze.GetRandomPath();
-            }
-            location[0] = receptor[0];
-            location[1] = receptor[1];
-            map[location[0], location[1]] = id;
-            Console.WriteLine();
-            Console.WriteLine("Press a key to continue...");
-            Console.ReadKey(true);
+
+            Hero.DisplayList2(otherplayer.Party, $"Select a Hero of {otherplayer.name}'s Party!\n to switch positions!", map);
+            Hero heroselected = Player.GetPlayerChoice(otherplayer.Party);
+
             Console.Clear();
-            Console.WriteLine($"{name} has Teleported to  [  {location[0]}  ,  {location[1]}  ]");
+            Console.WriteLine($"{name} >> , You will be teleported {heroselected.name}, and you will not even know why, hahahahahaha");
+            //save other hero Location
+            int savedlocationX = heroselected.location[0];
+            int savedlocationY = heroselected.location[1];
+
+            //make otherplayer's hero location equal to my current hero location
+            heroselected.location[0] = location[0];
+            heroselected.location[1] = location[1];
+
+            //make my current hero location equal to the saved location of the otherplayer's hero
+            location[0] = savedlocationX;
+            location[1] = savedlocationY;
+
+            //update the display map for the PrintMaze method
+            map[heroselected.location[0], heroselected.location[1]] = heroselected.id;
+            map[location[0], location[1]] = id;
+
         }
     }
     public class Jumper : Hero
@@ -251,7 +262,7 @@ namespace GameObjects
         //Call to base constructor
         {
         }
-        public override void CastSpell(int[,] map)
+        public override void CastSpell(int[,] map, Player otherplayer)
         {
             Console.Clear();
             Console.WriteLine(name + " >> Nobody can jump like I can! .... Ahahahaha");
@@ -271,6 +282,28 @@ namespace GameObjects
                 {
                     if (map[location[0] + Dir[0] + Dir[0] + Dir[0], location[1] + Dir[1] + Dir[1] + Dir[1]] != 1)
                     {
+                        if (map[location[0] + Dir[0] + Dir[0] + Dir[0], location[1] + Dir[1] + Dir[1] + Dir[1]] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[location[0], location[1]] = 0;
+
+                            // Remove trap, and move player to trap
+                            location[0] = location[0] + Dir[0] + Dir[0];
+                            location[1] = location[1] + Dir[1] + Dir[1];
+                            map[location[0], location[1]] = id;
+
+                            //add new position to the log
+                            locationlog.Add(new int[] { location[0], location[1] });
+
+                            //point that the player is in a trap
+                            trapped = true;
+                            Console.Clear();
+                            Maze.PrintMaze(map, "Super Activated successfully!");
+                            Console.WriteLine($"{name} >> It's amazing!, my jump reached the maximum distance :D");
+                            Console.WriteLine();
+                        }
+                        else if(map[location[0] + Dir[0] + Dir[0] + Dir[0], location[1] + Dir[1] + Dir[1] + Dir[1]] == 0)
+                        {
                         location[0] = location[0] + Dir[0] + Dir[0] + Dir[0];
                         location[1] = location[1] + Dir[1] + Dir[1] + Dir[1];
                         map[location[0], location[1]] = id;
@@ -278,33 +311,73 @@ namespace GameObjects
                         Maze.PrintMaze(map, "Super Activated successfully!");
                         Console.WriteLine($"{name} >> It's amazing!, my jump reached the maximum distance :D");
                         Console.WriteLine();
-                        Console.WriteLine("Press a key to continue...");
-                        Console.ReadKey(true);
+                        }
+
                     }
                     else
                     {
-                        location[0] = location[0] + Dir[0] + Dir[0];
-                        location[1] = location[1] + Dir[1] + Dir[1];
+                        if (map[location[0] + Dir[0] + Dir[0], location[1] + Dir[1] + Dir[1]] == 3)
+                        {
+                            // Make player current position equals 0
+                            map[location[0], location[1]] = 0;
+
+                            // Remove trap, and move player to trap
+                            location[0] = location[0] + Dir[0] + Dir[0];
+                            location[1] = location[1] + Dir[1] + Dir[1];
+                            map[location[0], location[1]] = id;
+
+                            //add new position to the log
+                            locationlog.Add(new int[] { location[0], location[1] });
+
+                            //point that the player is in a trap
+                            trapped = true;
+                            Console.Clear();
+                            Maze.PrintMaze(map, "Super Activated successfully!");
+                            Console.WriteLine($"{name} >> I could have jumped a higher distance but my jump was interruped due to an obstacle :(");
+                            Console.WriteLine();
+                        }
+                        else if (map[location[0] + Dir[0] + Dir[0], location[1] + Dir[1] + Dir[1]] == 0)
+                        {
+                            location[0] = location[0] + Dir[0] + Dir[0];
+                            location[1] = location[1] + Dir[1] + Dir[1];
+                            map[location[0], location[1]] = id;
+                            Console.Clear();
+                            Maze.PrintMaze(map, "Super Activated successfully!");
+                            Console.WriteLine($"{name} >> I could have jumped a higher distance but my jump was interruped due to an obstacle :(");
+                            Console.WriteLine();
+                        }
+                    }
+                }
+                else
+                {
+                    if (map[location[0] + Dir[0], location[1] + Dir[1]] == 3)
+                    {
+                        // Make player current position equals 0
+                        map[location[0], location[1]] = 0;
+
+                        // Remove trap, and move player to trap
+                        location[0] = location[0] + Dir[0];
+                        location[1] = location[1] + Dir[1];
+                        map[location[0], location[1]] = id;
+                        //add new position to the log
+                        locationlog.Add(new int[] { location[0], location[1] });
+                        //select a random trap in the trap list, to execute to the hero
+                        trapped = true;
+                        Console.Clear();
+                        Maze.PrintMaze(map, "Super Activated successfully!");
+                        Console.WriteLine($"{name} >> I could have jumped a higher distance but my jump was interruped due to an obstacle :(");
+                        Console.WriteLine();
+                    }
+                    else if(map[location[0] + Dir[0], location[1] + Dir[1]] == 0)
+                    {
+                        location[0] = location[0] + Dir[0];
+                        location[1] = location[1] + Dir[1];
                         map[location[0], location[1]] = id;
                         Console.Clear();
                         Maze.PrintMaze(map, "Super Activated successfully!");
                         Console.WriteLine($"{name} >> I could have jumped a higher distance but my jump was interruped due to an obstacle :(");
                         Console.WriteLine();
-                        Console.WriteLine("Press a key to continue...");
-                        Console.ReadKey(true);
                     }
-                }
-                else
-                {
-                    location[0] = location[0] + Dir[0];
-                    location[1] = location[1] + Dir[1];
-                    map[location[0], location[1]] = id;
-                    Console.Clear();
-                    Maze.PrintMaze(map, "Super Activated successfully!");
-                    Console.WriteLine($"{name} >> I could have jumped a higher distance but my jump was interruped due to an obstacle :(");
-                    Console.WriteLine();
-                    Console.WriteLine("Press a key to continue...");
-                    Console.ReadKey(true);
                 }
             }
             map[location[0], location[1]] = id;
@@ -316,7 +389,7 @@ namespace GameObjects
         public WallBreaker(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, mana, cooldown, maze)//Call to base constructor
         {
         }
-        public override void CastSpell(int[,] map)
+        public override void CastSpell(int[,] map, Player otherplayer)
         {
             // Console.WriteLine(Name + "The bigger the wall is, the easier it falls down :D");
             while (true)

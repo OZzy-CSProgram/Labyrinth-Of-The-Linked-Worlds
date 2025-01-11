@@ -111,12 +111,12 @@ namespace GameObjects
             }
         }
     }
-    class Trap1 : Trap
+    class TReturn10 : Trap
     {
         public override void CastTrap(Hero hero, int[,] map)
         {
             Console.Clear();
-            Console.WriteLine("YOU SHALL TRAVEL IN TIME TO THE PLACE YOU WERE 5 CELLS AGO!");
+            Console.WriteLine("YOU SHALL TRAVEL IN TIME TO THE PLACE YOU WERE 5 MOVEMENTS AGO!");
             Console.WriteLine("");
             Console.WriteLine("Press a key to continue");
             Console.ReadKey(true);
@@ -136,12 +136,12 @@ namespace GameObjects
             }
         }
     }
-    class Trap2 : Trap
+    class TReturn5 : Trap
     {
         public override void CastTrap(Hero hero, int[,] map)
         {
             Console.Clear();
-            Console.WriteLine("YOU SHALL TRAVEL IN TIME TO THE PLACE YOU WERE 10 CELLS AGO!");
+            Console.WriteLine("YOU SHALL TRAVEL IN TIME TO THE PLACE YOU WERE 10 MOVEMENTS AGO!");
             Console.WriteLine("");
             Console.WriteLine("Press a key to continue");
             Console.ReadKey(true);
@@ -158,6 +158,25 @@ namespace GameObjects
                 hero.location[0] = hero.locationlog[hero.locationlog.Count - 11][0];
                 hero.location[1] = hero.locationlog[hero.locationlog.Count - 11][1];
                 map[hero.location[0], hero.location[1]] = hero.id;
+            }
+        }
+    }
+    class TLoseMana5 : Trap
+    {
+        public override void CastTrap(Hero hero, int[,] map)
+        {
+            Console.Clear();
+            Console.WriteLine("5 POINTS OF MANA ARE TAKEN FROM YOU!");
+            Console.WriteLine("");
+            Console.WriteLine("Press a key to continue");
+            Console.ReadKey(true);
+            if (hero.mana < 5)
+            {
+                hero.mana = 0;
+            }
+            else
+            {
+                hero.mana = hero.mana -5;
             }
         }
     }

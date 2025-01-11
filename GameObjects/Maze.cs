@@ -329,7 +329,6 @@ namespace GameObjects
             downtable.AddColumn(new TableColumn(stats));
             downtable.AddColumn(new TableColumn(downrighttable).Centered());
             downtable.Expand();
-            table.AddEmptyRow();
             table.AddRow(downtable.Centered());
             AnsiConsole.Write(table);
         }
