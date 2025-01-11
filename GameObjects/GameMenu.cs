@@ -1,0 +1,137 @@
+using System.Net.Security;
+using Spectre.Console;
+namespace GameObjects
+{
+    public class Menu
+    {
+        public static Table LadyElara(Table gamemenu, Table table)
+        {
+            gamemenu.AddColumn(new TableColumn("")).HideHeaders();
+            gamemenu.AddColumn(new TableColumn("")).HideHeaders();
+
+            var ladyelara = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Color.Silver);
+            ladyelara.AddColumn(new TableColumn("[bold green]LADY ELARA [/]")).Centered();
+            ladyelara.AddRow(@"         w*W*W*W*w       ");
+            ladyelara.AddRow(@"          \'.'.'/        ");
+            ladyelara.AddRow(@"           //`\\         ");
+            ladyelara.AddRow(@"          (/a a\)        ");
+            ladyelara.AddRow(@"          (\_-_/)        ");
+            ladyelara.AddRow(@"         .-~'='~-.       ");
+            ladyelara.AddRow(@"        /`~`'Y'`~`\      ");
+            ladyelara.AddRow(@"       / /(_ * _)\ \     ");
+            ladyelara.AddRow(@"      / /  )   (  \ \    ");
+            ladyelara.AddRow(@"      \ \_/\\_//\_/ /    ");
+            ladyelara.AddRow(@"       \/_) '*' (_\/     ");
+            ladyelara.AddRow(@"         |       |       ");
+            ladyelara.AddRow(@"         |       |       ");
+            ladyelara.AddRow(@"         |       |       ");
+            ladyelara.AddRow(@"         |       |       ");
+            ladyelara.AddRow(@"         |       |       ");
+            ladyelara.AddRow(@"         |       |       ");
+            ladyelara.AddRow(@"         |       |       ");
+            ladyelara.AddRow(@"     w * W * W * W * w   ");
+
+            gamemenu.AddRow(ladyelara, table);
+            gamemenu.Centered();
+            return gamemenu;
+        }
+        public static void LadyElaraAskname(Table gamemenu, Table table)
+        {
+            gamemenu.AddColumn(new TableColumn("")).HideHeaders();
+            gamemenu.AddColumn(new TableColumn("")).HideHeaders();
+
+            var ladyelara = new Table();
+            ladyelara.AddColumn(new TableColumn("[bold]LADY ELARA [/]")).Centered();
+            ladyelara.AddRow(@"         w*W*W*W*w       ");
+            ladyelara.AddRow(@"          \'.'.'/        ");
+            ladyelara.AddRow(@"           //`\\         ");
+            ladyelara.AddRow(@"          (/a a\)        ");
+            ladyelara.AddRow(@"          (\_-_/)        ");
+            ladyelara.AddRow(@"         .-~'='~-.       ");
+            ladyelara.AddRow(@"        /`~`'Y'`~`\      ");
+            ladyelara.AddRow(@"       / /(_ * _)\ \     ");
+            ladyelara.AddRow(@"      / /  )   (  \ \    ");
+            ladyelara.AddRow(@"      \ \_/\\_//\_/ /    ");
+            ladyelara.AddRow(@"       \/_) '*' (_\/     ");
+            ladyelara.AddRow(@"         |       |       ");
+            ladyelara.AddRow(@"         |       |       ");
+            ladyelara.AddRow(@"         |       |       ");
+            ladyelara.AddRow(@"         |       |       ");
+            ladyelara.AddRow(@"         |       |       ");
+            ladyelara.AddRow(@"         |       |       ");
+            ladyelara.AddRow(@"         |       |       ");
+            ladyelara.AddRow(@"     w * W * W * W * w   ");
+
+            gamemenu.AddRow(ladyelara, table);
+            gamemenu.Centered();
+            AnsiConsole.Write(gamemenu);
+        }
+
+
+        public static void GetMainMenu(Table gamemenu)
+        {
+            var gametitle = new Table()
+            .BorderColor(Color.Black);
+
+            gametitle.AddColumn(new TableColumn("[bold #012df4] ___      _______  _______  __   __  ______    ___   __    _  _______  __   __      _______  _______    _______  __   __  _______ [/]\n[bold #4b01f4]|   |    |   _   ||  _    ||  | |  ||    _ |  |   | |  |  | ||       ||  | |  |    |       ||       |  |       ||  | |  ||       |[/]\n[bold #7701f4]|   |    |  |_|  || |_|   ||  |_|  ||   | ||  |   | |   |_| ||_     _||  |_|  |    |   _   ||    ___|  |_     _||  |_|  ||    ___|[/]\n[bold #9101f4]|   |    |       ||       ||       ||   |_||_ |   | |       |  |   |  |       |    |  | |  ||   |___     |   |  |       ||   |___ [/]\n[bold #ae01f4]|   |___ |       ||  _   | |_     _||    __  ||   | |  _    |  |   |  |       |    |  |_|  ||    ___|    |   |  |       ||    ___|[/]\n[bold #c801f4]|       ||   _   || |_|   |  |   |  |   |  | ||   | | | |   |  |   |  |   _   |    |       ||   |        |   |  |   _   ||   |___ [/]\n[bold #e201f4]|_______||__| |__||_______|  |___|  |___|  |_||___| |_|  |__|  |___|  |__| |__|    |_______||___|        |___|  |__| |__||_______|[/]\n \n[bold #f401da] ___      ___   __    _  ___   _  _______  ______       _     _  _______  ______    ___      ______   _______ [/]\n[bold #f40186]|   |    |   | |  |  | ||   | | ||       ||      |     | | _ | ||       ||    _ |  |   |    |      | |       |[/]\n[bold #f40186]|   |    |   | |   |_| ||   |_| ||    ___||  _    |    | || || ||   _   ||   | ||  |   |    |  _    ||  _____|[/]\n[bold #f4016f]|   |    |   | |       ||      _||   |___ | | |   |    |       ||  | |  ||   |_||_ |   |    | | |   || |_____ [/]\n[bold #f40156]|   |___ |   | |  _    ||     |_ |    ___|| |_|   |    |       ||  |_|  ||    __  ||   |___ | |_|   ||_____  |[/]\n[bold #f40138]|       ||   | | | |   ||    _  ||   |___ |       |    |   _   ||       ||   |  | ||       ||       | _____| |[/]\n[bold #f40101]|_______||___| |_|  |__||___| |_||_______||______|     |__| |__||_______||___|  |_||_______||______| |_______|[/]\n")).Centered();
+            gamemenu.AddColumn(new TableColumn(gametitle)).Centered();
+            gamemenu.Expand();
+
+
+            //Play or Exit
+            var playselected = new Table()
+            .Border(TableBorder.Heavy)
+            .BorderColor(Color.BlueViolet);
+            var gameplayselected = new Table()
+            .Border(TableBorder.Markdown)
+            .BorderColor(Color.SteelBlue);
+            gameplayselected.AddColumn(new TableColumn("[bold] _____ __    _____ __ __ [/]\n[bold]|  _  |  |  |  _  |  |  |[/]\n[bold]|   __|  |__|     |_   _|[/]\n[bold]|__|  |_____|__|__| |_|  [/]\n ")).Centered();
+            playselected.AddColumn(new TableColumn(gameplayselected));
+            playselected.Centered();
+
+
+
+            var gameplay = new Table()
+            .Border(TableBorder.Markdown)
+            .BorderColor(Color.SteelBlue);
+            gameplay.AddColumn(new TableColumn("[bold] _____ __    _____ __ __ [/]\n[bold]|  _  |  |  |  _  |  |  |[/]\n[bold]|   __|  |__|     |_   _|[/]\n[bold]|__|  |_____|__|__| |_|  [/]\n ")).Centered();
+
+
+            var exitselected = new Table()
+            .Border(TableBorder.Heavy)
+            .BorderColor(Color.BlueViolet);
+            var gameexitselected = new Table()
+            .Border(TableBorder.Markdown)
+            .BorderColor(Color.SteelBlue);
+            gameexitselected.AddColumn(new TableColumn("[bold] _____ __ __ _____ _____ [/]\n[bold]|   __|  |  |     |_   _|[/]\n[bold]|   __|-   -|-   -| | |  [/]\n[bold]|_____|__|__|_____| |_|  [/]\n ")).Centered();
+            exitselected.AddColumn(new TableColumn(gameexitselected));
+            exitselected.Centered();
+
+            var gameexit = new Table()
+            .Border(TableBorder.Markdown)
+            .BorderColor(Color.SteelBlue);
+            gameexit.AddColumn(new TableColumn("[bold] _____ __ __ _____ _____ [/]\n[bold]|   __|  |  |     |_   _|[/]\n[bold]|   __|-   -|-   -| | |  [/]\n[bold]|_____|__|__|_____| |_|  [/]\n ")).Centered();
+
+
+            gamemenu.AddEmptyRow();
+            gamemenu.AddEmptyRow();
+            if (Player.play == true)
+            {
+                gamemenu.AddRow(playselected);
+                gamemenu.AddEmptyRow();
+                gamemenu.AddRow(gameexit);
+                AnsiConsole.Write(gamemenu);
+            }
+            if (Player.exit == true)
+            {
+                gamemenu.AddRow(gameplay);
+                gamemenu.AddEmptyRow();
+                gamemenu.AddRow(exitselected);
+                AnsiConsole.Write(gamemenu);
+            }
+        }
+
+    }
+}

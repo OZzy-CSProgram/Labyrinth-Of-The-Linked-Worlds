@@ -7,66 +7,44 @@ while (true)
     ///////////////////      MAIN MENU         /////////////
     Console.Clear();
     Console.Beep();
-    var gamemenu = new Table();
+    var GameGui1 = new Table()
+    .BorderColor(Color.DeepSkyBlue3);
+    var GameGui2 = new Table()
+    .Border(TableBorder.Heavy)
+    .BorderColor(Color.DeepSkyBlue3_1);
+    var GameGui3 = new Table()
+    .Border(TableBorder.Heavy)
+    .BorderColor(Color.SkyBlue1);
+    var GameGui4 = new Table()
+    .Border(TableBorder.Heavy)
+    .BorderColor(Color.CadetBlue);
+    var GameGui5 = new Table()
+    .Border(TableBorder.Heavy)
+    .BorderColor(Color.DodgerBlue1);
+    var GameGui6 = new Table()
+    .Border(TableBorder.Heavy)
+    .BorderColor(Color.DarkGoldenrod);
+    var GameGui7 = new Table()
+    .Border(TableBorder.Heavy)
+    .BorderColor(Color.DarkGreen);
+    var GameGui8 = new Table()
+    .Border(TableBorder.Heavy)
+    .BorderColor(Color.DarkGreen);
 
-    var gametitle = new Table()
-    .BorderColor(Color.Black);
+    Menu.GetMainMenu(GameGui1);
 
-    gametitle.AddColumn(new TableColumn("[bold #012df4] ___      _______  _______  __   __  ______    ___   __    _  _______  __   __      _______  _______    _______  __   __  _______ [/]\n[bold #4b01f4]|   |    |   _   ||  _    ||  | |  ||    _ |  |   | |  |  | ||       ||  | |  |    |       ||       |  |       ||  | |  ||       |[/]\n[bold #7701f4]|   |    |  |_|  || |_|   ||  |_|  ||   | ||  |   | |   |_| ||_     _||  |_|  |    |   _   ||    ___|  |_     _||  |_|  ||    ___|[/]\n[bold #9101f4]|   |    |       ||       ||       ||   |_||_ |   | |       |  |   |  |       |    |  | |  ||   |___     |   |  |       ||   |___ [/]\n[bold #ae01f4]|   |___ |       ||  _   | |_     _||    __  ||   | |  _    |  |   |  |       |    |  |_|  ||    ___|    |   |  |       ||    ___|[/]\n[bold #c801f4]|       ||   _   || |_|   |  |   |  |   |  | ||   | | | |   |  |   |  |   _   |    |       ||   |        |   |  |   _   ||   |___ [/]\n[bold #e201f4]|_______||__| |__||_______|  |___|  |___|  |_||___| |_|  |__|  |___|  |__| |__|    |_______||___|        |___|  |__| |__||_______|[/]\n \n[bold #f401da] ___      ___   __    _  ___   _  _______  ______       _     _  _______  ______    ___      ______   _______ [/]\n[bold #f40186]|   |    |   | |  |  | ||   | | ||       ||      |     | | _ | ||       ||    _ |  |   |    |      | |       |[/]\n[bold #f40186]|   |    |   | |   |_| ||   |_| ||    ___||  _    |    | || || ||   _   ||   | ||  |   |    |  _    ||  _____|[/]\n[bold #f4016f]|   |    |   | |       ||      _||   |___ | | |   |    |       ||  | |  ||   |_||_ |   |    | | |   || |_____ [/]\n[bold #f40156]|   |___ |   | |  _    ||     |_ |    ___|| |_|   |    |       ||  |_|  ||    __  ||   |___ | |_|   ||_____  |[/]\n[bold #f40138]|       ||   | | | |   ||    _  ||   |___ |       |    |   _   ||       ||   |  | ||       ||       | _____| |[/]\n[bold #f40101]|_______||___| |_|  |__||___| |_||_______||______|     |__| |__||_______||___|  |_||_______||______| |_______|[/]\n")).Centered();
-    gamemenu.AddColumn(new TableColumn(gametitle)).Centered();
-    gamemenu.Expand();
-    
-
-    //Play or Exit
-    var gameplayselected = new Table()
-    .Border(TableBorder.Double)
-    .BorderColor(Color.Red);
-    gameplayselected.AddColumn(new TableColumn("[bold] _____ __    _____ __ __ [/]\n[bold]|  _  |  |  |  _  |  |  |[/]\n[bold]|   __|  |__|     |_   _|[/]\n[bold]|__|  |_____|__|__| |_|  [/]\n ")).Centered();
- 
-    var gameplay = new Table()
-    .Border(TableBorder.Double)
-    .BorderColor(Color.SteelBlue);
-    gameplay.AddColumn(new TableColumn("[bold] _____ __    _____ __ __ [/]\n[bold]|  _  |  |  |  _  |  |  |[/]\n[bold]|   __|  |__|     |_   _|[/]\n[bold]|__|  |_____|__|__| |_|  [/]\n ")).Centered();
-
-    var gameexitselected = new Table()
-    .Border(TableBorder.Double)
-    .BorderColor(Color.Red);
-    gameexitselected.AddColumn(new TableColumn("[bold] _____ __ __ _____ _____ [/]\n[bold]|   __|  |  |     |_   _|[/]\n[bold]|   __|-   -|-   -| | |  [/]\n[bold]|_____|__|__|_____| |_|  [/]\n ")).Centered();
-    
-    var gameexit = new Table()
-    .Border(TableBorder.Rounded)
-    .BorderColor(Color.SteelBlue);
-    gameexit.AddColumn(new TableColumn("[bold] _____ __ __ _____ _____ [/]\n[bold]|   __|  |  |     |_   _|[/]\n[bold]|   __|-   -|-   -| | |  [/]\n[bold]|_____|__|__|_____| |_|  [/]\n ")).Centered();
-
-
-    gamemenu.AddEmptyRow();
-    gamemenu.AddEmptyRow();
-    if(Player.play ==true)
-    {
-    gamemenu.AddRow(gameplayselected);
-    gamemenu.AddEmptyRow();
-    gamemenu.AddRow(gameexit);
-    AnsiConsole.Write(gamemenu);
-    }
-    if(Player.exit==true)
-    {
-    gamemenu.AddRow(gameplay);
-    gamemenu.AddEmptyRow();
-    gamemenu.AddRow(gameexitselected);
-    AnsiConsole.Write(gamemenu);
-    }
     ConsoleKeyInfo Selection = Console.ReadKey(true);
-    if(Selection.KeyChar == 's')
+    if (Selection.KeyChar == 's')
     {
-    Player.exit = true;
-    Player.play = false;
-    continue;
+        Player.exit = true;
+        Player.play = false;
+        continue;
     }
-    if(Selection.KeyChar == 'w')
+    if (Selection.KeyChar == 'w')
     {
-    Player.exit = false;
-    Player.play = true;
-    continue;
+        Player.exit = false;
+        Player.play = true;
+        continue;
     }
     if (Selection.KeyChar == (char)13 && Player.play == true)
     {
@@ -117,58 +95,40 @@ while (true)
         Console.WriteLine();
 
         //More Roleplay
-        var forP1 = new Table();
-        forP1.AddColumn(new TableColumn("")).HideHeaders();
-        forP1.AddColumn(new TableColumn("")).HideHeaders();
-        var roleplay1 = new Table();
-        roleplay1.AddColumn(new TableColumn("[bold]LADY ELARA [/]")).Centered();
-        roleplay1.AddRow(@"         w*W*W*W*w       ");
-        roleplay1.AddRow(@"          \'.'.'/        ");
-        roleplay1.AddRow(@"           //`\\         ");
-        roleplay1.AddRow(@"          (/a a\)        ");
-        roleplay1.AddRow(@"          (\_-_/)        ");
-        roleplay1.AddRow(@"         .-~'='~-.       ");
-        roleplay1.AddRow(@"        /`~`'Y'`~`\      ");
-        roleplay1.AddRow(@"       / /(_ * _)\ \     ");
-        roleplay1.AddRow(@"      / /  )   (  \ \    ");
-        roleplay1.AddRow(@"      \ \_/\\_//\_/ /    ");
-        roleplay1.AddRow(@"       \/_) '*' (_\/     ");
-        roleplay1.AddRow(@"         |       |       ");
-        roleplay1.AddRow(@"         |       |       ");
-        roleplay1.AddRow(@"         |       |       ");
-        roleplay1.AddRow(@"         |       |       ");
-        roleplay1.AddRow(@"         |       |       ");
-        roleplay1.AddRow(@"         |       |       ");
-        roleplay1.AddRow(@"         |       |       ");
-        roleplay1.AddRow(@"     w * W * W * W * w   ");
 
-        var instance1 = new Table();
+        var instance1 = new Table()
+        .Border(TableBorder.Rounded)
+        .BorderColor(Color.Gold1);
         instance1.AddColumn(new TableColumn("")).HideHeaders();
-        instance1.AddRow("Lady Elara> We have been waiting for you warrior!").Centered();
+        instance1.AddRow("[bold green]Lady Elara [/] [yellow]>[/] We have been waiting for you warrior!").Centered();
         instance1.AddEmptyRow();
         instance1.AddEmptyRow();
         instance1.AddEmptyRow();
         instance1.AddRow("(press a key to continue)").Centered();
-        forP1.AddRow(roleplay1, instance1);
-        forP1.Centered();
-        AnsiConsole.Write(forP1);
+
+        var Stage1 = Menu.LadyElara(GameGui2, instance1);
+        AnsiConsole.Write(Stage1);
         Console.ReadKey(true);
+        Console.Clear();
+
+        Player Player1 = new Player();
+
+        var instance2 = new Table()
+        .Border(TableBorder.Rounded)
+        .BorderColor(Color.Gold1);
+        instance2.AddColumn(new TableColumn("")).HideHeaders();
+        instance2.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Wait, We have not properly meet, What is your name?!").Centered();
+        instance2.AddEmptyRow();
+        instance2.AddEmptyRow();
+        instance2.AddEmptyRow();
+        instance2.AddRow(" ").Centered();
+        var Stage2 = Menu.LadyElara(GameGui3, instance2);
+        AnsiConsole.Write(Stage2);
+        Console.WriteLine();
+        Console.Write("                             Enter your name to continue) ▶     ");
+        string nameofP1 = Player.intname(Console.ReadLine(), Player1);
 
         Console.Clear();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine("Lady Elara> Wait, We have not properly meet, What is your name?!");
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.Write("(Enter your name to continue) ▶ ");
-        string nameofP1 = Player.intname(Console.ReadLine());
-        Player Player1 = new Player(nameofP1);
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Player1.Greet();
         Console.WriteLine();
         Console.WriteLine();
         Console.WriteLine();
@@ -176,28 +136,34 @@ while (true)
         Console.ReadKey(true);
 
         Console.Clear();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine("Lady Elara> Greetings " + nameofP1 + " we have summoned you, from your world because we need your help!");
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine("(press a key to continue)");
-        Console.ReadKey(true);
+        var instance3 = new Table()
+        .Border(TableBorder.Rounded)
+        .BorderColor(Color.Gold1);
+        instance3.AddColumn(new TableColumn("")).HideHeaders();
+        instance3.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Greetings " + nameofP1 + " we have summoned you, from your world because we need your help!").Centered();
+        instance3.AddEmptyRow();
+        instance3.AddEmptyRow();
+        instance3.AddEmptyRow();
+        instance3.AddRow("(press a key to continue)").Centered();
+        var Stage3 = Menu.LadyElara(GameGui4, instance3);
+        AnsiConsole.Write(Stage3);
 
         Console.Clear();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine("Lady Elara> I have had a vision of a future where darkness consumes all of my world, I have seen in my visions that the only way to stop the darkness from spreading is by using an ancient and lost artifact called The Heart of Ebony... ");
-        Console.WriteLine("Lady Elara> A group of our elder mages has discover that this artifact lays in a dangerous place called 'The Labyrinth of The Linked Worlds' So... Can you help us " + nameofP1 + " ?");
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine("(Choose your answer)");
-        Console.WriteLine();
-        Console.WriteLine("1 Why me?");
-        Console.WriteLine("2 What exactly do you want me to do!");
+        var instance4 = new Table()
+        .Border(TableBorder.Rounded)
+        .BorderColor(Color.Gold1);
+        instance4.AddColumn(new TableColumn("")).HideHeaders();
+        instance4.AddRow("[bold green]Lady Elara [/] [yellow]>[/] I have had a vision of a future where darkness consumes all of my world,\nI have seen in my visions that the only way to stop the darkness from spreading\n is by using an ancient and lost artifact called The Heart of Ebony... \n \n\nA group of our elder mages has discover that this artifact lays in a dangerous place called \n'The Labyrinth of The Linked Worlds' So... Can you help us " + nameofP1 + " ?").Centered();
+        instance4.AddEmptyRow();
+        instance4.AddEmptyRow();
+        instance4.AddRow("(   Choose your answer   )").Centered();
+        instance4.AddEmptyRow();
+        instance4.AddEmptyRow();
+        instance4.AddRow("[bold red]1[/] Why me?").Centered();
+        instance4.AddRow("[bold red]2[/] What exactly do you want me to do!").Centered();
+        var Stage4 = Menu.LadyElara(GameGui5, instance4);
+        AnsiConsole.Write(Stage4);
+
         ConsoleKeyInfo decition2 = Console.ReadKey(true);
         while (decition2.KeyChar != '2' && decition2.KeyChar != '1')
         {
@@ -214,14 +180,7 @@ while (true)
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("Lady Elara> I have had a vision of a future where darkness consumes all of my world, I have seen in my visions that the only way to stop the darkness from spreading is by using an ancient and lost artifact called The Heart of Ebony... ");
-            Console.WriteLine("Lady Elara> A group of our elder mages has discover that this artifact lays in a dangerous place called 'The Labyrinth of The Linked Worlds' So... Can you help us " + nameofP1 + " ?");
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("(Choose your answer)");
-            Console.WriteLine();
-            Console.WriteLine("1 Why me?");
-            Console.WriteLine("2 What exactly do you want me to do!");
+            AnsiConsole.Write(Stage4);
             decition2 = Console.ReadKey(true);
 
             if (decition2.KeyChar == '2' || decition2.KeyChar == '1')
@@ -229,18 +188,26 @@ while (true)
                 break;
             }
         }
+
         while (decition2.KeyChar == '1')
         {
             Console.Clear();
-            Console.WriteLine("Lady Elara> I understand the question " + nameofP1 + " ,there is a prophecy about this labyrinth that says 'Nobody in this world shall carry the Heart of Ebony out of the Labyrinth', and so we have decided to summon someone from another world to help us! ... Can you?");
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("(Choose your answer)");
-            Console.WriteLine();
-            Console.WriteLine("2 What exactly do you want me to do!");
+            var instance5 = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Color.Gold1);
+            instance5.AddColumn(new TableColumn("")).HideHeaders();
+            instance5.AddRow("[bold green]Lady Elara [/] [yellow]>[/] I understand the question " + nameofP1 + " ,there is a prophecy about this labyrinth that says \n'Nobody in this world shall carry the Heart of Ebony out of the Labyrinth',\n and so we have decided to summon someone from another world to help us!\n \n... Can you?").Centered();
+            instance5.AddEmptyRow();
+            instance5.AddEmptyRow();
+            instance5.AddRow("(   Choose your answer   )").Centered();
+            instance5.AddEmptyRow();
+            instance5.AddEmptyRow();
+            instance5.AddRow("[bold red]2[/] What exactly do you want me to do!").Centered();
+            var Stage5 = Menu.LadyElara(GameGui7, instance5);
+            AnsiConsole.Write(Stage5);
             decition2 = Console.ReadKey(true);
 
-            if (decition2.KeyChar != '2')
+            while (decition2.KeyChar != '2')
             {
                 Console.Clear();
                 Console.WriteLine();
@@ -252,27 +219,31 @@ while (true)
                 Console.WriteLine();
                 Console.WriteLine("(press a key to continue)");
                 Console.ReadKey(true);
-
                 Console.Clear();
-                Console.WriteLine("Lady Elara> I understand the question " + nameofP1 + " ,there is a prophecy about this labyrinth that says 'Nobody in this world shall carry the Heart of Ebony out of the Labyrinth', and so we have decided to summon someone from another world to help us! ... Can you?");
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine("(Choose your answer)");
-                Console.WriteLine();
-                Console.WriteLine("2 What exactly do you want me to do!");
-                continue;
+                AnsiConsole.Write(Stage5);
+                decition2 = Console.ReadKey(true);
+
+                if (decition2.KeyChar == '2')
+                {
+                    break;
+                }
             }
-            break;
-        }
-        {
-            Console.Clear();
-            Console.WriteLine("Lady Elara> Thank you " + nameofP1 + " ! Your quest would be to go inside the Labyrinth of the Linked Worlds and get the Heart of Ebony, dont worry, you will not be alone, you will be leading a party of brave heroes of our kingdom, you can personally choose them!");
+
         }
 
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine("(press a key to continue)");
+        Console.Clear();
+        var instance6 = new Table()
+        .Border(TableBorder.Rounded)
+        .BorderColor(Color.Gold1);
+        instance6.AddColumn(new TableColumn("")).HideHeaders();
+        instance6.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Thank you " + nameofP1 + " ! Your quest would be to go inside the Labyrinth of the Linked Worlds and get the Heart of Ebony, dont worry, you will not be alone, you will be leading a party of brave heroes of our kingdom, you can personally choose them! ").Centered();
+        instance6.AddEmptyRow();
+        instance6.AddEmptyRow();
+        instance6.AddRow("(   press a key to continue   )").Centered();
+        instance6.AddEmptyRow();
+        instance6.AddEmptyRow();
+        var Stage6 = Menu.LadyElara(GameGui8, instance6);
+        AnsiConsole.Write(Stage6);
         Console.ReadKey(true);
         Console.Clear();
 
@@ -281,6 +252,7 @@ while (true)
         Console.WriteLine();
 
         //Phase 2
+        Player Player2 = new Player();
         Console.WriteLine("                    For The Player 2");
         Console.WriteLine("(The Player 2 should be the one playing, at this current time!)");
         Console.WriteLine();
@@ -311,8 +283,8 @@ while (true)
         Console.WriteLine();
         Console.WriteLine();
         Console.Write("(Enter your name to continue) : ");
-        string nameofP2 = Player.intname(Console.ReadLine());
-        Player Player2 = new Player(nameofP2);
+        string nameofP2 = Player.intname(Console.ReadLine(), Player2);
+        Player2.name = nameofP2;
         Console.WriteLine();
         Console.WriteLine();
         Console.WriteLine();
@@ -695,23 +667,11 @@ while (true)
             }
             while (Player1.turn == true)
             {
-                if (Player1.Party[0].mana < 20)
-                {
-                    Player1.Party[0].mana++;
-                }
-                if (Player1.Party[1].mana < 20)
-                {
-                    Player1.Party[1].mana++;
-                }
 
                 Console.Clear();
                 Console.WriteLine($"{nameofP1} IS YOUR TURN!");
                 Hero.DisplayList2(Player1.Party, $"            {nameofP1}'s Party!", map);
                 Hero choice1 = Player.GetPlayerChoice(Player1.Party);
-                Console.WriteLine();
-                Console.WriteLine($"Hero {choice1.name} selected correctly !");
-                Console.WriteLine("(press a key to continue)");
-                Console.ReadKey(true);
                 ConsoleKeyInfo action;
                 action = GetAction(map, nameofP1, choice1);
                 while (true)
@@ -740,7 +700,7 @@ while (true)
                             choice1.moveup(choice1.location, map);
                             //change the value in the map of the new position so the hero is displayed there
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
-                            choice1.mana++;
+
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             //select a random trap in the trap list, to execute to the hero
@@ -758,7 +718,6 @@ while (true)
                         choice1.moveup(choice1.location, map);
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
                         choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                        choice1.mana++;
                         break;
                     }
                     if (action.KeyChar == 'W')
@@ -785,7 +744,7 @@ while (true)
                             choice1.moveup(choice1.location, map);
                             //change the value in the map of the new position so the hero is displayed there
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
-                            choice1.mana++;
+
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             //select a random trap in the trap list, to execute to the hero
@@ -803,7 +762,6 @@ while (true)
                         choice1.moveup(choice1.location, map);
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
                         choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                        choice1.mana++;
                         break;
                     }
                     if (action.KeyChar == 'a')
@@ -829,7 +787,7 @@ while (true)
                             choice1.moveleft(choice1.location, map);
                             //change the value in the map of the new position so the hero is displayed there
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
-                            choice1.mana++;
+
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             //select a random trap in the trap list, to execute to the hero
@@ -847,7 +805,6 @@ while (true)
                         choice1.moveleft(choice1.location, map);
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
                         choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                        choice1.mana++;
                         break;
                     }
                     if (action.KeyChar == 'A')
@@ -873,6 +830,7 @@ while (true)
                             choice1.moveleft(choice1.location, map);
                             //change the value in the map of the new position so the hero is displayed there
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
+
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             //select a random trap in the trap list, to execute to the hero
@@ -915,7 +873,7 @@ while (true)
                             choice1.movedown(choice1.location, map);
                             //change the value in the map of the new position so the hero is displayed there
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
-                            choice1.mana++;
+
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             //select a random trap in the trap list, to execute to the hero
@@ -960,7 +918,7 @@ while (true)
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                            choice1.mana++;
+
                             //select a random trap in the trap list, to execute to the hero
                             Random randomTrap = new Random();
                             int index = randomTrap.Next(Traps.Count);
@@ -1003,7 +961,7 @@ while (true)
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                            choice1.mana++;
+
                             //select a random trap in the trap list, to execute to the hero
                             Random randomTrap = new Random();
                             int index = randomTrap.Next(Traps.Count);
@@ -1046,7 +1004,7 @@ while (true)
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                            choice1.mana++;
+
                             //select a random trap in the trap list, to execute to the hero
                             Random randomTrap = new Random();
                             int index = randomTrap.Next(Traps.Count);
@@ -1088,6 +1046,7 @@ while (true)
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
                             action = GetAction(map, nameofP1, choice1);
+                            continue;
                         }
 
                     }
@@ -1115,9 +1074,18 @@ while (true)
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
                             action = GetAction(map, nameofP1, choice1);
+                            continue;
                         }
                     }
                     break;
+                }
+                if (Player1.Party[0].mana < 20)
+                {
+                    Player1.Party[0].mana++;
+                }
+                if (Player1.Party[1].mana < 20)
+                {
+                    Player1.Party[1].mana++;
                 }
                 PassTurn(map, nameofP1, choice1);
                 Player1.turn = false;
@@ -1126,27 +1094,13 @@ while (true)
             }
             while (Player2.turn == true)
             {
-                if (Player2.Party[0].mana < 20)
-                {
-                    Player2.Party[0].mana++;
-                }
-                if (Player2.Party[1].mana < 20)
-                {
-                    Player2.Party[1].mana++;
-                }
 
                 Console.Clear();
                 Console.WriteLine($"{nameofP2} IS YOUR TURN!");
                 Hero.DisplayList2(Player2.Party, $"            {nameofP2}'s Party!", map);
                 Hero choice2 = Player.GetPlayerChoice(Player2.Party);
-                Console.WriteLine();
-                Console.WriteLine($"Hero {choice2.name} selected correctly !");
-                Console.WriteLine("(press a key to continue)");
-                Console.ReadKey(true);
                 ConsoleKeyInfo action;
                 action = GetAction(map, nameofP2, choice2);
-
-
                 while (true)
                 {
                     if (action.KeyChar == 'w')
@@ -1509,6 +1463,7 @@ while (true)
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
                             action = GetAction(map, nameofP1, choice2);
+                            continue;
                         }
                     }
                     if (action.KeyChar == 'R')
@@ -1535,10 +1490,19 @@ while (true)
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
                             action = GetAction(map, nameofP1, choice2);
+                            continue;
                         }
                     }
                     break;
 
+                }
+                if (Player2.Party[0].mana < 20)
+                {
+                    Player2.Party[0].mana++;
+                }
+                if (Player2.Party[1].mana < 20)
+                {
+                    Player2.Party[1].mana++;
                 }
                 Console.Clear();
                 PassTurn(map, nameofP2, choice2);

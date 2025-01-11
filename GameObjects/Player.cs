@@ -4,33 +4,29 @@ namespace GameObjects
 {
     public class Player
     {
-        public string Name;
-
         public static bool play = true;
         public static bool exit = false;
         public bool turn;
         public List<Hero> Party = new List<Hero>();
-        public Player(string name)
-        {
-            Name = name;
-        }
-        public static string intname(string s)
+        public string name;
+        public static string intname(string name, Player p)
         {
 
-            while (s == "")
+            while (string.IsNullOrEmpty(name))
             {
                 Console.WriteLine("I dont like that name, write another one! And take this serious!");
-                s = Console.ReadLine();
-                if (s != "")
+                name = Console.ReadLine();
+                if (!string.IsNullOrEmpty(name))
                 {
                     break;
                 }
+                p.name = name;
             }
-            return s;
+            return name;
         }
         public void Greet()
         {
-            Console.Write("            ✅(Valid name," + Name + "!!!)");
+            Console.Write("            ✅(Valid name !!!)");
         }
         public static Hero GetPlayerChoice(List<Hero> list)
         {
