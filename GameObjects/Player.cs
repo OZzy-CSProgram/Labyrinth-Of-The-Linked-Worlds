@@ -37,6 +37,11 @@ namespace GameObjects
 
                 if (int.TryParse(input, out int index) && index > 0 && index <= list.Count)
                 {
+                    if(list[index - 1].stunned > 0)
+                    {
+                        Console.WriteLine("\n\nYou cant play with that hero yet!");
+                        continue;
+                    }
                     return list[index - 1]; // Retorna el token elegido
                 }
 
