@@ -180,4 +180,23 @@ namespace GameObjects
             }
         }
     }
+    class TLoseHealth6 : Trap
+    {
+        public override void CastTrap(Hero hero, int[,] map)
+        {
+            Console.Clear();
+            Console.WriteLine("THIS TRAP HAS DAMAGED YOU, AND YOU HAVE LOST 6 POINTS OF YOUR HEALTH!");
+            Console.WriteLine("");
+            Console.WriteLine("Press a key to continue");
+            Console.ReadKey(true);
+            if (hero.health < 6)
+            {
+                hero.health = 0;
+            }
+            else
+            {
+                hero.health = hero.health -6;
+            }
+        }
+    }
 }

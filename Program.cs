@@ -219,6 +219,7 @@ while (true)
                 Console.WriteLine();
                 Console.WriteLine("(press a key to continue)");
                 Console.ReadKey(true);
+
                 Console.Clear();
                 AnsiConsole.Write(Stage5);
                 decition2 = Console.ReadKey(true);
@@ -258,7 +259,7 @@ while (true)
         Console.WriteLine();
         Console.WriteLine();
         Console.WriteLine();
-        Console.WriteLine("Lord Kaelg> Wake up!, You are now under my command traveler!!!");
+        Console.WriteLine("Lord Kaelg> Wake up!, You are now under my command Switcher!!!");
         Console.WriteLine();
         Console.WriteLine();
         Console.WriteLine();
@@ -331,12 +332,16 @@ while (true)
         List<Hero> Heroes = new List<Hero>();
         Teleporter Mediv = new Teleporter(11, "🧙🏻‍♂️", "Mediv The Guardian", "A powerfull mage with the magical power \n of teleporting to a random position in the maze!", 10, 6, 0, 12, map);
         Heroes.Add(Mediv);
-        WallBreaker Eledron = new WallBreaker(13, "👳‍♂️", "Eledron The WallBreaker", "A strong Dwarv with a big Hammer\n He has got the ability to break walls!", 15, 4, 0, 10, map);
+        WallBreaker Eledron = new WallBreaker(13, "👳‍♂️", "Eledron The WallBreaker", "A strong Dwarv with a big Hammer\n He has got the ability to break walls!", 16, 4, 0, 10, map);
         Heroes.Add(Eledron);
         Jumper Monkinho = new Jumper(15, "🐵", "Monkinho The Jumper", "A monkey with the ability to jump 3 cells \n in front of him, but obstacles can interrupt his jump!", 12, 5, 0, 8, map);
         Heroes.Add(Monkinho);
-        Traveler Travelero = new Traveler(17, "🧞", "Travelero The Jumper", "A monkey with the ability to jump 3 cells \n in front of him, but obstacles can interrupt his jump!", 10, 10, 0, 10, map);
-        Heroes.Add(Travelero);
+        Switcher Warlus = new Switcher(17, "🧞", "Warlus The Genius", "A Genius with the great power of,\n switching position with an enemy hero selected!", 10, 5, 0, 2, map);
+        Heroes.Add(Warlus);
+        Witcher Galia = new Witcher(19, "👹", "Galia The Witch", "A tenebrous witch with the dangerous power,\n of paralyzing the enemy hero selected!", 9, 7, 0, 2, map);
+        Heroes.Add(Galia);
+        Manner Elymnis = new Manner(21, "👽", "Elymnis The Creator", "One of the first mages that used mana,\nas a supply of energy, she can remove 5 points\nof mana to the selected enemy hero and transfer it\nto a random player in the host!", 13, 4, 0, 2, map);
+        Heroes.Add(Elymnis);
 
 
         while (Heroes.Count > 0)
@@ -418,39 +423,39 @@ while (true)
         Console.WriteLine();
         Console.WriteLine("(press a key to continue)");
         Console.ReadKey(true);
-        //Creating Trap List
-        List<Trap> Traps = new List<Trap>();
-        Trap1 Back5 = new Trap1();
-        Traps.Add(Back5);
-        Trap2 Back10 = new Trap2();
-        Traps.Add(Back10);
+
         ///Heroes Spwans
         //                       Player 1
         //Spawn of First Hero
         Player1.Party[0].location[0] = 1;
         Player1.Party[0].location[1] = 1;
         int[] spawn1p1 = new int[] { 1, 1 };
+
         //Spawn of Second Hero
         Player1.Party[1].location[0] = 1;
         Player1.Party[1].location[1] = Maze.size / 2 - 1;
         int[] spawn2p1 = new int[] { 1, Maze.size / 2 - 1 };
-        // //Spawn of Third Hero
-        // Player1.Party[2].location[0] = 1;
-        // Player1.Party[2].location[1] = Maze.size - 1;
-        // int[] spawn3p1 = new int[] { 1, Maze.size - 1 };
+
+        //Spawn of Third Hero
+        Player1.Party[2].location[0] = 1;
+        Player1.Party[2].location[1] = Maze.size - 2;
+        int[] spawn3p1 = new int[] { 1, Maze.size - 2 };
+
         //                       Player 2
         //Spawn of First Hero
         Player2.Party[0].location[0] = Maze.size - 2;
         Player2.Party[0].location[1] = 1;
         int[] spawn1p2 = new int[] { Maze.size - 2, 1 };
+
         //Spawn of Second Hero
         Player2.Party[1].location[0] = Maze.size - 2;
         Player2.Party[1].location[1] = Maze.size / 2 - 1;
         int[] spawn2p2 = new int[] { Maze.size - 2, Maze.size / 2 - 1 };
-        // //Spawn of Third Hero
-        // Player2.Party[2].location[0] = Maze.size - 1;
-        // Player2.Party[2].location[1] = Maze.size - 1;
-        // int[] spawn3p2 = new int[] { Maze.size - 1, Maze.size - 1 };
+
+        //Spawn of Third Hero
+        Player2.Party[2].location[0] = Maze.size - 2;
+        Player2.Party[2].location[1] = Maze.size - 2;
+        int[] spawn3p2 = new int[] { Maze.size - 2, Maze.size - 2 };
 
         //                 Printing Players in the Map
         //Player1
@@ -468,9 +473,17 @@ while (true)
                 map[spawn1p1[0], spawn1p1[1]] = Monkinho.id;
                 Monkinho.locationlog.Add(new int[] { spawn1p1[0], spawn1p1[1] });
                 break;
-            case nameof(Traveler): // wall
-                map[spawn1p1[0], spawn1p1[1]] = Travelero.id;
-                Travelero.locationlog.Add(new int[] { spawn1p1[0], spawn1p1[1] });
+            case nameof(Switcher): // wall
+                map[spawn1p1[0], spawn1p1[1]] = Warlus.id;
+                Warlus.locationlog.Add(new int[] { spawn1p1[0], spawn1p1[1] });
+                break;
+            case nameof(Witcher): // wall
+                map[spawn1p1[0], spawn1p1[1]] = Galia.id;
+                Galia.locationlog.Add(new int[] { spawn1p1[0], spawn1p1[1] });
+                break;
+            case nameof(Manner): // wall
+                map[spawn1p1[0], spawn1p1[1]] = Elymnis.id;
+                Elymnis.locationlog.Add(new int[] { spawn1p1[0], spawn1p1[1] });
                 break;
             default:
                 break;
@@ -489,25 +502,51 @@ while (true)
                 map[spawn2p1[0], spawn2p1[1]] = Monkinho.id;
                 Monkinho.locationlog.Add(new int[] { spawn2p1[0], spawn2p1[1] });
                 break;
-            case nameof(Traveler): // wall
-                map[spawn2p1[0], spawn2p1[1]] = Travelero.id;
-                Travelero.locationlog.Add(new int[] { spawn2p1[0], spawn2p1[1] });
+            case nameof(Switcher): // wall
+                map[spawn2p1[0], spawn2p1[1]] = Warlus.id;
+                Warlus.locationlog.Add(new int[] { spawn2p1[0], spawn2p1[1] });
+                break;
+            case nameof(Witcher): // wall
+                map[spawn2p1[0], spawn2p1[1]] = Galia.id;
+                Galia.locationlog.Add(new int[] { spawn2p1[0], spawn2p1[1] });
+                break;
+            case nameof(Manner): // wall
+                map[spawn2p1[0], spawn2p1[1]] = Elymnis.id;
+                Elymnis.locationlog.Add(new int[] { spawn2p1[0], spawn2p1[1] });
                 break;
             default:
                 break;
         }
-        // switch (Player1.Party[2].GetType().Name)
-        // {
-        //     case nameof(Teleporter): // wall
-        //         map[spawn3p1[0], spawn3p1[1]] = 11;
-        //         break;
-        //     case nameof(WallBreaker): // wall
-        //         map[spawn3p1[0], spawn3p1[1]] = 13;
-        //         break;
-        //     default:
-        //         break;
-        // }
-        /// Player 2
+        switch (Player1.Party[2].GetType().Name)
+        {
+            case nameof(Teleporter): // wall
+                map[spawn3p1[0], spawn3p1[1]] = Mediv.id;
+                Mediv.locationlog.Add(new int[] { spawn3p1[0], spawn3p1[1] });
+                break;
+            case nameof(WallBreaker): // wall
+                map[spawn3p1[0], spawn3p1[1]] = Eledron.id;
+                Eledron.locationlog.Add(new int[] { spawn3p1[0], spawn3p1[1] });
+                break;
+            case nameof(Jumper): // wall
+                map[spawn3p1[0], spawn3p1[1]] = Monkinho.id;
+                Monkinho.locationlog.Add(new int[] { spawn3p1[0], spawn3p1[1] });
+                break;
+            case nameof(Switcher): // wall
+                map[spawn3p1[0], spawn3p1[1]] = Warlus.id;
+                Warlus.locationlog.Add(new int[] { spawn3p1[0], spawn3p1[1] });
+                break;
+            case nameof(Witcher): // wall
+                map[spawn3p1[0], spawn3p1[1]] = Galia.id;
+                Galia.locationlog.Add(new int[] { spawn3p1[0], spawn3p1[1] });
+                break;
+            case nameof(Manner): // wall
+                map[spawn3p1[0], spawn3p1[1]] = Elymnis.id;
+                Elymnis.locationlog.Add(new int[] { spawn3p1[0], spawn3p1[1] });
+                break;
+            default:
+                break;
+        }
+        // Player 2
         switch (Player2.Party[0].GetType().Name)
         {
             case nameof(Teleporter): // wall
@@ -522,9 +561,17 @@ while (true)
                 map[spawn1p2[0], spawn1p2[1]] = Monkinho.id;
                 Monkinho.locationlog.Add(new int[] { spawn1p2[0], spawn1p2[1] });
                 break;
-            case nameof(Traveler): // wall
-                map[spawn1p2[0], spawn1p2[1]] = Travelero.id;
-                Travelero.locationlog.Add(new int[] { spawn1p2[0], spawn1p2[1] });
+            case nameof(Switcher): // wall
+                map[spawn1p2[0], spawn1p2[1]] = Warlus.id;
+                Warlus.locationlog.Add(new int[] { spawn1p2[0], spawn1p2[1] });
+                break;
+            case nameof(Witcher): // wall
+                map[spawn1p2[0], spawn1p2[1]] = Galia.id;
+                Galia.locationlog.Add(new int[] { spawn1p2[0], spawn1p2[1] });
+                break;
+            case nameof(Manner): // wall
+                map[spawn1p2[0], spawn1p2[1]] = Elymnis.id;
+                Elymnis.locationlog.Add(new int[] { spawn1p2[0], spawn1p2[1] });
                 break;
             default:
                 break;
@@ -543,24 +590,61 @@ while (true)
                 map[spawn2p2[0], spawn2p2[1]] = Monkinho.id;
                 Monkinho.locationlog.Add(new int[] { spawn2p2[0], spawn2p2[1] });
                 break;
-            case nameof(Traveler): // wall
-                map[spawn2p2[0], spawn2p2[1]] = Travelero.id;
-                Travelero.locationlog.Add(new int[] { spawn2p2[0], spawn2p2[1] });
+            case nameof(Switcher): // wall
+                map[spawn2p2[0], spawn2p2[1]] = Warlus.id;
+                Warlus.locationlog.Add(new int[] { spawn2p2[0], spawn2p2[1] });
+                break;
+            case nameof(Witcher): // wall
+                map[spawn2p2[0], spawn2p2[1]] = Galia.id;
+                Galia.locationlog.Add(new int[] { spawn2p2[0], spawn2p2[1] });
+                break;
+            case nameof(Manner): // wall
+                map[spawn2p2[0], spawn2p2[1]] = Elymnis.id;
+                Elymnis.locationlog.Add(new int[] { spawn2p2[0], spawn2p2[1] });
                 break;
             default:
                 break;
         }
-        // switch (Player2.Party[2].GetType().Name)
-        // {
-        //     case nameof(Teleporter): // wall
-        //         map[spawn3p2[0], spawn3p2[1]] = 11;
-        //         break;
-        //     case nameof(WallBreaker): // wall
-        //         map[spawn3p2[0], spawn3p2[1]] = 13;
-        //         break;
-        //     default:
-        //         break;
-        // }
+        switch (Player2.Party[2].GetType().Name)
+        {
+            case nameof(Teleporter): // wall
+                map[spawn3p2[0], spawn3p2[1]] = Mediv.id;
+                Mediv.locationlog.Add(new int[] { spawn3p2[0], spawn3p2[1] });
+                break;
+            case nameof(WallBreaker): // wall
+                map[spawn3p2[0], spawn3p2[1]] = Eledron.id;
+                Eledron.locationlog.Add(new int[] { spawn3p2[0], spawn3p2[1] });
+                break;
+            case nameof(Jumper): // wall
+                map[spawn3p2[0], spawn3p2[1]] = Monkinho.id;
+                Monkinho.locationlog.Add(new int[] { spawn3p2[0], spawn3p2[1] });
+                break;
+            case nameof(Switcher): // wall
+                map[spawn3p2[0], spawn3p2[1]] = Warlus.id;
+                Warlus.locationlog.Add(new int[] { spawn3p2[0], spawn3p2[1] });
+                break;
+            case nameof(Witcher): // wall
+                map[spawn3p2[0], spawn3p2[1]] = Galia.id;
+                Galia.locationlog.Add(new int[] { spawn3p2[0], spawn3p2[1] });
+                break;
+            case nameof(Manner): // wall
+                map[spawn3p2[0], spawn3p2[1]] = Elymnis.id;
+                Elymnis.locationlog.Add(new int[] { spawn3p2[0], spawn3p2[1] });
+                break;
+            default:
+                break;
+        }
+        //Creating Trap List
+        List<Trap> Traps = new List<Trap>();
+        TReturn5 Return5 = new TReturn5();
+        Traps.Add(Return5);
+        TReturn10 Return10 = new TReturn10();
+        Traps.Add(Return10);
+        TLoseMana5 LoseMana5 = new TLoseMana5();
+        Traps.Add(LoseMana5);
+        TLoseHealth6 LoseHealth6 = new TLoseHealth6();
+        Traps.Add(LoseHealth6);
+
         Player1.turn = true;
         Player2.turn = false;
         while (true)
@@ -703,15 +787,7 @@ while (true)
 
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                            //select a random trap in the trap list, to execute to the hero
-                            Random randomTrap = new Random();
-                            int index = randomTrap.Next(Traps.Count);
-                            Console.Clear();
-                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                            Console.WriteLine("");
-                            Console.WriteLine("(press a key to proceed :( )");
-                            Console.ReadKey(true);
-                            Traps[index].CastTrap(choice1, map);
+                            choice1.trapped = true;
                             break;
                         }
                         map[choice1.location[0], choice1.location[1]] = 0;
@@ -747,15 +823,7 @@ while (true)
 
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                            //select a random trap in the trap list, to execute to the hero
-                            Random randomTrap = new Random();
-                            int index = randomTrap.Next(Traps.Count);
-                            Console.Clear();
-                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                            Console.WriteLine("");
-                            Console.WriteLine("(press a key to proceed :( )");
-                            Console.ReadKey(true);
-                            Traps[index].CastTrap(choice1, map);
+                            choice1.trapped = true;
                             break;
                         }
                         map[choice1.location[0], choice1.location[1]] = 0;
@@ -790,15 +858,7 @@ while (true)
 
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                            //select a random trap in the trap list, to execute to the hero
-                            Random randomTrap = new Random();
-                            int index = randomTrap.Next(Traps.Count);
-                            Console.Clear();
-                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                            Console.WriteLine("");
-                            Console.WriteLine("(press a key to proceed :( )");
-                            Console.ReadKey(true);
-                            Traps[index].CastTrap(choice1, map);
+                            choice1.trapped = true;
                             break;
                         }
                         map[choice1.location[0], choice1.location[1]] = 0;
@@ -806,6 +866,7 @@ while (true)
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
                         choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                         break;
+
                     }
                     if (action.KeyChar == 'A')
                     {
@@ -833,15 +894,7 @@ while (true)
 
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                            //select a random trap in the trap list, to execute to the hero
-                            Random randomTrap = new Random();
-                            int index = randomTrap.Next(Traps.Count);
-                            Console.Clear();
-                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                            Console.WriteLine("");
-                            Console.WriteLine("(press a key to proceed :( )");
-                            Console.ReadKey(true);
-                            Traps[index].CastTrap(choice1, map);
+                            choice1.trapped = true;
                             break;
                         }
                         map[choice1.location[0], choice1.location[1]] = 0;
@@ -876,17 +929,10 @@ while (true)
 
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                            //select a random trap in the trap list, to execute to the hero
-                            Random randomTrap = new Random();
-                            int index = randomTrap.Next(Traps.Count);
-                            Console.Clear();
-                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                            Console.WriteLine("");
-                            Console.WriteLine("(press a key to proceed :( )");
-                            Console.ReadKey(true);
-                            Traps[index].CastTrap(choice1, map);
+                            choice1.trapped = true;
                             break;
                         }
+
                         map[choice1.location[0], choice1.location[1]] = 0;
                         choice1.movedown(choice1.location, map);
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
@@ -918,18 +964,10 @@ while (true)
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-
-                            //select a random trap in the trap list, to execute to the hero
-                            Random randomTrap = new Random();
-                            int index = randomTrap.Next(Traps.Count);
-                            Console.Clear();
-                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                            Console.WriteLine("");
-                            Console.WriteLine("(press a key to proceed :( )");
-                            Console.ReadKey(true);
-                            Traps[index].CastTrap(choice1, map);
+                            choice1.trapped = true;
                             break;
                         }
+
                         map[choice1.location[0], choice1.location[1]] = 0;
                         choice1.movedown(choice1.location, map);
                         map[choice1.location[0], choice1.location[1]] = choice1.id;
@@ -961,16 +999,7 @@ while (true)
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-
-                            //select a random trap in the trap list, to execute to the hero
-                            Random randomTrap = new Random();
-                            int index = randomTrap.Next(Traps.Count);
-                            Console.Clear();
-                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                            Console.WriteLine("");
-                            Console.WriteLine("(press a key to proceed :( )");
-                            Console.ReadKey(true);
-                            Traps[index].CastTrap(choice1, map);
+                            choice1.trapped = true;
                             break;
                         }
                         map[choice1.location[0], choice1.location[1]] = 0;
@@ -1004,16 +1033,7 @@ while (true)
                             map[choice1.location[0], choice1.location[1]] = choice1.id;
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-
-                            //select a random trap in the trap list, to execute to the hero
-                            Random randomTrap = new Random();
-                            int index = randomTrap.Next(Traps.Count);
-                            Console.Clear();
-                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                            Console.WriteLine("");
-                            Console.WriteLine("(press a key to proceed :( )");
-                            Console.ReadKey(true);
-                            Traps[index].CastTrap(choice1, map);
+                            choice1.trapped = true;
                             break;
                         }
                         map[choice1.location[0], choice1.location[1]] = 0;
@@ -1032,7 +1052,7 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("Press a key to continue...");
                             Console.ReadKey(true);
-                            choice1.CastSpell(map);
+                            choice1.CastSpell(map, Player1, Player2);
                             Console.WriteLine();
                             Console.WriteLine("Press a key to continue...");
                             Console.ReadKey(true);
@@ -1060,7 +1080,7 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("Press a key to continue...");
                             Console.ReadKey(true);
-                            choice1.CastSpell(map);
+                            choice1.CastSpell(map, Player1, Player2);
                             Console.WriteLine();
                             Console.WriteLine("Press a key to continue...");
                             Console.ReadKey(true);
@@ -1079,6 +1099,35 @@ while (true)
                     }
                     break;
                 }
+                if (choice1.trapped == true)
+                {
+                    Random randomTrap = new Random();
+                    int index = randomTrap.Next(Traps.Count);
+                    Console.Clear();
+                    Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                    Console.WriteLine("");
+                    Console.WriteLine("(press a key to proceed :( )");
+                    Console.ReadKey(true);
+                    Traps[index].CastTrap(choice1, map);
+                    choice1.trapped = false;
+                }
+        
+                ///Decrease Stun points
+                if (Player1.Party[0].stunned > 0)
+                {
+                    Player1.Party[0].stunned--;
+                }
+                if (Player1.Party[1].stunned > 0)
+                {
+                    Player1.Party[1].stunned--;
+                }
+                if (Player1.Party[2].stunned > 0)
+                {
+                    Player1.Party[2].stunned--;
+                }
+                PassTurn(map, nameofP1, choice1);
+
+                ///check if he's mana is at the maximum amount
                 if (Player1.Party[0].mana < 20)
                 {
                     Player1.Party[0].mana++;
@@ -1087,14 +1136,16 @@ while (true)
                 {
                     Player1.Party[1].mana++;
                 }
-                PassTurn(map, nameofP1, choice1);
+                if (Player1.Party[2].mana < 20)
+                {
+                    Player1.Party[2].mana++;
+                }
                 Player1.turn = false;
                 Player2.turn = true;
                 continue;
             }
             while (Player2.turn == true)
             {
-
                 Console.Clear();
                 Console.WriteLine($"{nameofP2} IS YOUR TURN!");
                 Hero.DisplayList2(Player2.Party, $"            {nameofP2}'s Party!", map);
@@ -1128,15 +1179,7 @@ while (true)
                             map[choice2.location[0], choice2.location[1]] = choice2.id;
                             //add new position to the log
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
-                            //select a random trap in the trap list, to execute to the hero
-                            Random randomTrap = new Random();
-                            int index = randomTrap.Next(Traps.Count);
-                            Console.Clear();
-                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                            Console.WriteLine("");
-                            Console.WriteLine("(press a key to proceed :( )");
-                            Console.ReadKey(true);
-                            Traps[index].CastTrap(choice2, map);
+                            choice2.trapped = true;
                             break;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -1144,6 +1187,7 @@ while (true)
                         map[choice2.location[0], choice2.location[1]] = choice2.id;
                         choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                         break;
+
                     }
                     if (action.KeyChar == 'W')
                     {
@@ -1170,15 +1214,7 @@ while (true)
                             map[choice2.location[0], choice2.location[1]] = choice2.id;
                             //add new position to the log
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
-                            //select a random trap in the trap list, to execute to the hero
-                            Random randomTrap = new Random();
-                            int index = randomTrap.Next(Traps.Count);
-                            Console.Clear();
-                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                            Console.WriteLine("");
-                            Console.WriteLine("(press a key to proceed :( )");
-                            Console.ReadKey(true);
-                            Traps[index].CastTrap(choice2, map);
+                            choice2.trapped = true;
                             break;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -1212,15 +1248,7 @@ while (true)
                             map[choice2.location[0], choice2.location[1]] = choice2.id;
                             //add new position to the log
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
-                            //select a random trap in the trap list, to execute to the hero
-                            Random randomTrap = new Random();
-                            int index = randomTrap.Next(Traps.Count);
-                            Console.Clear();
-                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                            Console.WriteLine("");
-                            Console.WriteLine("(press a key to proceed :( )");
-                            Console.ReadKey(true);
-                            Traps[index].CastTrap(choice2, map);
+                            choice2.trapped = true;
                             break;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -1228,6 +1256,7 @@ while (true)
                         map[choice2.location[0], choice2.location[1]] = choice2.id;
                         choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                         break;
+
                     }
                     if (action.KeyChar == 'A')
                     {
@@ -1254,15 +1283,7 @@ while (true)
                             map[choice2.location[0], choice2.location[1]] = choice2.id;
                             //add new position to the log
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
-                            //select a random trap in the trap list, to execute to the hero
-                            Random randomTrap = new Random();
-                            int index = randomTrap.Next(Traps.Count);
-                            Console.Clear();
-                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                            Console.WriteLine("");
-                            Console.WriteLine("(press a key to proceed :( )");
-                            Console.ReadKey(true);
-                            Traps[index].CastTrap(choice2, map);
+                            choice2.trapped = true;
                             break;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -1270,6 +1291,7 @@ while (true)
                         map[choice2.location[0], choice2.location[1]] = choice2.id;
                         choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                         break;
+
                     }
                     if (action.KeyChar == 's')
                     {
@@ -1296,15 +1318,7 @@ while (true)
                             map[choice2.location[0], choice2.location[1]] = choice2.id;
                             //add new position to the log
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
-                            //select a random trap in the trap list, to execute to the hero
-                            Random randomTrap = new Random();
-                            int index = randomTrap.Next(Traps.Count);
-                            Console.Clear();
-                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                            Console.WriteLine("");
-                            Console.WriteLine("(press a key to proceed :( )");
-                            Console.ReadKey(true);
-                            Traps[index].CastTrap(choice2, map);
+                            choice2.trapped = true;
                             break;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -1312,6 +1326,7 @@ while (true)
                         map[choice2.location[0], choice2.location[1]] = choice2.id;
                         choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                         break;
+
                     }
                     if (action.KeyChar == 'S')
                     {
@@ -1338,15 +1353,7 @@ while (true)
                             map[choice2.location[0], choice2.location[1]] = choice2.id;
                             //add new position to the log
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
-                            //select a random trap in the trap list, to execute to the hero
-                            Random randomTrap = new Random();
-                            int index = randomTrap.Next(Traps.Count);
-                            Console.Clear();
-                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                            Console.WriteLine("");
-                            Console.WriteLine("(press a key to proceed :( )");
-                            Console.ReadKey(true);
-                            Traps[index].CastTrap(choice2, map);
+                            choice2.trapped = true;
                             break;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -1381,14 +1388,7 @@ while (true)
                             //add new position to the log
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                             //select a random trap in the trap list, to execute to the hero
-                            Random randomTrap = new Random();
-                            int index = randomTrap.Next(Traps.Count);
-                            Console.Clear();
-                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                            Console.WriteLine("");
-                            Console.WriteLine("(press a key to proceed :( )");
-                            Console.ReadKey(true);
-                            Traps[index].CastTrap(choice2, map);
+                            choice2.trapped = true;
                             break;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -1422,15 +1422,7 @@ while (true)
                             map[choice2.location[0], choice2.location[1]] = choice2.id;
                             //add new position to the log
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
-                            //select a random trap in the trap list, to execute to the hero
-                            Random randomTrap = new Random();
-                            int index = randomTrap.Next(Traps.Count);
-                            Console.Clear();
-                            Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                            Console.WriteLine("");
-                            Console.WriteLine("(press a key to proceed :( )");
-                            Console.ReadKey(true);
-                            Traps[index].CastTrap(choice2, map);
+                            choice2.trapped = true;
                             break;
                         }
                         map[choice2.location[0], choice2.location[1]] = 0;
@@ -1449,7 +1441,7 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("Press a key to continue...");
                             Console.ReadKey(true);
-                            choice2.CastSpell(map);
+                            choice2.CastSpell(map, Player2, Player1);
                             Console.WriteLine();
                             Console.WriteLine("Press a key to continue...");
                             Console.ReadKey(true);
@@ -1462,7 +1454,7 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP1, choice2);
+                            action = GetAction(map, nameofP2, choice2);
                             continue;
                         }
                     }
@@ -1476,7 +1468,7 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("Press a key to continue...");
                             Console.ReadKey(true);
-                            choice2.CastSpell(map);
+                            choice2.CastSpell(map, Player2, Player1);
                             Console.WriteLine();
                             Console.WriteLine("Press a key to continue...");
                             Console.ReadKey(true);
@@ -1489,13 +1481,42 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP1, choice2);
+                            action = GetAction(map, nameofP2, choice2);
                             continue;
                         }
                     }
                     break;
-
                 }
+                //check if he moved to a TRAP
+                if (choice2.trapped == true)
+                {
+                    Random randomTrap = new Random();
+                    int index = randomTrap.Next(Traps.Count);
+                    Console.Clear();
+                    Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                    Console.WriteLine("");
+                    Console.WriteLine("(press a key to proceed :( )");
+                    Console.ReadKey(true);
+                    Traps[index].CastTrap(choice2, map);
+                    choice2.trapped = false;
+                }
+                
+                ///Decrease Stun points
+                if (Player2.Party[0].stunned > 0)
+                {
+                    Player2.Party[0].stunned--;
+                }
+                if (Player2.Party[1].stunned > 0)
+                {
+                    Player2.Party[1].stunned--;
+                }
+                if (Player2.Party[2].stunned > 0)
+                {
+                    Player2.Party[2].stunned--;
+                }
+                Console.Clear();
+                PassTurn(map, nameofP2, choice2);
+                ///check if he's mana is at the maximum amount
                 if (Player2.Party[0].mana < 20)
                 {
                     Player2.Party[0].mana++;
@@ -1504,8 +1525,10 @@ while (true)
                 {
                     Player2.Party[1].mana++;
                 }
-                Console.Clear();
-                PassTurn(map, nameofP2, choice2);
+                if (Player2.Party[2].mana < 20)
+                {
+                    Player2.Party[2].mana++;
+                }
                 Player1.turn = true;
                 Player2.turn = false;
                 continue;

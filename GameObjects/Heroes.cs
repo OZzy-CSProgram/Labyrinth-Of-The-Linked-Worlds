@@ -1,5 +1,6 @@
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.ExceptionServices;
+using System.Transactions;
 using Spectre.Console;
 namespace GameObjects
 {
@@ -68,12 +69,12 @@ namespace GameObjects
             for (int i = 0; i < list.Count; i++)
             {
                 var table1 = new Table();
-                table1.AddColumn("[bold #ff7400] " + (i + 1) + "[/][yellow] >>[/]  [bold] " + list[i].name + "[/]");
+                table1.AddColumn("[bold #ff7400] " + (i + 1) + "[/][yellow] >>[/]  [bold]  " + list[i].icon + "  " + list[i].name + "[/]  ");
                 table1.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
                 table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
                 table1.AddRow(" 💙 [bold] Max Mana[/] >  20");
                 table1.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
-                table1.AddRow(" 💠 [bold]Cooldown[/] >  " + list[i].cooldown);
+                table1.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
                 table.AddRow(table1);
                 table1.BorderColor(Color.DarkGoldenrod);
             }
@@ -94,16 +95,30 @@ namespace GameObjects
                 if (list[i].stunned > 0)
                 {
                     var table1 = new Table();
-                    table1.AddColumn("[bold #ff7400] " + (i + 1) + "[/][yellow] >>[/]  [bold] " + list[i].icon + " " + list[i].name + "[/]         [bold red]MUST WAIT " + list[i].stunned + " TURN(S)[/]");
+                    table1.AddColumn("[bold #ff7400] " + (i + 1) + "[/][yellow] >>[/]  [bold] " + list[i].icon + " " + list[i].name + "[/]       [bold red]MUST WAIT " + list[i].stunned + " TURN(S)[/]");
                     table1.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
                     table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
                     table1.AddRow(" 💙 [bold] Mana[/] >  " + list[i].mana + " / 20");
                     table1.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
-                    table1.AddRow(" 💠 [bold]Cooldown[/] >  " + list[i].cooldown);
+                    table1.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
                     table.AddRow(table1);
                     table1.BorderColor(Color.Red);
                 }
-                else
+                if (list[i].health == 0)
+                {
+                    list[i].stunned = 10;
+                    list[i].health = 6;
+                    var table1 = new Table();
+                    table1.AddColumn("[bold #ff7400] " + (i + 1) + "[/][yellow] >>[/]  [bold] " + list[i].icon + " " + list[i].name + "[/] [bold red]RECOVERING, WAIT " + list[i].stunned + " TURN(S)[/]");
+                    table1.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
+                    table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
+                    table1.AddRow(" 💙 [bold] Mana[/] >  " + list[i].mana + " / 20");
+                    table1.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
+                    table1.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
+                    table.AddRow(table1);
+                    table1.BorderColor(Color.Red);
+                }
+                if(list[i].stunned <= 0 && list[i].health > 0)
                 {
                     var table1 = new Table();
                     table1.AddColumn("[bold #ff7400] " + (i + 1) + "[/][yellow] >>[/]  [bold] " + list[i].icon + " " + list[i].name + "[/]");
@@ -111,7 +126,7 @@ namespace GameObjects
                     table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
                     table1.AddRow(" 💙 [bold] Mana[/] >  " + list[i].mana + " / 20");
                     table1.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
-                    table1.AddRow(" 💠 [bold]Cooldown[/] >  " + list[i].cooldown);
+                    table1.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
                     table.AddRow(table1);
                     table1.BorderColor(Color.Chartreuse2);
                 }
@@ -134,7 +149,7 @@ namespace GameObjects
             Console.Clear();
         }
 
-        public virtual void CastSpell(int[,] map, Player otherplayer)
+        public virtual void CastSpell(int[,] map, Player player, Player otherplayer)
         {
             Console.WriteLine("Casting Spell");
         }
@@ -217,7 +232,7 @@ namespace GameObjects
         //Call to base constructor
         {
         }
-        public override void CastSpell(int[,] map, Player otherplayer)
+        public override void CastSpell(int[,] map, Player player, Player otherplayer)
         {
             Console.Clear();
             Console.WriteLine(name + " >> Thou cannot reach my magic! .... Teleporting");
@@ -244,7 +259,7 @@ namespace GameObjects
         //Call to base constructor
         {
         }
-        public override void CastSpell(int[,] map, Player otherplayer)
+        public override void CastSpell(int[,] map, Player player, Player otherplayer)
         {
             Console.Clear();
 
@@ -278,7 +293,7 @@ namespace GameObjects
         //Call to base constructor
         {
         }
-        public override void CastSpell(int[,] map, Player otherplayer)
+        public override void CastSpell(int[,] map, Player player, Player otherplayer)
         {
             Console.Clear();
 
@@ -299,22 +314,31 @@ namespace GameObjects
         //Call to base constructor
         {
         }
-        public override void CastSpell(int[,] map, Player otherplayer)
+        public override void CastSpell(int[,] map, Player player, Player otherplayer)
         {
             Console.Clear();
+            int savedmana = 0;
 
             Hero.DisplayList2(otherplayer.Party, $"Select a Hero of {otherplayer.name}'s Party!\n to steal mana from him/her!", map);
             Hero heroselected = Player.GetPlayerChoice(otherplayer.Party);
 
-            Console.Clear();
-            Console.WriteLine($"{name} >> Thy mana does not belongs to you! It shall be transfer to a member of my host");
-            //stun hero
-            heroselected.mana -= 5;
-            //select random hero
+            //select random hero to transfer mana
             Random randomhero = new Random();
-            int index = randomhero.Next(otherplayer.Party.Count);
-            otherplayer.Party[index].mana += 5;
-
+            int index = randomhero.Next(player.Party.Count);
+            if (heroselected.mana < 5)
+            {
+                savedmana = heroselected.mana;
+                heroselected.mana = 0;
+                player.Party[index].mana += savedmana;
+            }
+            else
+            {
+                savedmana = 5;
+                heroselected.mana -= 5;
+                player.Party[index].mana += 5;
+            }
+            Console.Clear();
+            Console.WriteLine($"{name} >> Thy mana does not belongs to you {heroselected.name}, and I will transfer {savedmana} points of it to {player.Party[index].name}, hahahahahaha");
         }
     }
     public class Jumper : Hero
@@ -324,7 +348,7 @@ namespace GameObjects
         //Call to base constructor
         {
         }
-        public override void CastSpell(int[,] map, Player otherplayer)
+        public override void CastSpell(int[,] map, Player player, Player otherplayer)
         {
             Console.Clear();
             Console.WriteLine(name + " >> Nobody can jump like I can! .... Ahahahaha");
@@ -451,7 +475,7 @@ namespace GameObjects
         public WallBreaker(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, mana, cooldown, maze)//Call to base constructor
         {
         }
-        public override void CastSpell(int[,] map, Player otherplayer)
+        public override void CastSpell(int[,] map, Player player, Player otherplayer)
         {
             // Console.WriteLine(Name + "The bigger the wall is, the easier it falls down :D");
             while (true)

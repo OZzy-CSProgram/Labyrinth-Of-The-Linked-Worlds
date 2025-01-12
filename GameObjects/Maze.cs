@@ -262,6 +262,12 @@ namespace GameObjects
                         case 17: //HEro
                             cellMarkup = "[#4D017C]🧞 [/]"; // Mage
                             break;
+                        case 19: //Wallbreaker
+                            cellMarkup = "[#4D017C]👹 [/]"; // Mage
+                            break;
+                        case 21: //HEro
+                            cellMarkup = "[#4D017C]👽 [/]"; // Mage
+                            break;
                         default:
                             cellMarkup = "[transparent]███[/]";
                             break;
@@ -310,6 +316,12 @@ namespace GameObjects
                             break;
                         case 17: //HEro
                             cellMarkup = "[#4D017C]🧞 [/]"; // Mage
+                            break;
+                        case 19: //Wallbreaker
+                            cellMarkup = "[#4D017C]👹 [/]"; // Mage
+                            break;
+                        case 21: //HEro
+                            cellMarkup = "[#4D017C]👽 [/]"; // Mage
                             break;
                         default:
                             cellMarkup = "[transparent]███[/]";
