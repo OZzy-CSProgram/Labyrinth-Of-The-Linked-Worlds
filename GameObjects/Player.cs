@@ -7,6 +7,8 @@ namespace GameObjects
         public static bool play = true;
         public static bool exit = false;
         public bool turn;
+        public bool Victory;
+        public int HeroesInCentre;
         public List<Hero> Party = new List<Hero>();
         public string name;
         public static string intname(string name, Player p)
@@ -37,7 +39,7 @@ namespace GameObjects
 
                 if (int.TryParse(input, out int index) && index > 0 && index <= list.Count)
                 {
-                    if(list[index - 1].stunned > 0)
+                    if (list[index - 1].stunned > 0)
                     {
                         Console.WriteLine("\n\nYou cant play with that hero yet!");
                         continue;

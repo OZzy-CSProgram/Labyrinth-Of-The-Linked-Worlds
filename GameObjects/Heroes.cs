@@ -18,9 +18,10 @@ namespace GameObjects
 
         public bool trapped = false;
         public int stunned = 0;
-        public bool OnCentre = false;
         public int toughness;
         public int cooldown;
+
+        public int actionsRemaining = 5;
         public List<int[]> locationlog = new List<int[]>();
         public int[,] map;
         public int[] location = new int[2];
@@ -118,7 +119,7 @@ namespace GameObjects
                     table.AddRow(table1);
                     table1.BorderColor(Color.Red);
                 }
-                if(list[i].stunned <= 0 && list[i].health > 0)
+                if (list[i].stunned <= 0 && list[i].health > 0)
                 {
                     var table1 = new Table();
                     table1.AddColumn("[bold #ff7400] " + (i + 1) + "[/][yellow] >>[/]  [bold] " + list[i].icon + " " + list[i].name + "[/]");

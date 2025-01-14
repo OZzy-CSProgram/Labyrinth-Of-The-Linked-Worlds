@@ -357,7 +357,7 @@ while (true)
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
-            Hero.DisplayList(Heroes, $"{nameofP1} , ITS YOUR TURN !!!");
+            Hero.DisplayList(Heroes, $"{nameofP1.ToUpper()} , ITS YOUR TURN !!!");
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
@@ -392,7 +392,7 @@ while (true)
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
-            Hero.DisplayList(Heroes, $"{nameofP2} , ITS YOUR TURN !!!");
+            Hero.DisplayList(Heroes, $"{nameofP2.ToUpper()} , ITS YOUR TURN !!!");
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
@@ -649,6 +649,20 @@ while (true)
         Player2.turn = false;
         while (true)
         {
+            ///Check if victory condition is satisfaced
+            if (Player1.HeroesInCentre == 3)
+            {
+                Player1.Victory = true;
+                break;
+            }
+            if (Player2.HeroesInCentre == 3)
+            {
+                Player2.Victory = true;
+                break;
+            }
+
+
+            //////Methods for Game Actions
             static ConsoleKeyInfo ValidPosition(ConsoleKeyInfo action, int[,] map, string name, Hero hero)
             {
                 while (action.KeyChar != 'w' && action.KeyChar != 'W' && action.KeyChar != 'a' && action.KeyChar != 'A' && action.KeyChar != 's' && action.KeyChar != 'S' && action.KeyChar != 'd' && action.KeyChar != 'D' && action.KeyChar != 'r' && action.KeyChar != 'R')
@@ -700,7 +714,7 @@ while (true)
                 }
                 return action;
             }
-            static ConsoleKeyInfo GetAction(int[,] map, string name, Hero hero)
+            static ConsoleKeyInfo GetAction(int[,] map, Player p, Hero hero)
             {
                 Console.Clear();
                 var table = new Table();
@@ -729,23 +743,30 @@ while (true)
                 .Border(TableBorder.Double)
                 .BorderColor(Color.Red)
                 .AddColumn(new TableColumn("R > Super Power! ").Centered());
+
+                var actionsleft = new Table()
+                .NoBorder()
+                .AddColumn(new TableColumn("[yellow bold] \n" + hero.actionsRemaining + " actions left[/]").Centered());
+
                 table.AddColumn(new TableColumn("").Centered()).NoBorder();
                 table.AddColumn(new TableColumn(w).Centered()).NoBorder();
                 table.AddColumn(new TableColumn("").Centered()).NoBorder();
                 table.AddColumn(new TableColumn(r).Centered()).NoBorder();
 
-                table.AddRow(a.Centered(), s.Centered(), d.Centered());
-                Maze.PrintMaze2(map, $" {name}'s Turn!!!         ", table, hero);
+                table.AddRow(a.Centered(), s.Centered(), d.Centered(), actionsleft.Centered());
+                Maze.PrintMaze2(map, $" {p.name}'s Turn!!!    {hero.actionsRemaining} Actions Remaining     ", table, hero);
                 ConsoleKeyInfo action = Console.ReadKey(true);
-                action = ValidPosition(action, map, name, hero);
+                action = ValidPosition(action, map, p.name, hero);
                 return action;
             }
             static void PassTurn(int[,] map, string name, Hero hero)
             {
                 Console.Clear();
-                var table = new Table();
+                var table = new Table()
+                .BorderColor(Color.Red);
                 // table.AddColumn(new TableColumn($"{name} Has moved {hero.name} to [  {hero.location[0]}  ,  {hero.location[1]}  ] ").Centered());
                 table.AddColumn(new TableColumn("Press a key to finish your turn").Centered());
+                table.Centered();
                 Maze.PrintMaze2(map, $" {name}'s Turn!!!         ", table, hero);
                 Console.ReadKey(true);
             }
@@ -755,11 +776,66 @@ while (true)
                 Console.Clear();
                 Console.WriteLine($"{nameofP1} IS YOUR TURN!");
                 Hero.DisplayList2(Player1.Party, $"            {nameofP1}'s Party!", map);
+                if (Player1.Party.Count == 3)
+                {
+                    if (!(Player1.Party[0].stunned == 0 || Player1.Party[1].stunned == 0 || Player1.Party[2].stunned == 0))
+                    {
+                        Console.WriteLine("You have no hero avalaible to select right now, Press a key to finish your turn...");
+                        Console.ReadKey(true);
+                        //Decrease Stun
+
+                        Player1.Party[0].stunned--;
+                        Player1.Party[1].stunned--;
+                        Player1.Party[2].stunned--;
+
+                        Player1.turn = false;
+                        Player2.turn = true;
+                        break;
+                    }
+                }
+                else if (Player1.Party.Count == 2)
+                {
+                    if (!(Player1.Party[0].stunned == 0 || Player1.Party[1].stunned == 0))
+                    {
+                        Console.WriteLine("You have no hero avalaible to select right now, Press a key to finish your turn...");
+                        Console.ReadKey(true);
+                        //Decrease Stun
+
+                        Player1.Party[0].stunned--;
+                        Player1.Party[1].stunned--;
+                        
+                        Player1.turn = false;
+                        Player2.turn = true;
+                        break;
+                    }
+                }
+                else if (Player1.Party.Count == 1)
+                {
+                    if (!(Player1.Party[0].stunned == 0))
+                    {
+                        Console.WriteLine("You have no hero avalaible to select right now, Press a key to finish your turn...");
+                        Console.ReadKey(true);
+                        //Decrease Stun
+
+                        Player1.Party[0].stunned--;
+
+                        Player1.turn = false;
+                        Player2.turn = true;
+                        break;
+                    }
+                }
                 Hero choice1 = Player.GetPlayerChoice(Player1.Party);
                 ConsoleKeyInfo action;
-                action = GetAction(map, nameofP1, choice1);
+                action = GetAction(map, Player1, choice1);
                 while (true)
                 {
+                    ///break whiletrue
+                    if (choice1.actionsRemaining == 0)
+                    {
+                        choice1.actionsRemaining = 5;
+                        break;
+                    }
+                    ///check actions selected
                     if (action.KeyChar == 'w')
                     {
                         if (map[choice1.location[0] - 1, choice1.location[1]] == 1)
@@ -770,11 +846,11 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP1, choice1);
+                            action = GetAction(map, Player1, choice1);
                             continue;
 
                         }
-                        if (map[choice1.location[0] - 1, choice1.location[1]] == 3)
+                        else if (map[choice1.location[0] - 1, choice1.location[1]] == 3)
                         {
                             // Make player current position equals 0
                             map[choice1.location[0], choice1.location[1]] = 0;
@@ -788,15 +864,30 @@ while (true)
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             choice1.trapped = true;
+                            choice1.actionsRemaining--;
+
+                        }
+                        else if (map[choice1.location[0] - 1, choice1.location[1]] == 4)
+                        {
+                            // Make player current position equals 0
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            //execute move method
+                            choice1.moveup(choice1.location, map);
+                            Player1.Party.Remove(choice1);
+                            Player1.HeroesInCentre++;
+                            choice1.actionsRemaining = 0;
                             break;
                         }
-                        map[choice1.location[0], choice1.location[1]] = 0;
-                        choice1.moveup(choice1.location, map);
-                        map[choice1.location[0], choice1.location[1]] = choice1.id;
-                        choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                        break;
+                        else if (map[choice1.location[0] - 1, choice1.location[1]] == 0)
+                        {
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            choice1.moveup(choice1.location, map);
+                            map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            choice1.actionsRemaining--;
+                        }
                     }
-                    if (action.KeyChar == 'W')
+                    else if (action.KeyChar == 'W')
                     {
                         if (map[choice1.location[0] - 1, choice1.location[1]] == 1)
                         {
@@ -806,11 +897,11 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP1, choice1);
+                            action = GetAction(map, Player1, choice1);
                             continue;
 
                         }
-                        if (map[choice1.location[0] - 1, choice1.location[1]] == 3)
+                        else if (map[choice1.location[0] - 1, choice1.location[1]] == 3)
                         {
                             // Make player current position equals 0
                             map[choice1.location[0], choice1.location[1]] = 0;
@@ -824,15 +915,30 @@ while (true)
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             choice1.trapped = true;
+                            choice1.actionsRemaining--;
+
+                        }
+                        else if (map[choice1.location[0] - 1, choice1.location[1]] == 4)
+                        {
+                            // Make player current position equals 0
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            //execute move method
+                            choice1.moveup(choice1.location, map);
+                            Player1.Party.Remove(choice1);
+                            Player1.HeroesInCentre++;
+                            choice1.actionsRemaining = 0;
                             break;
                         }
-                        map[choice1.location[0], choice1.location[1]] = 0;
-                        choice1.moveup(choice1.location, map);
-                        map[choice1.location[0], choice1.location[1]] = choice1.id;
-                        choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                        break;
+                        else if (map[choice1.location[0] - 1, choice1.location[1]] == 0)
+                        {
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            choice1.moveup(choice1.location, map);
+                            map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            choice1.actionsRemaining--;
+                        }
                     }
-                    if (action.KeyChar == 'a')
+                    else if (action.KeyChar == 'a')
                     {
                         if (map[choice1.location[0], choice1.location[1] - 1] == 1)
                         {
@@ -842,10 +948,10 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP1, choice1);
+                            action = GetAction(map, Player1, choice1);
                             continue;
                         }
-                        if (map[choice1.location[0], choice1.location[1] - 1] == 3)
+                        else if (map[choice1.location[0], choice1.location[1] - 1] == 3)
                         {
                             // Make player current position equals 0
                             map[choice1.location[0], choice1.location[1]] = 0;
@@ -859,16 +965,29 @@ while (true)
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             choice1.trapped = true;
+                            choice1.actionsRemaining--;
+                        }
+                        else if (map[choice1.location[0], choice1.location[1] - 1] == 4)
+                        {
+                            // Make player current position equals 0
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            //execute move method
+                            choice1.moveleft(choice1.location, map);
+                            Player1.Party.Remove(choice1);
+                            Player1.HeroesInCentre++;
+                            choice1.actionsRemaining = 0;
                             break;
                         }
-                        map[choice1.location[0], choice1.location[1]] = 0;
-                        choice1.moveleft(choice1.location, map);
-                        map[choice1.location[0], choice1.location[1]] = choice1.id;
-                        choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                        break;
-
+                        else if (map[choice1.location[0], choice1.location[1] - 1] == 0)
+                        {
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            choice1.moveleft(choice1.location, map);
+                            map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            choice1.actionsRemaining--;
+                        }
                     }
-                    if (action.KeyChar == 'A')
+                    else if (action.KeyChar == 'A')
                     {
                         if (map[choice1.location[0], choice1.location[1] - 1] == 1)
                         {
@@ -878,10 +997,10 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP1, choice1);
+                            action = GetAction(map, Player1, choice1);
                             continue;
                         }
-                        if (map[choice1.location[0], choice1.location[1] - 1] == 3)
+                        else if (map[choice1.location[0], choice1.location[1] - 1] == 3)
                         {
                             // Make player current position equals 0
                             map[choice1.location[0], choice1.location[1]] = 0;
@@ -895,15 +1014,29 @@ while (true)
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             choice1.trapped = true;
+                            choice1.actionsRemaining--;
+                        }
+                        else if (map[choice1.location[0], choice1.location[1] - 1] == 4)
+                        {
+                            // Make player current position equals 0
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            //execute move method
+                            choice1.moveleft(choice1.location, map);
+                            Player1.Party.Remove(choice1);
+                            Player1.HeroesInCentre++;
+                            choice1.actionsRemaining = 0;
                             break;
                         }
-                        map[choice1.location[0], choice1.location[1]] = 0;
-                        choice1.moveleft(choice1.location, map);
-                        map[choice1.location[0], choice1.location[1]] = choice1.id;
-                        choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                        break;
+                        else if (map[choice1.location[0], choice1.location[1] - 1] == 0)
+                        {
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            choice1.moveleft(choice1.location, map);
+                            map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            choice1.actionsRemaining--;
+                        }
                     }
-                    if (action.KeyChar == 's')
+                    else if (action.KeyChar == 's')
                     {
                         if (map[choice1.location[0] + 1, choice1.location[1]] == 1)
                         {
@@ -913,10 +1046,10 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP1, choice1);
+                            action = GetAction(map, Player1, choice1);
                             continue;
                         }
-                        if (map[choice1.location[0] + 1, choice1.location[1]] == 3)
+                        else if (map[choice1.location[0] + 1, choice1.location[1]] == 3)
                         {
                             // Make player current position equals 0
                             map[choice1.location[0], choice1.location[1]] = 0;
@@ -930,16 +1063,29 @@ while (true)
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             choice1.trapped = true;
+                            choice1.actionsRemaining--;
+                        }
+                        else if (map[choice1.location[0] + 1, choice1.location[1]] == 4)
+                        {
+                            // Make player current position equals 0
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            //execute move method
+                            choice1.movedown(choice1.location, map);
+                            Player1.Party.Remove(choice1);
+                            Player1.HeroesInCentre++;
+                            choice1.actionsRemaining = 0;
                             break;
                         }
-
-                        map[choice1.location[0], choice1.location[1]] = 0;
-                        choice1.movedown(choice1.location, map);
-                        map[choice1.location[0], choice1.location[1]] = choice1.id;
-                        choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                        break;
+                        else if (map[choice1.location[0] + 1, choice1.location[1]] == 0)
+                        {
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            choice1.movedown(choice1.location, map);
+                            map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            choice1.actionsRemaining--;
+                        }
                     }
-                    if (action.KeyChar == 'S')
+                    else if (action.KeyChar == 'S')
                     {
                         if (map[choice1.location[0] + 1, choice1.location[1]] == 1)
                         {
@@ -949,10 +1095,10 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP1, choice1);
+                            action = GetAction(map, Player1, choice1);
                             continue;
                         }
-                        if (map[choice1.location[0] + 1, choice1.location[1]] == 3)
+                        else if (map[choice1.location[0] + 1, choice1.location[1]] == 3)
                         {
                             // Make player current position equals 0
                             map[choice1.location[0], choice1.location[1]] = 0;
@@ -965,16 +1111,29 @@ while (true)
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             choice1.trapped = true;
+                            choice1.actionsRemaining--;
+                        }
+                        else if (map[choice1.location[0] + 1, choice1.location[1]] == 4)
+                        {
+                            // Make player current position equals 0
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            //execute move method
+                            choice1.movedown(choice1.location, map);
+                            Player1.Party.Remove(choice1);
+                            Player1.HeroesInCentre++;
+                            choice1.actionsRemaining = 0;
                             break;
                         }
-
-                        map[choice1.location[0], choice1.location[1]] = 0;
-                        choice1.movedown(choice1.location, map);
-                        map[choice1.location[0], choice1.location[1]] = choice1.id;
-                        choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                        break;
+                        else if (map[choice1.location[0] + 1, choice1.location[1]] == 0)
+                        {
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            choice1.movedown(choice1.location, map);
+                            map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            choice1.actionsRemaining--;
+                        }
                     }
-                    if (action.KeyChar == 'd')
+                    else if (action.KeyChar == 'd')
                     {
                         if (map[choice1.location[0], choice1.location[1] + 1] == 1)
                         {
@@ -984,10 +1143,10 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP1, choice1);
+                            action = GetAction(map, Player1, choice1);
                             continue;
                         }
-                        if (map[choice1.location[0], choice1.location[1] + 1] == 3)
+                        else if (map[choice1.location[0], choice1.location[1] + 1] == 3)
                         {
                             // Make player current position equals 0
                             map[choice1.location[0], choice1.location[1]] = 0;
@@ -1000,15 +1159,29 @@ while (true)
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             choice1.trapped = true;
+                            choice1.actionsRemaining--;
+                        }
+                        else if (map[choice1.location[0], choice1.location[1] + 1] == 4)
+                        {
+                            // Make player current position equals 0
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            //execute move method
+                            choice1.moveright(choice1.location, map);
+                            Player1.Party.Remove(choice1);
+                            Player1.HeroesInCentre++;
+                            choice1.actionsRemaining = 0;
                             break;
                         }
-                        map[choice1.location[0], choice1.location[1]] = 0;
-                        choice1.moveright(choice1.location, map);
-                        map[choice1.location[0], choice1.location[1]] = choice1.id;
-                        choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                        break;
+                        else if (map[choice1.location[0], choice1.location[1] + 1] == 0)
+                        {
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            choice1.moveright(choice1.location, map);
+                            map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            choice1.actionsRemaining--;
+                        }
                     }
-                    if (action.KeyChar == 'D')
+                    else if (action.KeyChar == 'D')
                     {
                         if (map[choice1.location[0], choice1.location[1] + 1] == 1)
                         {
@@ -1018,10 +1191,10 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP1, choice1);
+                            action = GetAction(map, Player1, choice1);
                             continue;
                         }
-                        if (map[choice1.location[0], choice1.location[1] + 1] == 3)
+                        else if (map[choice1.location[0], choice1.location[1] + 1] == 3)
                         {
                             // Make player current position equals 0
                             map[choice1.location[0], choice1.location[1]] = 0;
@@ -1034,15 +1207,29 @@ while (true)
                             //add new position to the log
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             choice1.trapped = true;
+                            choice1.actionsRemaining--;
+                        }
+                        else if (map[choice1.location[0], choice1.location[1] + 1] == 4)
+                        {
+                            // Make player current position equals 0
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            //execute move method
+                            choice1.moveright(choice1.location, map);
+                            Player1.Party.Remove(choice1);
+                            Player1.HeroesInCentre++;
+                            choice1.actionsRemaining = 0;
                             break;
                         }
-                        map[choice1.location[0], choice1.location[1]] = 0;
-                        choice1.moveright(choice1.location, map);
-                        map[choice1.location[0], choice1.location[1]] = choice1.id;
-                        choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
-                        break;
+                        else if (map[choice1.location[0], choice1.location[1] + 1] == 0)
+                        {
+                            map[choice1.location[0], choice1.location[1]] = 0;
+                            choice1.moveright(choice1.location, map);
+                            map[choice1.location[0], choice1.location[1]] = choice1.id;
+                            choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
+                            choice1.actionsRemaining--;
+                        }
                     }
-                    if (action.KeyChar == 'r')
+                    else if (action.KeyChar == 'r')
                     {
                         if (choice1.mana >= choice1.cooldown)
                         {
@@ -1056,6 +1243,7 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("Press a key to continue...");
                             Console.ReadKey(true);
+                            choice1.actionsRemaining--;
                         }
                         else
                         {
@@ -1065,12 +1253,12 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP1, choice1);
+                            action = GetAction(map, Player1, choice1);
                             continue;
                         }
 
                     }
-                    if (action.KeyChar == 'R')
+                    else if (action.KeyChar == 'R')
                     {
                         if (choice1.mana >= choice1.cooldown)
                         {
@@ -1084,6 +1272,7 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("Press a key to continue...");
                             Console.ReadKey(true);
+                            choice1.actionsRemaining--;
                         }
                         else
                         {
@@ -1093,53 +1282,111 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP1, choice1);
+                            action = GetAction(map, Player1, choice1);
                             continue;
                         }
                     }
+                    ///check if is trapped
+                    if (choice1.trapped == true)
+                    {
+                        Random randomTrap = new Random();
+                        int index = randomTrap.Next(Traps.Count);
+                        Console.Clear();
+                        Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                        Console.WriteLine("");
+                        Console.WriteLine("(press a key to proceed :( )");
+                        Console.ReadKey(true);
+                        Traps[index].CastTrap(choice1, map);
+                        choice1.trapped = false;
+                    }
+                    ////check if there are actions remaining 
+                    if (choice1.actionsRemaining > 0)
+                    {
+                        action = GetAction(map, Player1, choice1);
+                        continue;
+                    }
+                }
+
+
+                //victory condition
+                if (Player1.HeroesInCentre == 3)
+                {
+                    Player1.Victory = true;
                     break;
                 }
-                if (choice1.trapped == true)
+
+
+                ///Decrease Stun points before passing turn
+                if (Player1.Party.Count == 3)
                 {
-                    Random randomTrap = new Random();
-                    int index = randomTrap.Next(Traps.Count);
-                    Console.Clear();
-                    Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                    Console.WriteLine("");
-                    Console.WriteLine("(press a key to proceed :( )");
-                    Console.ReadKey(true);
-                    Traps[index].CastTrap(choice1, map);
-                    choice1.trapped = false;
+                    if (Player1.Party[0].stunned > 0)
+                    {
+                        Player1.Party[0].stunned--;
+                    }
+                    if (Player1.Party[1].stunned > 0)
+                    {
+                        Player1.Party[1].stunned--;
+                    }
+                    if (Player1.Party[2].stunned > 0)
+                    {
+                        Player1.Party[2].stunned--;
+                    }
                 }
-        
-                ///Decrease Stun points
-                if (Player1.Party[0].stunned > 0)
+                if (Player1.Party.Count == 2)
                 {
-                    Player1.Party[0].stunned--;
+                    if (Player1.Party[0].stunned > 0)
+                    {
+                        Player1.Party[0].stunned--;
+                    }
+                    if (Player1.Party[1].stunned > 0)
+                    {
+                        Player1.Party[1].stunned--;
+                    }
                 }
-                if (Player1.Party[1].stunned > 0)
+                if (Player1.Party.Count == 1)
                 {
-                    Player1.Party[1].stunned--;
-                }
-                if (Player1.Party[2].stunned > 0)
-                {
-                    Player1.Party[2].stunned--;
+                    if (Player1.Party[0].stunned > 0)
+                    {
+                        Player1.Party[0].stunned--;
+                    }
                 }
                 PassTurn(map, nameofP1, choice1);
 
                 ///check if he's mana is at the maximum amount
-                if (Player1.Party[0].mana < 20)
+                if (Player1.Party.Count == 3)
                 {
-                    Player1.Party[0].mana++;
+                    if (Player1.Party[0].mana < 20)
+                    {
+                        Player1.Party[0].mana++;
+                    }
+                    if (Player1.Party[1].mana < 20)
+                    {
+                        Player1.Party[1].mana++;
+                    }
+                    if (Player1.Party[2].mana < 20)
+                    {
+                        Player1.Party[2].mana++;
+                    }
                 }
-                if (Player1.Party[1].mana < 20)
+                if (Player1.Party.Count == 2)
                 {
-                    Player1.Party[1].mana++;
+                    if (Player1.Party[0].mana < 20)
+                    {
+                        Player1.Party[0].mana++;
+                    }
+                    if (Player1.Party[1].mana < 20)
+                    {
+                        Player1.Party[1].mana++;
+                    }
                 }
-                if (Player1.Party[2].mana < 20)
+                if (Player1.Party.Count == 1)
                 {
-                    Player1.Party[2].mana++;
+                    if (Player1.Party[0].mana < 20)
+                    {
+                        Player1.Party[0].mana++;
+                    }
                 }
+
                 Player1.turn = false;
                 Player2.turn = true;
                 continue;
@@ -1149,11 +1396,55 @@ while (true)
                 Console.Clear();
                 Console.WriteLine($"{nameofP2} IS YOUR TURN!");
                 Hero.DisplayList2(Player2.Party, $"            {nameofP2}'s Party!", map);
+
+
+                ///check if all heroes are not stunned
+                if (Player2.Party.Count == 3)
+                {
+                    if (!(Player2.Party[0].stunned == 0 || Player2.Party[1].stunned == 0 || Player2.Party[2].stunned == 0))
+                    {
+                        Console.WriteLine("You have no hero avalaible to select right now, Press a key to finish your turn...");
+                        Console.ReadKey(true);
+                        Player2.turn = false;
+                        Player1.turn = true;
+                        break;
+                    }
+                }
+                else if (Player2.Party.Count == 2)
+                {
+                    if (!(Player2.Party[0].stunned == 0 || Player2.Party[1].stunned == 0))
+                    {
+                        Console.WriteLine("You have no hero avalaible to select right now, Press a key to finish your turn...");
+                        Console.ReadKey(true);
+                        Player2.turn = false;
+                        Player1.turn = true;
+                        break;
+                    }
+                }
+                else if (Player2.Party.Count == 1)
+                {
+                    if (!(Player2.Party[0].stunned == 0))
+                    {
+                        Console.WriteLine("You have no hero avalaible to select right now, Press a key to finish your turn...");
+                        Console.ReadKey(true);
+                        Player2.turn = false;
+                        Player1.turn = true;
+                        break;
+                    }
+                }
+                // keep it going
                 Hero choice2 = Player.GetPlayerChoice(Player2.Party);
                 ConsoleKeyInfo action;
-                action = GetAction(map, nameofP2, choice2);
+                action = GetAction(map, Player2, choice2);
                 while (true)
                 {
+                    ///break whiletrue
+                    if (choice2.actionsRemaining == 0)
+                    {
+                        choice2.actionsRemaining = 5;
+                        break;
+                    }
+                    //check
                     if (action.KeyChar == 'w')
                     {
                         if (map[choice2.location[0] - 1, choice2.location[1]] == 1)
@@ -1164,10 +1455,10 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP2, choice2);
+                            action = GetAction(map, Player2, choice2);
                             continue;
                         }
-                        if (map[choice2.location[0] - 1, choice2.location[1]] == 3)
+                        else if (map[choice2.location[0] - 1, choice2.location[1]] == 3)
                         {
                             // Make player current position equals 0
                             map[choice2.location[0], choice2.location[1]] = 0;
@@ -1180,16 +1471,29 @@ while (true)
                             //add new position to the log
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                             choice2.trapped = true;
+                            choice2.actionsRemaining--;
+                        }
+                        else if (map[choice2.location[0] - 1, choice2.location[1]] == 4)
+                        {
+                            // Make player current position equals 0
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            //execute move method
+                            choice2.moveup(choice2.location, map);
+                            Player2.Party.Remove(choice2);
+                            Player2.HeroesInCentre++;
+                            choice2.actionsRemaining = 0;
                             break;
                         }
-                        map[choice2.location[0], choice2.location[1]] = 0;
-                        choice2.moveup(choice2.location, map);
-                        map[choice2.location[0], choice2.location[1]] = choice2.id;
-                        choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
-                        break;
-
+                        else if (map[choice2.location[0] - 1, choice2.location[1]] == 0)
+                        {
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            choice2.moveup(choice2.location, map);
+                            map[choice2.location[0], choice2.location[1]] = choice2.id;
+                            choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            choice2.actionsRemaining--;
+                        }
                     }
-                    if (action.KeyChar == 'W')
+                    else if (action.KeyChar == 'W')
                     {
                         if (map[choice2.location[0] - 1, choice2.location[1]] == 1)
                         {
@@ -1199,10 +1503,10 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP2, choice2);
+                            action = GetAction(map, Player2, choice2);
                             continue;
                         }
-                        if (map[choice2.location[0] - 1, choice2.location[1]] == 3)
+                        else if (map[choice2.location[0] - 1, choice2.location[1]] == 3)
                         {
                             // Make player current position equals 0
                             map[choice2.location[0], choice2.location[1]] = 0;
@@ -1215,15 +1519,29 @@ while (true)
                             //add new position to the log
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                             choice2.trapped = true;
+                            choice2.actionsRemaining--;
+                        }
+                        else if (map[choice2.location[0] - 1, choice2.location[1]] == 4)
+                        {
+                            // Make player current position equals 0
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            //execute move method
+                            choice2.moveup(choice2.location, map);
+                            Player2.Party.Remove(choice2);
+                            Player2.HeroesInCentre++;
+                            choice2.actionsRemaining = 0;
                             break;
                         }
-                        map[choice2.location[0], choice2.location[1]] = 0;
-                        choice2.moveup(choice2.location, map);
-                        map[choice2.location[0], choice2.location[1]] = choice2.id;
-                        choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
-                        break;
+                        else if (map[choice2.location[0] - 1, choice2.location[1]] == 0)
+                        {
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            choice2.moveup(choice2.location, map);
+                            map[choice2.location[0], choice2.location[1]] = choice2.id;
+                            choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            choice2.actionsRemaining--;
+                        }
                     }
-                    if (action.KeyChar == 'a')
+                    else if (action.KeyChar == 'a')
                     {
                         if (map[choice2.location[0], choice2.location[1] - 1] == 1)
                         {
@@ -1233,10 +1551,10 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP2, choice2);
+                            action = GetAction(map, Player2, choice2);
                             continue;
                         }
-                        if (map[choice2.location[0], choice2.location[1] - 1] == 3)
+                        else if (map[choice2.location[0], choice2.location[1] - 1] == 3)
                         {
                             // Make player current position equals 0
                             map[choice2.location[0], choice2.location[1]] = 0;
@@ -1249,16 +1567,29 @@ while (true)
                             //add new position to the log
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                             choice2.trapped = true;
+                            choice2.actionsRemaining--;
+                        }
+                        else if (map[choice2.location[0], choice2.location[1] - 1] == 4)
+                        {
+                            // Make player current position equals 0
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            //execute move method
+                            choice2.moveleft(choice2.location, map);
+                            Player2.Party.Remove(choice2);
+                            Player2.HeroesInCentre++;
+                            choice2.actionsRemaining = 0;
                             break;
                         }
-                        map[choice2.location[0], choice2.location[1]] = 0;
-                        choice2.moveleft(choice2.location, map);
-                        map[choice2.location[0], choice2.location[1]] = choice2.id;
-                        choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
-                        break;
-
+                        else if (map[choice2.location[0], choice2.location[1] - 1] == 0)
+                        {
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            choice2.moveleft(choice2.location, map);
+                            map[choice2.location[0], choice2.location[1]] = choice2.id;
+                            choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            choice2.actionsRemaining--;
+                        }
                     }
-                    if (action.KeyChar == 'A')
+                    else if (action.KeyChar == 'A')
                     {
                         if (map[choice2.location[0], choice2.location[1] - 1] == 1)
                         {
@@ -1268,10 +1599,10 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP2, choice2);
+                            action = GetAction(map, Player2, choice2);
                             continue;
                         }
-                        if (map[choice2.location[0], choice2.location[1] - 1] == 3)
+                        else if (map[choice2.location[0], choice2.location[1] - 1] == 3)
                         {
                             // Make player current position equals 0
                             map[choice2.location[0], choice2.location[1]] = 0;
@@ -1284,16 +1615,30 @@ while (true)
                             //add new position to the log
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                             choice2.trapped = true;
+                            choice2.actionsRemaining--;
+                        }
+                        else if (map[choice2.location[0], choice2.location[1] - 1] == 4)
+                        {
+                            // Make player current position equals 0
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            //execute move method
+                            choice2.moveleft(choice2.location, map);
+                            Player2.Party.Remove(choice2);
+                            Player2.HeroesInCentre++;
+                            choice2.actionsRemaining = 0;
                             break;
                         }
-                        map[choice2.location[0], choice2.location[1]] = 0;
-                        choice2.moveleft(choice2.location, map);
-                        map[choice2.location[0], choice2.location[1]] = choice2.id;
-                        choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
-                        break;
+                        else if (map[choice2.location[0], choice2.location[1] - 1] == 0)
+                        {
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            choice2.moveleft(choice2.location, map);
+                            map[choice2.location[0], choice2.location[1]] = choice2.id;
+                            choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            choice2.actionsRemaining--;
+                        }
 
                     }
-                    if (action.KeyChar == 's')
+                    else if (action.KeyChar == 's')
                     {
                         if (map[choice2.location[0] + 1, choice2.location[1]] == 1)
                         {
@@ -1303,10 +1648,10 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP2, choice2);
+                            action = GetAction(map, Player2, choice2);
                             continue;
                         }
-                        if (map[choice2.location[0] + 1, choice2.location[1]] == 3)
+                        else if (map[choice2.location[0] + 1, choice2.location[1]] == 3)
                         {
                             // Make player current position equals 0
                             map[choice2.location[0], choice2.location[1]] = 0;
@@ -1319,16 +1664,30 @@ while (true)
                             //add new position to the log
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                             choice2.trapped = true;
+                            choice2.actionsRemaining--;
+                        }
+                        else if (map[choice2.location[0] + 1, choice2.location[1]] == 4)
+                        {
+                            // Make player current position equals 0
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            //execute move method
+                            choice2.movedown(choice2.location, map);
+                            Player2.Party.Remove(choice2);
+                            Player2.HeroesInCentre++;
+                            choice2.actionsRemaining = 0;
                             break;
                         }
-                        map[choice2.location[0], choice2.location[1]] = 0;
-                        choice2.movedown(choice2.location, map);
-                        map[choice2.location[0], choice2.location[1]] = choice2.id;
-                        choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
-                        break;
+                        else if (map[choice2.location[0] + 1, choice2.location[1]] == 0)
+                        {
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            choice2.movedown(choice2.location, map);
+                            map[choice2.location[0], choice2.location[1]] = choice2.id;
+                            choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            choice2.actionsRemaining--;
+                        }
 
                     }
-                    if (action.KeyChar == 'S')
+                    else if (action.KeyChar == 'S')
                     {
                         if (map[choice2.location[0] + 1, choice2.location[1]] == 1)
                         {
@@ -1338,10 +1697,10 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP2, choice2);
+                            action = GetAction(map, Player2, choice2);
                             continue;
                         }
-                        if (map[choice2.location[0] + 1, choice2.location[1]] == 3)
+                        else if (map[choice2.location[0] + 1, choice2.location[1]] == 3)
                         {
                             // Make player current position equals 0
                             map[choice2.location[0], choice2.location[1]] = 0;
@@ -1354,15 +1713,29 @@ while (true)
                             //add new position to the log
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                             choice2.trapped = true;
+                            choice2.actionsRemaining--;
+                        }
+                        else if (map[choice2.location[0] + 1, choice2.location[1]] == 4)
+                        {
+                            // Make player current position equals 0
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            //execute move method
+                            choice2.movedown(choice2.location, map);
+                            Player2.Party.Remove(choice2);
+                            Player2.HeroesInCentre++;
+                            choice2.actionsRemaining = 0;
                             break;
                         }
-                        map[choice2.location[0], choice2.location[1]] = 0;
-                        choice2.movedown(choice2.location, map);
-                        map[choice2.location[0], choice2.location[1]] = choice2.id;
-                        choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
-                        break;
+                        else if (map[choice2.location[0] + 1, choice2.location[1]] == 0)
+                        {
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            choice2.movedown(choice2.location, map);
+                            map[choice2.location[0], choice2.location[1]] = choice2.id;
+                            choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            choice2.actionsRemaining--;
+                        }
                     }
-                    if (action.KeyChar == 'd')
+                    else if (action.KeyChar == 'd')
                     {
                         if (map[choice2.location[0], choice2.location[1] + 1] == 1)
                         {
@@ -1372,10 +1745,10 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP2, choice2);
+                            action = GetAction(map, Player2, choice2);
                             continue;
                         }
-                        if (map[choice2.location[0], choice2.location[1] + 1] == 3)
+                        else if (map[choice2.location[0], choice2.location[1] + 1] == 3)
                         {
                             // Make player current position equals 0
                             map[choice2.location[0], choice2.location[1]] = 0;
@@ -1389,15 +1762,29 @@ while (true)
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                             //select a random trap in the trap list, to execute to the hero
                             choice2.trapped = true;
+                            choice2.actionsRemaining--;
+                        }
+                        else if (map[choice2.location[0], choice2.location[1] + 1] == 4)
+                        {
+                            // Make player current position equals 0
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            //execute move method
+                            choice2.moveright(choice2.location, map);
+                            Player2.Party.Remove(choice2);
+                            Player2.HeroesInCentre++;
+                            choice2.actionsRemaining = 0;
                             break;
                         }
-                        map[choice2.location[0], choice2.location[1]] = 0;
-                        choice2.moveright(choice2.location, map);
-                        map[choice2.location[0], choice2.location[1]] = choice2.id;
-                        choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
-                        break;
+                        else if (map[choice2.location[0], choice2.location[1] + 1] == 0)
+                        {
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            choice2.moveright(choice2.location, map);
+                            map[choice2.location[0], choice2.location[1]] = choice2.id;
+                            choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            choice2.actionsRemaining--;
+                        }
                     }
-                    if (action.KeyChar == 'D')
+                    else if (action.KeyChar == 'D')
                     {
                         if (map[choice2.location[0], choice2.location[1] + 1] == 1)
                         {
@@ -1407,10 +1794,10 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP2, choice2);
+                            action = GetAction(map, Player2, choice2);
                             continue;
                         }
-                        if (map[choice2.location[0], choice2.location[1] + 1] == 3)
+                        else if (map[choice2.location[0], choice2.location[1] + 1] == 3)
                         {
                             // Make player current position equals 0
                             map[choice2.location[0], choice2.location[1]] = 0;
@@ -1422,16 +1809,31 @@ while (true)
                             map[choice2.location[0], choice2.location[1]] = choice2.id;
                             //add new position to the log
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            //select a random trap in the trap list, to execute to the hero
                             choice2.trapped = true;
+                            choice2.actionsRemaining--;
+                        }
+                        else if (map[choice2.location[0], choice2.location[1] + 1] == 4)
+                        {
+                            // Make player current position equals 0
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            //execute move method
+                            choice2.moveright(choice2.location, map);
+                            Player2.Party.Remove(choice2);
+                            Player2.HeroesInCentre++;
+                            choice2.actionsRemaining = 0;
                             break;
                         }
-                        map[choice2.location[0], choice2.location[1]] = 0;
-                        choice2.moveright(choice2.location, map);
-                        map[choice2.location[0], choice2.location[1]] = choice2.id;
-                        choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
-                        break;
+                        else if (map[choice2.location[0], choice2.location[1] + 1] == 0)
+                        {
+                            map[choice2.location[0], choice2.location[1]] = 0;
+                            choice2.moveright(choice2.location, map);
+                            map[choice2.location[0], choice2.location[1]] = choice2.id;
+                            choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
+                            choice2.actionsRemaining--;
+                        }
                     }
-                    if (action.KeyChar == 'r')
+                    else if (action.KeyChar == 'r')
                     {
                         if (choice2.mana >= choice2.cooldown)
                         {
@@ -1445,6 +1847,7 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("Press a key to continue...");
                             Console.ReadKey(true);
+                            choice2.actionsRemaining--;
                         }
                         else
                         {
@@ -1454,11 +1857,11 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP2, choice2);
+                            action = GetAction(map, Player2, choice2);
                             continue;
                         }
                     }
-                    if (action.KeyChar == 'R')
+                    else if (action.KeyChar == 'R')
                     {
                         if (choice2.mana >= choice2.cooldown)
                         {
@@ -1472,6 +1875,7 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("Press a key to continue...");
                             Console.ReadKey(true);
+                            choice2.actionsRemaining--;
                         }
                         else
                         {
@@ -1481,58 +1885,130 @@ while (true)
                             Console.WriteLine();
                             Console.WriteLine("(press a key to continue)");
                             Console.ReadKey(true);
-                            action = GetAction(map, nameofP2, choice2);
+                            action = GetAction(map, Player2, choice2);
                             continue;
                         }
                     }
+                    //check if he moved to a TRAP
+                    if (choice2.trapped == true)
+                    {
+                        Random randomTrap = new Random();
+                        int index = randomTrap.Next(Traps.Count);
+                        Console.Clear();
+                        Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
+                        Console.WriteLine("");
+                        Console.WriteLine("(press a key to proceed :( )");
+                        Console.ReadKey(true);
+                        Traps[index].CastTrap(choice2, map);
+                        choice2.trapped = false;
+                    }
+
+                    ////check if there are actions remaining 
+                    if (choice2.actionsRemaining > 0)
+                    {
+                        action = GetAction(map, Player2, choice2);
+                        continue;
+                    }
+                }
+                //victory condition
+                if (Player2.HeroesInCentre == 3)
+                {
+                    Player2.Victory = true;
                     break;
                 }
-                //check if he moved to a TRAP
-                if (choice2.trapped == true)
-                {
-                    Random randomTrap = new Random();
-                    int index = randomTrap.Next(Traps.Count);
-                    Console.Clear();
-                    Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                    Console.WriteLine("");
-                    Console.WriteLine("(press a key to proceed :( )");
-                    Console.ReadKey(true);
-                    Traps[index].CastTrap(choice2, map);
-                    choice2.trapped = false;
-                }
-                
+
+
                 ///Decrease Stun points
-                if (Player2.Party[0].stunned > 0)
+                if (Player2.Party.Count == 3)
                 {
-                    Player2.Party[0].stunned--;
+                    if (Player2.Party[0].stunned > 0)
+                    {
+                        Player2.Party[0].stunned--;
+                    }
+                    if (Player2.Party[1].stunned > 0)
+                    {
+                        Player2.Party[1].stunned--;
+                    }
+                    if (Player2.Party[2].stunned > 0)
+                    {
+                        Player2.Party[2].stunned--;
+                    }
                 }
-                if (Player2.Party[1].stunned > 0)
+                if (Player2.Party.Count == 2)
                 {
-                    Player2.Party[1].stunned--;
+                    if (Player2.Party[0].stunned > 0)
+                    {
+                        Player2.Party[0].stunned--;
+                    }
+                    if (Player2.Party[1].stunned > 0)
+                    {
+                        Player2.Party[1].stunned--;
+                    }
                 }
-                if (Player2.Party[2].stunned > 0)
+                if (Player2.Party.Count == 1)
                 {
-                    Player2.Party[2].stunned--;
+                    if (Player2.Party[0].stunned > 0)
+                    {
+                        Player2.Party[0].stunned--;
+                    }
                 }
                 Console.Clear();
                 PassTurn(map, nameofP2, choice2);
+
+
                 ///check if he's mana is at the maximum amount
-                if (Player2.Party[0].mana < 20)
+                if (Player2.Party.Count == 3)
                 {
-                    Player2.Party[0].mana++;
+                    if (Player2.Party[0].mana < 20)
+                    {
+                        Player2.Party[0].mana++;
+                    }
+                    if (Player2.Party[1].mana < 20)
+                    {
+                        Player2.Party[1].mana++;
+                    }
+                    if (Player2.Party[2].mana < 20)
+                    {
+                        Player2.Party[2].mana++;
+                    }
                 }
-                if (Player2.Party[1].mana < 20)
+                if (Player2.Party.Count == 2)
                 {
-                    Player2.Party[1].mana++;
+                    if (Player2.Party[0].mana < 20)
+                    {
+                        Player2.Party[0].mana++;
+                    }
+                    if (Player2.Party[1].mana < 20)
+                    {
+                        Player2.Party[1].mana++;
+                    }
                 }
-                if (Player2.Party[2].mana < 20)
+                if (Player2.Party.Count == 1)
                 {
-                    Player2.Party[2].mana++;
+                    if (Player2.Party[0].mana < 20)
+                    {
+                        Player2.Party[0].mana++;
+                    }
                 }
                 Player1.turn = true;
                 Player2.turn = false;
                 continue;
             }
+        }
+        //Out of Game PlayerTurns WhileTrue
+        if (Player1.Victory == true)
+        {
+            Console.WriteLine($"{nameofP1.ToUpper()}'s VICTORY\n\n");
+            Console.WriteLine($"Congratulations!!!!! YOU'VE WONNNN!! {nameofP1.ToUpper()}");
+            Console.ReadKey(true);
+            continue;
+        }
+        if (Player2.Victory == true)
+        {
+            Console.WriteLine($"{nameofP2.ToUpper()}'s VICTORY\n\n");
+            Console.WriteLine($"Congratulations!!!!! YOU'VE WONNNN!! {nameofP2.ToUpper()}");
+            Console.ReadKey(true);
+            continue;
         }
     }
     //////////////////// Close game////////////////

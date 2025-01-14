@@ -337,6 +337,7 @@ namespace GameObjects
                .AddItem("Health", hero.health, Color.Green4)
                .AddItem("Mana", hero.mana, Color.Blue);
 
+
             var downtable = new Table();
             downtable.AddColumn(new TableColumn(stats));
             downtable.AddColumn(new TableColumn(downrighttable).Centered());
