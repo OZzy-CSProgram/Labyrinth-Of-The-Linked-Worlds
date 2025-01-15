@@ -37,6 +37,16 @@ namespace GameObjects
             gamemenu.Centered();
             return gamemenu;
         }
+        public static void HeroDialogue(Hero hero, string s)
+        {
+            var dialogue = new Table()
+            .RoundedBorder();
+            dialogue.AddColumn(new TableColumn("[bold #000000]" + hero.icon + "[/]").Centered());
+            dialogue.AddColumn(new TableColumn("[bold blue]> [/]" + s + "\n press a key to continue...").Centered());
+            AnsiConsole.Write(dialogue);
+            Console.ReadKey(true);
+            
+        }
         public static void LadyElaraAskname(Table gamemenu, Table table)
         {
             gamemenu.AddColumn(new TableColumn("")).HideHeaders();

@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using GameObjects;
 using Spectre.Console;
@@ -307,7 +308,96 @@ while (true)
         Trap.SpawnTraps(map);
 
         //spawn artifact
-        map[Maze.size / 2, Maze.size / 2 - 1] = 4;
+        map[Maze.size / 2, Maze.size / 2] = 4;
+        /// build walls around it
+        map[Maze.size / 2 - 1, Maze.size / 2] = 1; // up
+        map[Maze.size / 2 + 1, Maze.size / 2] = 1;//down
+        map[Maze.size / 2, Maze.size / 2 - 1] = 1;//left
+        map[Maze.size / 2, Maze.size / 2 + 1] = 1;//right
+        map[Maze.size / 2 - 1, Maze.size / 2 - 1] = 1;//upleft
+        map[Maze.size / 2 + 1, Maze.size / 2 + 1] = 1;//downright
+        map[Maze.size / 2 - 1, Maze.size / 2 + 1] = 1;//upright
+        map[Maze.size / 2 + 1, Maze.size / 2 - 1] = 1;//downleft 
+                                                      //
+                                                      //🟦🟦🟦
+                                                      //🟦💜🟦
+                                                      //🟦🟦🟦
+                                                      //
+                                                      //paths arround
+        map[Maze.size / 2 - 2, Maze.size / 2] = 0; // up
+        map[Maze.size / 2 - 2, Maze.size / 2 - 1] = 0; // up
+                                                       //🟩🟩
+                                                       //🟦🟦🟦
+                                                       //🟦💜🟦
+                                                       //🟦🟦🟦
+                                                       //
+        map[Maze.size / 2 - 2, Maze.size / 2 - 2] = 0; // up
+        map[Maze.size / 2 - 1, Maze.size / 2 - 2] = 0; // up
+                                                       //🟩🟩🟩
+                                                       //🟩🟦🟦🟦
+                                                       //⬛🟦💜🟦
+                                                       //⬛🟦🟦🟦
+                                                       //
+        map[Maze.size / 2, Maze.size / 2 - 2] = 0; // up
+        map[Maze.size / 2 + 1, Maze.size / 2 - 2] = 0; // up
+                                                       //🟩🟩🟩
+                                                       //🟩🟦🟦🟦
+                                                       //🟩🟦💜🟦
+                                                       //🟩🟦🟦🟦
+                                                       //
+        map[Maze.size / 2 + 2, Maze.size / 2 - 2] = 0; // up
+        map[Maze.size / 2 + 2, Maze.size / 2 - 1] = 0; // up
+                                                       //🟩🟩🟩
+                                                       //🟩🟦🟦🟦
+                                                       //🟩🟦💜🟦
+                                                       //🟩🟦🟦🟦
+                                                       //🟩🟩
+        map[Maze.size / 2 + 2, Maze.size / 2] = 0; // up
+        map[Maze.size / 2 + 2, Maze.size / 2 + 1] = 0; // up
+                                                       //🟩🟩🟩
+                                                       //🟩🟦🟦🟦
+                                                       //🟩🟦💜🟦
+                                                       //🟩🟦🟦🟦
+                                                       //🟩🟩🟩🟩
+        map[Maze.size / 2 + 2, Maze.size / 2 + 2] = 0; // up
+        map[Maze.size / 2 + 1, Maze.size / 2 + 2] = 0; // up
+                                                       //🟩🟩🟩
+                                                       //🟩🟦🟦🟦
+                                                       //🟩🟦💜🟦
+                                                       //🟩🟦🟦🟦🟩
+                                                       //🟩🟩🟩🟩🟩
+        map[Maze.size / 2, Maze.size / 2 + 2] = 0; // up
+        map[Maze.size / 2 - 1, Maze.size / 2 + 2] = 0; // up
+                                                       //🟩🟩🟩
+                                                       //🟩🟦🟦🟦🟩
+                                                       //🟩🟦💜🟦🟩
+                                                       //🟩🟦🟦🟦🟩
+                                                       //🟩🟩🟩🟩🟩
+        map[Maze.size / 2 - 2, Maze.size / 2 + 2] = 0; // up
+        map[Maze.size / 2 - 2, Maze.size / 2 + 1] = 0; // up
+                                                       //🟩🟩🟩🟩🟩
+                                                       //🟩🟦🟦🟦🟩
+                                                       //🟩🟦💜🟦🟩
+                                                       //🟩🟦🟦🟦🟩
+                                                       //🟩🟩🟩🟩🟩
+                                                       ////
+        map[Maze.size / 2 + 2, Maze.size / 2 + 1] = 8; // 
+        Random random = new Random();
+        List<int[]> DoorSpawn = new List<int[]>();
+        DoorSpawn.Add(new int[] { Maze.size / 2, Maze.size / 2 - 1 });
+        DoorSpawn.Add(new int[] { Maze.size / 2, Maze.size / 2 + 1 });
+
+        int doorspawnindex = random.Next(DoorSpawn.Count);
+
+        map[DoorSpawn[doorspawnindex][0], DoorSpawn[doorspawnindex][1]] = 6;
+
+        int[] KeyLocation = new int[2];
+        KeyLocation[0] = Maze.size / 2 + 2;
+        KeyLocation[1] = Maze.size / 2 + 1;
+
+
+
+
         var mapprinted = Maze.PrintMaze(map, "  Generated Map !");
         AnsiConsole.Write(mapprinted);
         Console.WriteLine("(press a key to continue)");
@@ -427,14 +517,14 @@ while (true)
         ///Heroes Spwans
         //                       Player 1
         //Spawn of First Hero
-        Player1.Party[0].location[0] = 1;
-        Player1.Party[0].location[1] = 1;
-        int[] spawn1p1 = new int[] { 1, 1 };
+        Player1.Party[0].location[0] = Maze.size / 2 - 2;
+        Player1.Party[0].location[1] = Maze.size / 2;
+        int[] spawn1p1 = new int[] { Maze.size / 2 - 2, Maze.size / 2 };
 
         //Spawn of Second Hero
         Player1.Party[1].location[0] = 1;
-        Player1.Party[1].location[1] = Maze.size / 2 - 1;
-        int[] spawn2p1 = new int[] { 1, Maze.size / 2 - 1 };
+        Player1.Party[1].location[1] = Maze.size / 2;
+        int[] spawn2p1 = new int[] { 1, Maze.size / 2 };
 
         //Spawn of Third Hero
         Player1.Party[2].location[0] = 1;
@@ -449,8 +539,8 @@ while (true)
 
         //Spawn of Second Hero
         Player2.Party[1].location[0] = Maze.size - 2;
-        Player2.Party[1].location[1] = Maze.size / 2 - 1;
-        int[] spawn2p2 = new int[] { Maze.size - 2, Maze.size / 2 - 1 };
+        Player2.Party[1].location[1] = Maze.size / 2;
+        int[] spawn2p2 = new int[] { Maze.size - 2, Maze.size / 2 };
 
         //Spawn of Third Hero
         Player2.Party[2].location[0] = Maze.size - 2;
@@ -663,7 +753,7 @@ while (true)
 
 
             //////Methods for Game Actions
-            static ConsoleKeyInfo ValidPosition(ConsoleKeyInfo action, int[,] map, string name, Hero hero)
+            static ConsoleKeyInfo ValidPosition(ConsoleKeyInfo action, int[,] map,Player p, Hero hero)
             {
                 while (action.KeyChar != 'w' && action.KeyChar != 'W' && action.KeyChar != 'a' && action.KeyChar != 'A' && action.KeyChar != 's' && action.KeyChar != 'S' && action.KeyChar != 'd' && action.KeyChar != 'D' && action.KeyChar != 'r' && action.KeyChar != 'R')
                 {
@@ -672,41 +762,8 @@ while (true)
                     Console.WriteLine("(press a key to continue)");
                     Console.ReadKey(true);
                     Console.Clear();
-                    Console.Clear();
-                    var table = new Table();
+                    action = GetAction(map, p, hero);
 
-                    var w = new Table()
-                    .Border(TableBorder.Double)
-                    .BorderColor(Color.SandyBrown)
-                    .AddColumn(new TableColumn("W ⬆ ").Centered());
-
-                    var a = new Table()
-                    .Border(TableBorder.Double)
-                    .BorderColor(Color.SandyBrown)
-                    .AddColumn(new TableColumn("A ⬅ ").Centered());
-
-                    var s = new Table()
-                    .Border(TableBorder.Double)
-                    .BorderColor(Color.SandyBrown)
-                    .AddColumn(new TableColumn("S ⬇ ").Centered());
-
-                    var d = new Table()
-                    .Border(TableBorder.Double)
-                    .BorderColor(Color.SandyBrown)
-                    .AddColumn(new TableColumn("D ➡ ").Centered());
-
-                    var r = new Table()
-                    .Border(TableBorder.Double)
-                    .BorderColor(Color.Red)
-                    .AddColumn(new TableColumn("R > Super Power! ").Centered());
-                    table.AddColumn(new TableColumn("").Centered()).NoBorder();
-                    table.AddColumn(new TableColumn(w).Centered()).NoBorder();
-                    table.AddColumn(new TableColumn("").Centered()).NoBorder();
-                    table.AddColumn(new TableColumn(r).Centered()).NoBorder();
-
-                    table.AddRow(a.Centered(), s.Centered(), d.Centered());
-                    Maze.PrintMaze2(map, $" {name}'s Turn!!!         ", table, hero);
-                    action = Console.ReadKey(true);
                     if (action.KeyChar == 'w' || action.KeyChar == 'W' || action.KeyChar == 'a' || action.KeyChar == 'A' || action.KeyChar == 's' || action.KeyChar == 'S' || action.KeyChar == 'd' || action.KeyChar == 'D')
                     {
                         break;
@@ -744,9 +801,68 @@ while (true)
                 .BorderColor(Color.Red)
                 .AddColumn(new TableColumn("R > Super Power! ").Centered());
 
+                int Distance = Maze.DistanceFromKey(hero, Maze.size / 2 + 2, Maze.size / 2 + 1, Maze.size);
+
+
+                var NearKey = new BarChart()
+                .Label("[yellow bold]" + hero.actionsRemaining + " actions left\n[/]");
+
+                if (Distance == 1)
+                {
+                    NearKey.Width(60);
+                    NearKey.AddItem("Key Distance", Distance, Color.Red3);
+                }
+                else if (Distance == 2)
+                {
+                    NearKey.Width(60);
+                    NearKey.AddItem("Key Distance", Distance, Color.Red1);
+                }
+                else if (Distance == 3)
+                {
+                    NearKey.Width(60);
+                    NearKey.AddItem("Key Distance", Distance, Color.OrangeRed1);
+                }
+                else if (Distance == 4)
+                {
+                    NearKey.Width(60);
+                    NearKey.AddItem("Key Distance", Distance, Color.Orange3);
+                }
+                else if (Distance == 5)
+                {
+                    NearKey.Width(60);
+                    NearKey.AddItem("Key Distance", Distance, Color.Orange1);
+                }
+                else if (Distance == 6)
+                {
+                    NearKey.Width(60);
+                    NearKey.AddItem("Key Distance", Distance, Color.Yellow2);
+                }
+                else if (Distance == 7)
+                {
+                    NearKey.Width(60);
+                    NearKey.AddItem("Key Distance", Distance, Color.Yellow3_1);
+                }
+                else if (Distance == 8)
+                {
+                    NearKey.Width(60);
+                    NearKey.AddItem("Key Distance", Distance, Color.Yellow);
+                }
+                else if (Distance == 9)
+                {
+                    NearKey.Width(60);
+                    NearKey.AddItem("Key Distance", Distance, Color.LightYellow3);
+                }
+                else if (Distance >= 10)
+                {
+                    NearKey.Width(60);
+                    NearKey.AddItem("Key Distance", Distance, Color.White);
+                }
+
+
+
                 var actionsleft = new Table()
                 .NoBorder()
-                .AddColumn(new TableColumn("[yellow bold] \n" + hero.actionsRemaining + " actions left[/]").Centered());
+                .AddColumn(new TableColumn(NearKey).Centered());
 
                 table.AddColumn(new TableColumn("").Centered()).NoBorder();
                 table.AddColumn(new TableColumn(w).Centered()).NoBorder();
@@ -756,7 +872,7 @@ while (true)
                 table.AddRow(a.Centered(), s.Centered(), d.Centered(), actionsleft.Centered());
                 Maze.PrintMaze2(map, $" {p.name}'s Turn!!!    {hero.actionsRemaining} Actions Remaining     ", table, hero);
                 ConsoleKeyInfo action = Console.ReadKey(true);
-                action = ValidPosition(action, map, p.name, hero);
+                action = ValidPosition(action, map, p, hero);
                 return action;
             }
             static void PassTurn(int[,] map, string name, Hero hero)
@@ -803,7 +919,7 @@ while (true)
 
                         Player1.Party[0].stunned--;
                         Player1.Party[1].stunned--;
-                        
+
                         Player1.turn = false;
                         Player2.turn = true;
                         break;
@@ -867,6 +983,37 @@ while (true)
                             choice1.actionsRemaining--;
 
                         }
+                        ///moving to a Door
+                        else if (map[choice1.location[0] - 1, choice1.location[1]] == 6)
+                        {
+                            if (choice1.haveKey)
+                            {
+                                Console.WriteLine("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                                string choosing = Console.ReadLine().ToLower();
+                                if (choosing == "yes")
+                                {
+                                    Console.WriteLine($"{choice1.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                    map[choice1.location[0] - 1, choice1.location[1]] = 0;
+                                }
+                                else if (choosing != "yess" && choosing != "no")
+                                {
+                                    Console.WriteLine("thats not a valid action!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(choice1, "I need a key to open that door!");
+                            }
+
+                        }
+                        else if (map[choice1.location[0] - 1, choice1.location[1]] == 6)
+                        {
+                            choice1.haveKey = true;
+                            Console.Clear();
+
+
+                        }
                         else if (map[choice1.location[0] - 1, choice1.location[1]] == 4)
                         {
                             // Make player current position equals 0
@@ -918,6 +1065,30 @@ while (true)
                             choice1.actionsRemaining--;
 
                         }
+                        ///moving to a Door
+                        else if (map[choice1.location[0] - 1, choice1.location[1]] == 6)
+                        {
+                            if (choice1.haveKey)
+                            {
+                                Console.WriteLine("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                                string choosing = Console.ReadLine().ToLower();
+                                if (choosing == "yes")
+                                {
+                                    Console.WriteLine($"{choice1.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                    map[choice1.location[0] - 1, choice1.location[1]] = 0;
+                                }
+                                else if (choosing != "yess" && choosing != "no")
+                                {
+                                    Console.WriteLine("thats not a valid action!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(choice1, "I need a key to open that door!");
+                            }
+
+                        }
                         else if (map[choice1.location[0] - 1, choice1.location[1]] == 4)
                         {
                             // Make player current position equals 0
@@ -966,6 +1137,30 @@ while (true)
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             choice1.trapped = true;
                             choice1.actionsRemaining--;
+                        }
+                        ///moving to a Door
+                        else if (map[choice1.location[0], choice1.location[1] - 1] == 6)
+                        {
+                            if (choice1.haveKey)
+                            {
+                                Console.WriteLine("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                                string choosing = Console.ReadLine().ToLower();
+                                if (choosing == "yes")
+                                {
+                                    Console.WriteLine($"{choice1.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                    map[choice1.location[0], choice1.location[1] - 1] = 0;
+                                }
+                                else if (choosing != "yess" && choosing != "no")
+                                {
+                                    Console.WriteLine("thats not a valid action!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(choice1, "I need a key to open that door!");
+                            }
+
                         }
                         else if (map[choice1.location[0], choice1.location[1] - 1] == 4)
                         {
@@ -1016,6 +1211,30 @@ while (true)
                             choice1.trapped = true;
                             choice1.actionsRemaining--;
                         }
+                        ///moving to a Door
+                        else if (map[choice1.location[0], choice1.location[1] - 1] == 6)
+                        {
+                            if (choice1.haveKey)
+                            {
+                                Console.WriteLine("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                                string choosing = Console.ReadLine().ToLower();
+                                if (choosing == "yes")
+                                {
+                                    Console.WriteLine($"{choice1.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                    map[choice1.location[0], choice1.location[1] - 1] = 0;
+                                }
+                                else if (choosing != "yess" && choosing != "no")
+                                {
+                                    Console.WriteLine("thats not a valid action!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(choice1, "I need a key to open that door!");
+                            }
+
+                        }
                         else if (map[choice1.location[0], choice1.location[1] - 1] == 4)
                         {
                             // Make player current position equals 0
@@ -1065,6 +1284,30 @@ while (true)
                             choice1.trapped = true;
                             choice1.actionsRemaining--;
                         }
+                        ///moving to a Door
+                        else if (map[choice1.location[0] + 1, choice1.location[1]] == 6)
+                        {
+                            if (choice1.haveKey)
+                            {
+                                Console.WriteLine("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                                string choosing = Console.ReadLine().ToLower();
+                                if (choosing == "yes")
+                                {
+                                    Console.WriteLine($"{choice1.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                    map[choice1.location[0] + 1, choice1.location[1]] = 0;
+                                }
+                                else if (choosing != "yess" && choosing != "no")
+                                {
+                                    Console.WriteLine("thats not a valid action!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(choice1, "I need a key to open that door!");
+                            }
+
+                        }
                         else if (map[choice1.location[0] + 1, choice1.location[1]] == 4)
                         {
                             // Make player current position equals 0
@@ -1112,6 +1355,30 @@ while (true)
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             choice1.trapped = true;
                             choice1.actionsRemaining--;
+                        }
+                        ///moving to a Door
+                        else if (map[choice1.location[0] + 1, choice1.location[1]] == 6)
+                        {
+                            if (choice1.haveKey)
+                            {
+                                Console.WriteLine("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                                string choosing = Console.ReadLine().ToLower();
+                                if (choosing == "yes")
+                                {
+                                    Console.WriteLine($"{choice1.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                    map[choice1.location[0] + 1, choice1.location[1]] = 0;
+                                }
+                                else if (choosing != "yess" && choosing != "no")
+                                {
+                                    Console.WriteLine("thats not a valid action!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(choice1, "I need a key to open that door!");
+                            }
+
                         }
                         else if (map[choice1.location[0] + 1, choice1.location[1]] == 4)
                         {
@@ -1161,6 +1428,30 @@ while (true)
                             choice1.trapped = true;
                             choice1.actionsRemaining--;
                         }
+                        ///moving to a Door
+                        else if (map[choice1.location[0], choice1.location[1] + 1] == 6)
+                        {
+                            if (choice1.haveKey)
+                            {
+                                Console.WriteLine("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                                string choosing = Console.ReadLine().ToLower();
+                                if (choosing == "yes")
+                                {
+                                    Console.WriteLine($"{choice1.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                    map[choice1.location[0], choice1.location[1] + 1] = 0;
+                                }
+                                else if (choosing != "yess" && choosing != "no")
+                                {
+                                    Console.WriteLine("thats not a valid action!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(choice1, "I need a key to open that door!");
+                            }
+
+                        }
                         else if (map[choice1.location[0], choice1.location[1] + 1] == 4)
                         {
                             // Make player current position equals 0
@@ -1208,6 +1499,30 @@ while (true)
                             choice1.locationlog.Add(new int[] { choice1.location[0], choice1.location[1] });
                             choice1.trapped = true;
                             choice1.actionsRemaining--;
+                        }
+                        ///moving to a Door
+                        else if (map[choice1.location[0], choice1.location[1] + 1] == 6)
+                        {
+                            if (choice1.haveKey)
+                            {
+                                Console.WriteLine("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                                string choosing = Console.ReadLine().ToLower();
+                                if (choosing == "yes")
+                                {
+                                    Console.WriteLine($"{choice1.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                    map[choice1.location[0], choice1.location[1] + 1] = 0;
+                                }
+                                else if (choosing != "yess" && choosing != "no")
+                                {
+                                    Console.WriteLine("thats not a valid action!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(choice1, "I need a key to open that door!");
+                            }
+
                         }
                         else if (map[choice1.location[0], choice1.location[1] + 1] == 4)
                         {
@@ -1473,6 +1788,30 @@ while (true)
                             choice2.trapped = true;
                             choice2.actionsRemaining--;
                         }
+                        ///moving to a Door
+                        else if (map[choice2.location[0] - 1, choice2.location[1]] == 6)
+                        {
+                            if (choice2.haveKey)
+                            {
+                                Console.WriteLine("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                                string choosing = Console.ReadLine().ToLower();
+                                if (choosing == "yes")
+                                {
+                                    Console.WriteLine($"{choice2.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                    map[choice2.location[0] - 1, choice2.location[1]] = 0;
+                                }
+                                else if (choosing != "yess" && choosing != "no")
+                                {
+                                    Console.WriteLine("thats not a valid action!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(choice2, "I need a key to open that door!");
+                            }
+
+                        }
                         else if (map[choice2.location[0] - 1, choice2.location[1]] == 4)
                         {
                             // Make player current position equals 0
@@ -1520,6 +1859,30 @@ while (true)
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                             choice2.trapped = true;
                             choice2.actionsRemaining--;
+                        }
+                        ///moving to a Door
+                        else if (map[choice2.location[0] - 1, choice2.location[1]] == 6)
+                        {
+                            if (choice2.haveKey)
+                            {
+                                Console.WriteLine("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                                string choosing = Console.ReadLine().ToLower();
+                                if (choosing == "yes")
+                                {
+                                    Console.WriteLine($"{choice2.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                    map[choice2.location[0] - 1, choice2.location[1]] = 0;
+                                }
+                                else if (choosing != "yess" && choosing != "no")
+                                {
+                                    Console.WriteLine("thats not a valid action!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(choice2, "I need a key to open that door!");
+                            }
+
                         }
                         else if (map[choice2.location[0] - 1, choice2.location[1]] == 4)
                         {
@@ -1569,6 +1932,30 @@ while (true)
                             choice2.trapped = true;
                             choice2.actionsRemaining--;
                         }
+                        ///moving to a Door
+                        else if (map[choice2.location[0], choice2.location[1] - 1] == 6)
+                        {
+                            if (choice2.haveKey)
+                            {
+                                Console.WriteLine("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                                string choosing = Console.ReadLine().ToLower();
+                                if (choosing == "yes")
+                                {
+                                    Console.WriteLine($"{choice2.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                    map[choice2.location[0], choice2.location[1] - 1] = 0;
+                                }
+                                else if (choosing != "yess" && choosing != "no")
+                                {
+                                    Console.WriteLine("thats not a valid action!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(choice2, "I need a key to open that door!");
+                            }
+
+                        }
                         else if (map[choice2.location[0], choice2.location[1] - 1] == 4)
                         {
                             // Make player current position equals 0
@@ -1616,6 +2003,30 @@ while (true)
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                             choice2.trapped = true;
                             choice2.actionsRemaining--;
+                        }
+                        ///moving to a Door
+                        else if (map[choice2.location[0], choice2.location[1] - 1] == 6)
+                        {
+                            if (choice2.haveKey)
+                            {
+                                Console.WriteLine("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                                string choosing = Console.ReadLine().ToLower();
+                                if (choosing == "yes")
+                                {
+                                    Console.WriteLine($"{choice2.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                    map[choice2.location[0], choice2.location[1] - 1] = 0;
+                                }
+                                else if (choosing != "yess" && choosing != "no")
+                                {
+                                    Console.WriteLine("thats not a valid action!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(choice2, "I need a key to open that door!");
+                            }
+
                         }
                         else if (map[choice2.location[0], choice2.location[1] - 1] == 4)
                         {
@@ -1666,6 +2077,30 @@ while (true)
                             choice2.trapped = true;
                             choice2.actionsRemaining--;
                         }
+                        ///moving to a Door
+                        else if (map[choice2.location[0] + 1, choice2.location[1]] == 6)
+                        {
+                            if (choice2.haveKey)
+                            {
+                                Console.WriteLine("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                                string choosing = Console.ReadLine().ToLower();
+                                if (choosing == "yes")
+                                {
+                                    Console.WriteLine($"{choice2.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                    map[choice2.location[0] + 1, choice2.location[1]] = 0;
+                                }
+                                else if (choosing != "yess" && choosing != "no")
+                                {
+                                    Console.WriteLine("thats not a valid action!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(choice2, "I need a key to open that door!");
+                            }
+
+                        }
                         else if (map[choice2.location[0] + 1, choice2.location[1]] == 4)
                         {
                             // Make player current position equals 0
@@ -1714,6 +2149,30 @@ while (true)
                             choice2.locationlog.Add(new int[] { choice2.location[0], choice2.location[1] });
                             choice2.trapped = true;
                             choice2.actionsRemaining--;
+                        }
+                        ///moving to a Door
+                        else if (map[choice2.location[0] + 1, choice2.location[1]] == 6)
+                        {
+                            if (choice2.haveKey)
+                            {
+                                Console.WriteLine("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                                string choosing = Console.ReadLine().ToLower();
+                                if (choosing == "yes")
+                                {
+                                    Console.WriteLine($"{choice2.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                    map[choice2.location[0] + 1, choice2.location[1]] = 0;
+                                }
+                                else if (choosing != "yess" && choosing != "no")
+                                {
+                                    Console.WriteLine("thats not a valid action!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(choice2, "I need a key to open that door!");
+                            }
+
                         }
                         else if (map[choice2.location[0] + 1, choice2.location[1]] == 4)
                         {
@@ -1764,6 +2223,30 @@ while (true)
                             choice2.trapped = true;
                             choice2.actionsRemaining--;
                         }
+                        ///moving to a Door
+                        else if (map[choice2.location[0], choice2.location[1] + 1] == 6)
+                        {
+                            if (choice2.haveKey)
+                            {
+                                Console.WriteLine("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                                string choosing = Console.ReadLine().ToLower();
+                                if (choosing == "yes")
+                                {
+                                    Console.WriteLine($"{choice2.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                    map[choice2.location[0], choice2.location[1] + 1] = 0;
+                                }
+                                else if (choosing != "yess" && choosing != "no")
+                                {
+                                    Console.WriteLine("thats not a valid action!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(choice2, "I need a key to open that door!");
+                            }
+
+                        }
                         else if (map[choice2.location[0], choice2.location[1] + 1] == 4)
                         {
                             // Make player current position equals 0
@@ -1812,6 +2295,30 @@ while (true)
                             //select a random trap in the trap list, to execute to the hero
                             choice2.trapped = true;
                             choice2.actionsRemaining--;
+                        }
+                        ///moving to a Door
+                        else if (map[choice2.location[0], choice2.location[1] + 1] == 6)
+                        {
+                            if (choice2.haveKey)
+                            {
+                                Console.WriteLine("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                                string choosing = Console.ReadLine().ToLower();
+                                if (choosing == "yes")
+                                {
+                                    Console.WriteLine($"{choice2.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                    map[choice2.location[0], choice2.location[1] + 1] = 0;
+                                }
+                                else if (choosing != "yess" && choosing != "no")
+                                {
+                                    Console.WriteLine("thats not a valid action!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(choice2, "I need a key to open that door!");
+                            }
+
                         }
                         else if (map[choice2.location[0], choice2.location[1] + 1] == 4)
                         {

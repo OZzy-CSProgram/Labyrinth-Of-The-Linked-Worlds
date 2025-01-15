@@ -16,6 +16,8 @@ namespace GameObjects
         public int attack;
         public int mana;
 
+        public bool haveKey;
+
         public bool trapped = false;
         public int stunned = 0;
         public int toughness;
@@ -61,6 +63,7 @@ namespace GameObjects
             location[0]++;
             return location;
         }
+
         public static void DisplayList(List<Hero> list, string s)
         {
             var table = new Table();
@@ -70,7 +73,7 @@ namespace GameObjects
             for (int i = 0; i < list.Count; i++)
             {
                 var table1 = new Table();
-                table1.AddColumn("[bold #ff7400] " + (i + 1) + "[/][yellow] >>[/]  [bold]  " + list[i].icon + "  " + list[i].name + "[/]  ");
+                table1.AddColumn("[bold #ff7400] " + (i + 1) + "[/][yellow] >>[/]  [black]  " + list[i].icon + " [/] [bold]" + list[i].name + "[/]  ");
                 table1.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
                 table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
                 table1.AddRow(" 💙 [bold] Max Mana[/] >  20");
@@ -91,17 +94,23 @@ namespace GameObjects
             table.AddColumn(new TableColumn(s).Centered());
             table.AddRow("");
             Console.OutputEncoding = System.Text.Encoding.UTF8;
+            
             for (int i = 0; i < list.Count; i++)
             {
+                 var stats = new BarChart()
+                 .Width(60)
+                 .AddItem("💗 [bold #e9e9e9]Health[/]", list[i].health, Color.DarkRed)
+                 .AddItem("💙 [bold #e9e9e9]Mana[/]", list[i].mana, Color.DarkBlue);
+
+
                 if (list[i].stunned > 0)
                 {
                     var table1 = new Table();
-                    table1.AddColumn("[bold #ff7400] " + (i + 1) + "[/][yellow] >>[/]  [bold] " + list[i].icon + " " + list[i].name + "[/]       [bold red]MUST WAIT " + list[i].stunned + " TURN(S)[/]");
-                    table1.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
-                    table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
-                    table1.AddRow(" 💙 [bold] Mana[/] >  " + list[i].mana + " / 20");
-                    table1.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
-                    table1.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
+                    table1.AddColumn("[bold #fbd022] " + (i + 1) + "[/][#783806] >>[/]  [black] " + list[i].icon + "[/] [bold]" + list[i].name + "[/]       [bold red]MUST WAIT " + list[i].stunned + " TURN(S)[/]");
+                    table1.AddRow(" 📜 [bold #e9e9e9]Info  [/]   >  [#f9d380]" + list[i].info + "[/]");
+                    table1.AddRow(stats);
+                    table1.AddRow(" 🔪 [bold #e9e9e9]Attack[/]   >  " + list[i].attack);
+                    table1.AddRow(" 💠 [bold #e9e9e9]Super Requires[/] > Mana " + list[i].cooldown + "💙");
                     table.AddRow(table1);
                     table1.BorderColor(Color.Red);
                 }
@@ -110,26 +119,24 @@ namespace GameObjects
                     list[i].stunned = 10;
                     list[i].health = 6;
                     var table1 = new Table();
-                    table1.AddColumn("[bold #ff7400] " + (i + 1) + "[/][yellow] >>[/]  [bold] " + list[i].icon + " " + list[i].name + "[/] [bold red]RECOVERING, WAIT " + list[i].stunned + " TURN(S)[/]");
-                    table1.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
-                    table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
-                    table1.AddRow(" 💙 [bold] Mana[/] >  " + list[i].mana + " / 20");
-                    table1.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
-                    table1.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
+                    table1.AddColumn("[bold #fbd022] " + (i + 1) + "[/][#783806] >>[/]  [black] " + list[i].icon + "[/][bold] " + list[i].name + "[/] [bold red]RECOVERING, WAIT " + list[i].stunned + " TURN(S)[/]");
+                    table1.AddRow(" 📜 [bold #e9e9e9]Info  [/]   >  [#f9d380]" + list[i].info + "[/]");
+                    table1.AddRow(stats);
+                    table1.AddRow(" 🔪 [bold #e9e9e9]Attack[/]   >  " + list[i].attack);
+                    table1.AddRow(" 💠 [bold #e9e9e9]Super Requires[/] > Mana " + list[i].cooldown + "💙");
                     table.AddRow(table1);
                     table1.BorderColor(Color.Red);
                 }
                 if (list[i].stunned <= 0 && list[i].health > 0)
                 {
                     var table1 = new Table();
-                    table1.AddColumn("[bold #ff7400] " + (i + 1) + "[/][yellow] >>[/]  [bold] " + list[i].icon + " " + list[i].name + "[/]");
-                    table1.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
-                    table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
-                    table1.AddRow(" 💙 [bold] Mana[/] >  " + list[i].mana + " / 20");
-                    table1.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
-                    table1.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
+                    table1.AddColumn("[bold #fbd022] " + (i + 1) + "[/][#783806] >>[/]  [black] " + list[i].icon + "[/][bold] " + list[i].name + "[/]");
+                    table1.AddRow(" 📜 [bold #e9e9e9]Info  [/]   >  [#f9d380]" + list[i].info + "[/]");
+                    table1.AddRow(stats);
+                    table1.AddRow(" 🔪 [bold #e9e9e9]Attack[/]   >  " + list[i].attack);
+                    table1.AddRow(" 💠 [bold #e9e9e9]Super Requires[/] > Mana " + list[i].cooldown + "💙");
                     table.AddRow(table1);
-                    table1.BorderColor(Color.Chartreuse2);
+                    table1.BorderColor(Color.OrangeRed1);
                 }
             }
             table.AddRow("");
@@ -162,12 +169,36 @@ namespace GameObjects
                 int[] arr = new int[2];
                 while (true)
                 {
-                    Console.WriteLine("                  ╔════════════════════╗                   ");
-                    Console.WriteLine("                  ║   W > Break above  ║                   ");
-                    Console.WriteLine("                  ╚════════════════════╝                   ");
-                    Console.WriteLine("╔══════════════════╦══════════════════╦═══════════════════╗");
-                    Console.WriteLine("║   A > Break left ║  S > Break below ║  D > Break right  ║");
-                    Console.WriteLine("╚══════════════════╩══════════════════╩═══════════════════╝");
+                    Console.Clear();
+                    var table = new Table()
+                    .NoBorder();
+                    var w = new Table()
+                    .Border(TableBorder.Double)
+                    .BorderColor(Color.SandyBrown)
+                    .AddColumn(new TableColumn("W ⬆ above").Centered());
+
+                    var a = new Table()
+                    .Border(TableBorder.Double)
+                    .BorderColor(Color.SandyBrown)
+                    .AddColumn(new TableColumn("A ⬅ left").Centered());
+
+                    var s = new Table()
+                    .Border(TableBorder.Double)
+                    .BorderColor(Color.SandyBrown)
+                    .AddColumn(new TableColumn("S ⬇ below").Centered());
+
+                    var d = new Table()
+                    .Border(TableBorder.Double)
+                    .BorderColor(Color.SandyBrown)
+                    .AddColumn(new TableColumn("D ➡ right").Centered());
+
+
+                    table.AddColumn(new TableColumn("").Centered()).NoBorder();
+                    table.AddColumn(new TableColumn(w).Centered()).NoBorder();
+                    table.AddColumn(new TableColumn("").Centered()).NoBorder();
+
+                    table.AddRow(a.Centered(), s.Centered(), d.Centered());
+                    AnsiConsole.Write(table);
                     Direction = Console.ReadKey(true);
 
                     while (Direction.KeyChar != 'w' && Direction.KeyChar != 'W' && Direction.KeyChar != 'a' && Direction.KeyChar != 'A' && Direction.KeyChar != 's' && Direction.KeyChar != 'S' && Direction.KeyChar != 'd' && Direction.KeyChar != 'D' && Direction.KeyChar != 'r' && Direction.KeyChar != 'R')
@@ -180,12 +211,7 @@ namespace GameObjects
 
                         Console.Clear();
                         Maze.PrintMaze(map, "Select A valid Direction !");
-                        Console.WriteLine("                  ╔════════════════════╗                   ");
-                        Console.WriteLine("                  ║   W > Break above  ║                   ");
-                        Console.WriteLine("                  ╚════════════════════╝                   ");
-                        Console.WriteLine("╔══════════════════╦══════════════════╦═══════════════════╗");
-                        Console.WriteLine("║   A > Break left ║  S > Break below ║  D > Break right  ║");
-                        Console.WriteLine("╚══════════════════╩══════════════════╩═══════════════════╝");
+                        AnsiConsole.Write(table);
                         Direction = Console.ReadKey(true);
 
                         if (Direction.KeyChar == 'w' || Direction.KeyChar == 'W' || Direction.KeyChar == 'a' || Direction.KeyChar == 'A' || Direction.KeyChar == 's' || Direction.KeyChar == 'S' || Direction.KeyChar == 'd' || Direction.KeyChar == 'D')
@@ -236,7 +262,11 @@ namespace GameObjects
         public override void CastSpell(int[,] map, Player player, Player otherplayer)
         {
             Console.Clear();
-            Console.WriteLine(name + " >> Thou cannot reach my magic! .... Teleporting");
+            var dialogue = new Table()
+            .RoundedBorder();
+            dialogue.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+            dialogue.AddColumn(new TableColumn("[bold blue]> [/] Nobody can reach my magic!  ٩(^ᴗ^)۶   .... Teleporting").Centered());
+            AnsiConsole.Write(dialogue);
             int[] receptor = Maze.GetRandomPath();
             map[location[0], location[1]] = 0;
             while (receptor[0] == location[0] && receptor[1] == location[1])
@@ -268,7 +298,11 @@ namespace GameObjects
             Hero heroselected = Player.GetPlayerChoice(otherplayer.Party);
 
             Console.Clear();
-            Console.WriteLine($"{name} >> , You will be teleported {heroselected.name}, and you will not even know why, hahahahahaha");
+            var dialogue = new Table()
+            .RoundedBorder();
+            dialogue.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+            dialogue.AddColumn(new TableColumn("[bold blue]> [/] You will be teleported [bold]" + heroselected.name + "[/], and you will not even know why, With the almighty power of space...!!   ≖‿≖").Centered());
+            AnsiConsole.Write(dialogue);
             //save other hero Location
             int savedlocationX = heroselected.location[0];
             int savedlocationY = heroselected.location[1];
@@ -302,7 +336,11 @@ namespace GameObjects
             Hero heroselected = Player.GetPlayerChoice(otherplayer.Party);
 
             Console.Clear();
-            Console.WriteLine($"{name} >> 'Tis such a shame, but I will paralyze you {heroselected.name}, for 5 turns!, hahahahahaha");
+            var dialogue = new Table()
+            .RoundedBorder();
+            dialogue.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+            dialogue.AddColumn(new TableColumn("[bold blue]> [/] 'Tis such a shame, but I will paralyze you [bold]" + heroselected.name + "[/], for [bold]5 turns[/] !, ᕚ('▿')ᕘ hahahahahaha").Centered());
+            AnsiConsole.Write(dialogue);
             //stun hero
             heroselected.stunned = 5;
 
@@ -339,7 +377,11 @@ namespace GameObjects
                 player.Party[index].mana += 5;
             }
             Console.Clear();
-            Console.WriteLine($"{name} >> Thy mana does not belongs to you {heroselected.name}, and I will transfer {savedmana} points of it to {player.Party[index].name}, hahahahahaha");
+            var dialogue = new Table()
+            .RoundedBorder();
+            dialogue.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+            dialogue.AddColumn(new TableColumn("[bold blue]> [/] Thy mana does not belongs to you [bold]" + heroselected.name + "[/], and I will transfer[bold blue] " + savedmana + "[/] points of it to[bold] " + player.Party[index].name + "[/], haha ⧹(⦁ᴗ⦁)⧸").Centered());
+            AnsiConsole.Write(dialogue);
         }
     }
     public class Jumper : Hero
@@ -352,7 +394,11 @@ namespace GameObjects
         public override void CastSpell(int[,] map, Player player, Player otherplayer)
         {
             Console.Clear();
-            Console.WriteLine(name + " >> Nobody can jump like I can! .... Ahahahaha");
+            var dialogue = new Table()
+            .RoundedBorder();
+            dialogue.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+            dialogue.AddColumn(new TableColumn("[bold blue]> [/] Nobody can jump like I can! .... Ahahahaha ?\n\n ").Centered());
+            AnsiConsole.Write(dialogue);
             Console.WriteLine();
             Console.WriteLine("Press a key to continue...");
             Console.ReadKey(true);
@@ -386,7 +432,11 @@ namespace GameObjects
                             trapped = true;
                             Console.Clear();
                             Maze.PrintMaze(map, "Super Activated successfully!");
-                            Console.WriteLine($"{name} >> It's amazing!, my jump reached the maximum distance :D");
+                            var dialogue2 = new Table()
+                            .RoundedBorder();
+                            dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+                            dialogue2.AddColumn(new TableColumn("[bold blue]> [/] It's amazing!, my jump reached the maximum distance :D").Centered());
+                            AnsiConsole.Write(dialogue2);
                             Console.WriteLine();
                         }
                         else if (map[location[0] + Dir[0] + Dir[0] + Dir[0], location[1] + Dir[1] + Dir[1] + Dir[1]] == 0)
@@ -396,7 +446,11 @@ namespace GameObjects
                             map[location[0], location[1]] = id;
                             Console.Clear();
                             Maze.PrintMaze(map, "Super Activated successfully!");
-                            Console.WriteLine($"{name} >> It's amazing!, my jump reached the maximum distance :D");
+                            var dialogue2 = new Table()
+                            .RoundedBorder();
+                            dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+                            dialogue2.AddColumn(new TableColumn("[bold blue]> [/] It's amazing!, my jump reached the maximum distance :D").Centered());
+                            AnsiConsole.Write(dialogue2);
                             Console.WriteLine();
                         }
 
@@ -420,8 +474,13 @@ namespace GameObjects
                             trapped = true;
                             Console.Clear();
                             Maze.PrintMaze(map, "Super Activated successfully!");
-                            Console.WriteLine($"{name} >> I could have jumped a higher distance but my jump was interruped due to an obstacle :(");
-                            Console.WriteLine();
+
+                            var dialogue2 = new Table()
+                            .RoundedBorder();
+                            dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+                            dialogue2.AddColumn(new TableColumn("[bold blue]> [/] I could have jumped a higher distance but my jump was interruped due to an obstacle :(").Centered());
+                            AnsiConsole.Write(dialogue2);
+
                         }
                         else if (map[location[0] + Dir[0] + Dir[0], location[1] + Dir[1] + Dir[1]] == 0)
                         {
@@ -430,8 +489,11 @@ namespace GameObjects
                             map[location[0], location[1]] = id;
                             Console.Clear();
                             Maze.PrintMaze(map, "Super Activated successfully!");
-                            Console.WriteLine($"{name} >> I could have jumped a higher distance but my jump was interruped due to an obstacle :(");
-                            Console.WriteLine();
+                            var dialogue2 = new Table()
+                            .RoundedBorder();
+                            dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+                            dialogue2.AddColumn(new TableColumn("[bold blue]> [/] I could have jumped a higher distance but my jump was interruped due to an obstacle :(").Centered());
+                            AnsiConsole.Write(dialogue2);
                         }
                     }
                 }
@@ -452,8 +514,11 @@ namespace GameObjects
                         trapped = true;
                         Console.Clear();
                         Maze.PrintMaze(map, "Super Activated successfully!");
-                        Console.WriteLine($"{name} >> I could have jumped a higher distance but my jump was interruped due to an obstacle :(");
-                        Console.WriteLine();
+                        var dialogue2 = new Table()
+                        .RoundedBorder();
+                        dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+                        dialogue2.AddColumn(new TableColumn("[bold blue]> [/] I could have jumped a higher distance but my jump was interruped due to an obstacle :(").Centered());
+                        AnsiConsole.Write(dialogue2);
                     }
                     else if (map[location[0] + Dir[0], location[1] + Dir[1]] == 0)
                     {
@@ -462,8 +527,11 @@ namespace GameObjects
                         map[location[0], location[1]] = id;
                         Console.Clear();
                         Maze.PrintMaze(map, "Super Activated successfully!");
-                        Console.WriteLine($"{name} >> I could have jumped a higher distance but my jump was interruped due to an obstacle :(");
-                        Console.WriteLine();
+                        var dialogue2 = new Table()
+                        .RoundedBorder();
+                        dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+                        dialogue2.AddColumn(new TableColumn("[bold blue]> [/] I could have jumped a higher distance but my jump was interruped due to an obstacle :(").Centered());
+                        AnsiConsole.Write(dialogue2);
                     }
                 }
             }
@@ -482,13 +550,47 @@ namespace GameObjects
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("Which wall would you like " + name + " to destroy");
-                Console.WriteLine("                  ╔════════════════════╗                   ");
-                Console.WriteLine("                  ║   W > Break above  ║                   ");
-                Console.WriteLine("                  ╚════════════════════╝                   ");
-                Console.WriteLine("╔══════════════════╦══════════════════╦═══════════════════╗");
-                Console.WriteLine("║   A > Break left ║  S > Break below ║  D > Break right  ║");
-                Console.WriteLine("╚══════════════════╩══════════════════╩═══════════════════╝");
+                var dialogue = new Table()
+                .RoundedBorder();
+                dialogue.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+                dialogue.AddColumn(new TableColumn("[bold blue]> [/]Which wall would you like me to destroy mate ? ヽ(ヅ)ノ").Centered());
+                AnsiConsole.Write(dialogue);
+
+
+                var table = new Table()
+                .NoBorder();
+                var w = new Table()
+                .Border(TableBorder.Double)
+                .BorderColor(Color.SandyBrown)
+                .AddColumn(new TableColumn("W ⬆ above").Centered());
+
+                var a = new Table()
+                .Border(TableBorder.Double)
+                .BorderColor(Color.SandyBrown)
+                .AddColumn(new TableColumn("A ⬅ left").Centered());
+
+                var s = new Table()
+                .Border(TableBorder.Double)
+                .BorderColor(Color.SandyBrown)
+                .AddColumn(new TableColumn("S ⬇ below").Centered());
+
+                var d = new Table()
+                .Border(TableBorder.Double)
+                .BorderColor(Color.SandyBrown)
+                .AddColumn(new TableColumn("D ➡ right").Centered());
+
+
+                table.AddColumn(new TableColumn("").Centered()).NoBorder();
+                table.AddColumn(new TableColumn(w).Centered()).NoBorder();
+                table.AddColumn(new TableColumn("").Centered()).NoBorder();
+
+                table.AddRow(a.Centered(), s.Centered(), d.Centered());
+                AnsiConsole.Write(table);
+
+
+
+
+
                 ConsoleKeyInfo Direction = Console.ReadKey(true);
                 while (Direction.KeyChar != 'w' && Direction.KeyChar != 'W' && Direction.KeyChar != 'a' && Direction.KeyChar != 'A' && Direction.KeyChar != 's' && Direction.KeyChar != 'S' && Direction.KeyChar != 'd' && Direction.KeyChar != 'D' && Direction.KeyChar != 'r' && Direction.KeyChar != 'R')
                 {
@@ -499,13 +601,8 @@ namespace GameObjects
                     Console.ReadKey(true);
 
                     Console.Clear();
-                    Console.WriteLine("Which wall would you like " + name + " to destroy");
-                    Console.WriteLine("                  ╔════════════════════╗                   ");
-                    Console.WriteLine("                  ║   W > Break above  ║                   ");
-                    Console.WriteLine("                  ╚════════════════════╝                   ");
-                    Console.WriteLine("╔══════════════════╦══════════════════╦═══════════════════╗");
-                    Console.WriteLine("║   A > Break left ║  S > Break below ║  D > Break right  ║");
-                    Console.WriteLine("╚══════════════════╩══════════════════╩═══════════════════╝");
+                    AnsiConsole.Write(dialogue);
+                    AnsiConsole.Write(table);
                     Direction = Console.ReadKey(true);
 
                     if (Direction.KeyChar == 'w' || Direction.KeyChar == 'W' || Direction.KeyChar == 'a' || Direction.KeyChar == 'A' || Direction.KeyChar == 's' || Direction.KeyChar == 'S' || Direction.KeyChar == 'd' || Direction.KeyChar == 'D')
