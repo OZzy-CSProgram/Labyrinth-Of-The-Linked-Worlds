@@ -42,11 +42,7 @@ namespace GameObjects
 
         }
         /////methods/////
-        public int[] move(int[] location, int[,] Maze)
-        {
-            location[1]++;
-            return location;
-        }
+        
 
 
 
@@ -102,13 +98,13 @@ namespace GameObjects
             table.AddColumn(new TableColumn(s).Centered());
             table.AddRow("");
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            
+
             for (int i = 0; i < list.Count; i++)
             {
-                 var stats = new BarChart()
-                 .Width(60)
-                 .AddItem("💗 [bold #e9e9e9]Health[/]", list[i].health, Color.DarkRed)
-                 .AddItem("💙 [bold #e9e9e9]Mana[/]", list[i].mana, Color.DarkBlue);
+                var stats = new BarChart()
+                .Width(60)
+                .AddItem("💗 [bold #e9e9e9]Health[/]", list[i].health, Color.DarkRed)
+                .AddItem("💙 [bold #e9e9e9]Mana[/]", list[i].mana, Color.DarkBlue);
 
 
                 if (list[i].stunned > 0)

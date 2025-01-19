@@ -2,7 +2,7 @@ using System.Data;
 using Spectre.Console;
 namespace GameObjects
 {
-    class Trap
+    public class Trap
     {
         public virtual void CastTrap(Hero hero, int[,] map)
         {
@@ -40,6 +40,7 @@ namespace GameObjects
             int[] Trap10 = GetTrap(map);
             map[Trap10[0], Trap10[1]] = 3;
         }
+        
         public static int[] GetTrap(int[,] map)
         {
             int[] Trap;
