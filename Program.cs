@@ -53,47 +53,35 @@ while (true)
         ///////////////////      PLAY- Choise   Setting Players   Generating Maze    ///////////////////////
 
         Console.Clear();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-
+        Console.WriteLine("\n\n\n");
         Console.WriteLine("Letsss goooo!!!");
-        Console.WriteLine("(press a key to continue)");
-        Console.ReadKey(true);
+        var letsgo = Menu.CreateTable("[bold #c159ff]" + @"  _    ___ _____ _ ___    ___  ___  _ " + "\n" + @" | |  | __|_   _( ) __|  / __|/ _ \| |" + "\n" + @" | |__| _|  | | |/\__ \ | (_ | (_) |_|" + "\n" + @" |____|___| |_|   |___/  \___|\___/(_)"  + "\n" +  "[/]");
+        AnsiConsole.Write(letsgo);
+        Menu.KeyToContinue();
 
         Console.Clear();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
+        Console.WriteLine("\n\n\n");
 
+
+
+        Player Player1 = new Player();
         //Phase 1
-        Console.WriteLine("                   For The Player 1");
-        Console.WriteLine("(The Player 1 should be the one playing, at this current time!)");
-
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-
-        Console.WriteLine("(press a key to continue)");
-        Console.ReadKey(true);
+        var ForP1 = Menu.CreateTable("[bold]FOR THE PLAYER 1[/]\n\n (The Player 1 should be the one playing, at this current time!)");
+        AnsiConsole.Write(ForP1);
+        Console.WriteLine("\n\n\n");
+        Menu.KeyToContinue();
 
         Console.Clear();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
+        Console.WriteLine("\n\n\n");
 
         //Roleplay
-        Console.WriteLine("(you wake up in a stranger place!)");
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine("(press a key to continue)");
-        Console.ReadKey(true);
+        var RoleP11 = Menu.CreateTable("(you wake up in a stranger place!)");
+        AnsiConsole.Write(RoleP11);
+        Console.WriteLine("\n\n\n");
+        Menu.KeyToContinue();
 
         Console.Clear();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
+        Console.WriteLine("\n\n\n");
 
         //More Roleplay
 
@@ -102,39 +90,33 @@ while (true)
         .BorderColor(Color.Gold1);
         instance1.AddColumn(new TableColumn("")).HideHeaders();
         instance1.AddRow("[bold green]Lady Elara [/] [yellow]>[/] We have been waiting for you warrior!").Centered();
-        instance1.AddEmptyRow();
-        instance1.AddEmptyRow();
-        instance1.AddEmptyRow();
-        instance1.AddRow("(press a key to continue)").Centered();
+        instance1.AddRow("\n\n\n");
 
         var Stage1 = Menu.LadyElara(GameGui2, instance1);
         AnsiConsole.Write(Stage1);
-        Console.ReadKey(true);
+        Menu.KeyToContinueCentered();
         Console.Clear();
 
-        Player Player1 = new Player();
 
         var instance2 = new Table()
         .Border(TableBorder.Rounded)
         .BorderColor(Color.Gold1);
         instance2.AddColumn(new TableColumn("")).HideHeaders();
         instance2.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Wait, We have not properly meet, What is your name?!").Centered();
-        instance2.AddEmptyRow();
-        instance2.AddEmptyRow();
-        instance2.AddEmptyRow();
-        instance2.AddRow(" ").Centered();
+        instance2.AddRow("\n\n\n");
         var Stage2 = Menu.LadyElara(GameGui3, instance2);
         AnsiConsole.Write(Stage2);
-        Console.WriteLine();
-        Console.Write("                             Enter your name to continue) ▶     ");
-        string nameofP1 = Player.intname(Console.ReadLine(), Player1);
+        Menu.KeyToContinueCentered();
 
         Console.Clear();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine("(press a key to continue)");
-        Console.ReadKey(true);
+        var EnterName = Menu.CreateTable("[bold #91e4f2] \nEnter your name to continue\n[/]");
+        AnsiConsole.Write(EnterName);
+        string nameofP1 = Player.intname(Console.ReadLine(), Player1);
+        Console.WriteLine("\n\n\n");
+        Player1.Greet();
+        Console.WriteLine("\n\n\n");
+        Console.WriteLine("\n\n\n");
+        Menu.KeyToContinue();
 
         Console.Clear();
         var instance3 = new Table()
@@ -142,12 +124,10 @@ while (true)
         .BorderColor(Color.Gold1);
         instance3.AddColumn(new TableColumn("")).HideHeaders();
         instance3.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Greetings " + nameofP1 + " we have summoned you, from your world because we need your help!").Centered();
-        instance3.AddEmptyRow();
-        instance3.AddEmptyRow();
-        instance3.AddEmptyRow();
-        instance3.AddRow("(press a key to continue)").Centered();
+        instance3.AddRow("\n\n\n");
         var Stage3 = Menu.LadyElara(GameGui4, instance3);
         AnsiConsole.Write(Stage3);
+        Menu.KeyToContinueCentered();
 
         Console.Clear();
         var instance4 = new Table()
@@ -155,11 +135,9 @@ while (true)
         .BorderColor(Color.Gold1);
         instance4.AddColumn(new TableColumn("")).HideHeaders();
         instance4.AddRow("[bold green]Lady Elara [/] [yellow]>[/] I have had a vision of a future where darkness consumes all of my world,\nI have seen in my visions that the only way to stop the darkness from spreading\n is by using an ancient and lost artifact called The Heart of Ebony... \n \n\nA group of our elder mages has discover that this artifact lays in a dangerous place called \n'The Labyrinth of The Linked Worlds' So... Can you help us " + nameofP1 + " ?").Centered();
-        instance4.AddEmptyRow();
-        instance4.AddEmptyRow();
+        instance4.AddRow("\n\n");
         instance4.AddRow("(   Choose your answer   )").Centered();
-        instance4.AddEmptyRow();
-        instance4.AddEmptyRow();
+        instance4.AddRow("\n\n");
         instance4.AddRow("[bold red]1[/] Why me?").Centered();
         instance4.AddRow("[bold red]2[/] What exactly do you want me to do!").Centered();
         var Stage4 = Menu.LadyElara(GameGui5, instance4);
@@ -171,16 +149,11 @@ while (true)
             Console.Clear();
 
             Console.WriteLine("thats not a valid answer)");
-            Console.WriteLine("(press a key to continue)");
-            Console.ReadKey(true);
+            Console.WriteLine("\n\n\n");
+            Menu.KeyToContinue();
 
             Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
+            Console.WriteLine("\n\n\n\n\n\n");
             AnsiConsole.Write(Stage4);
             decition2 = Console.ReadKey(true);
 
@@ -198,11 +171,9 @@ while (true)
             .BorderColor(Color.Gold1);
             instance5.AddColumn(new TableColumn("")).HideHeaders();
             instance5.AddRow("[bold green]Lady Elara [/] [yellow]>[/] I understand the question " + nameofP1 + " ,there is a prophecy about this labyrinth that says \n'Nobody in this world shall carry the Heart of Ebony out of the Labyrinth',\n and so we have decided to summon someone from another world to help us!\n \n... Can you?").Centered();
-            instance5.AddEmptyRow();
-            instance5.AddEmptyRow();
+            instance5.AddRow("\n\n");
             instance5.AddRow("(   Choose your answer   )").Centered();
-            instance5.AddEmptyRow();
-            instance5.AddEmptyRow();
+            instance5.AddRow("\n\n");
             instance5.AddRow("[bold red]2[/] What exactly do you want me to do!").Centered();
             var Stage5 = Menu.LadyElara(GameGui7, instance5);
             AnsiConsole.Write(Stage5);
@@ -211,15 +182,10 @@ while (true)
             while (decition2.KeyChar != '2')
             {
                 Console.Clear();
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine();
+                Console.WriteLine("\n\n\n");
                 Console.WriteLine("(thats not a valid answer)");
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine("(press a key to continue)");
-                Console.ReadKey(true);
+                Console.WriteLine("\n\n\n");
+                Menu.KeyToContinue();
 
                 Console.Clear();
                 AnsiConsole.Write(Stage5);
@@ -239,69 +205,52 @@ while (true)
         .BorderColor(Color.Gold1);
         instance6.AddColumn(new TableColumn("")).HideHeaders();
         instance6.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Thank you " + nameofP1 + " ! Your quest would be to go inside the Labyrinth of the Linked Worlds and get the Heart of Ebony, dont worry, you will not be alone, you will be leading a party of brave heroes of our kingdom, you can personally choose them! ").Centered();
-        instance6.AddEmptyRow();
-        instance6.AddEmptyRow();
-        instance6.AddRow("(   press a key to continue   )").Centered();
-        instance6.AddEmptyRow();
-        instance6.AddEmptyRow();
+        instance6.AddRow("\n\n\n\n");
         var Stage6 = Menu.LadyElara(GameGui8, instance6);
         AnsiConsole.Write(Stage6);
-        Console.ReadKey(true);
-        Console.Clear();
+        Menu.KeyToContinueCentered();
 
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
+        Console.Clear();
+        Console.WriteLine("\n\n\n");
 
         //Phase 2
         Player Player2 = new Player();
-        Console.WriteLine("                    For The Player 2");
-        Console.WriteLine("(The Player 2 should be the one playing, at this current time!)");
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
+        var ForP2 = Menu.CreateTable("[bold]FOR THE PLAYER 2[/]\n\n (The Player 2 should be the one playing, at this current time!)");
+        AnsiConsole.Write(ForP2);
+        Console.WriteLine("\n\n\n");
+        Menu.KeyToContinue();
+        
+        Console.Clear();
         Console.WriteLine("Lord Kaelg> Wake up!, You are now under my command Switcher!!!");
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine("(press a key to continue)");
-        Console.ReadKey(true);
+        Console.WriteLine("\n\n\n");
+        Menu.KeyToContinue();
 
         Console.Clear();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
+        Console.WriteLine("\n\n\n");
         Console.WriteLine("Lord Kaelg> If you want to get back to your miserable world you shall first serve me well!!!");
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
+        Console.WriteLine("\n\n\n");
+        Menu.KeyToContinue();
 
         Console.Clear();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
+        Console.WriteLine("\n\n\n");
         Console.WriteLine("Lord Kaelg> Tell me what your name is!!!");
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.Write("(Enter your name to continue) : ");
+        Console.WriteLine("\n\n\n");
+        Menu.KeyToContinue();
+
+        Console.Clear();
+        AnsiConsole.Write(EnterName);
         string nameofP2 = Player.intname(Console.ReadLine(), Player2);
         Player2.name = nameofP2;
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
+        Console.WriteLine("\n\n\n");
         Player2.Greet();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine("(press a key to continue)");
-        Console.ReadKey(true);
+        Console.WriteLine("\n\n\n");
+        Console.WriteLine("\n\n\n");
+        Menu.KeyToContinue();
+
         Console.Clear();
         //// MAP GENERATION
         Console.Clear();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
+        Console.WriteLine("\n\n\n");
 
         Console.WriteLine("Genering The Map...");
         int[,] map = Maze.Generator();
@@ -388,20 +337,15 @@ while (true)
         DoorSpawn.Add(new int[] { Maze.size / 2, Maze.size / 2 + 1 });
 
         int doorspawnindex = random.Next(DoorSpawn.Count);
-
         map[DoorSpawn[doorspawnindex][0], DoorSpawn[doorspawnindex][1]] = 6;
 
         int[] KeyLocation = new int[2];
         KeyLocation[0] = Maze.size / 2 + 2;
         KeyLocation[1] = Maze.size / 2 + 1;
 
-
-
-
         var mapprinted = Maze.PrintMaze(map, "  Generated Map !");
         AnsiConsole.Write(mapprinted);
-        Console.WriteLine("(press a key to continue)");
-        Console.ReadKey(true);
+        Menu.KeyToContinue();
         ///////////////////////////////////////////////////////////////////////////////////
         //////////////////////////      Heroes Selection         //////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////
@@ -410,15 +354,10 @@ while (true)
         Console.WriteLine("|  |  |___ ___ ___ ___ ___   |   __|___| |___ ___| |_|_|___ ___ ");
         Console.WriteLine("|     | -_|  _| . | -_|_ -|  |__   | -_| | -_|  _|  _| | . |   |");
         Console.WriteLine("|__|__|___|_| |___|___|___|  |_____|___|_|___|___|_| |_|___|_|_|");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
+        Console.WriteLine("\n\n\n");
         Console.WriteLine("Allright, Lets proceed to the Heroes Selection");
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine("(press a key to continue)");
-        Console.ReadKey(true);
+        Console.WriteLine("\n\n\n");
+        Menu.KeyToContinue();
         List<Hero> Heroes = new List<Hero>();
         Teleporter Mediv = new Teleporter(11, "🧙🏻‍♂️", "Mediv The Guardian", "A powerfull mage with the magical power \n of teleporting to a random position in the maze!", 10, 6, 0, 12, map);
         Heroes.Add(Mediv);
@@ -442,30 +381,20 @@ while (true)
             Console.WriteLine("|  |  |___ ___ ___ ___ ___   |   __|___| |___ ___| |_|_|___ ___ ");
             Console.WriteLine("|     | -_|  _| . | -_|_ -|  |__   | -_| | -_|  _|  _| | . |   |");
             Console.WriteLine("|__|__|___|_| |___|___|___|  |_____|___|_|___|___|_| |_|___|_|_|");
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
+            Console.WriteLine("\n\n\n\n\n");
             Hero.DisplayList(Heroes, $"{nameofP1.ToUpper()} , ITS YOUR TURN !!!");
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
+            Console.WriteLine("\n\n\n\n\n");
+
             Hero choice1 = Player.GetPlayerChoice(Heroes);
             if (choice1 != null)
             {
                 Console.Clear();
-                Console.WriteLine();
-                Console.WriteLine();
+                Console.WriteLine("\n\n");
                 Console.WriteLine($"{nameofP1} has chosen {choice1.name} !");
                 Player1.Party.Add(choice1);
                 Heroes.Remove(choice1);
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine("(press a key to continue)");
-                Console.ReadKey(true);
+                Console.WriteLine("\n\n\n");
+                Menu.KeyToContinue();
             }
             if (Heroes.Count == 0)
             {
@@ -477,42 +406,28 @@ while (true)
             Console.WriteLine("|  |  |___ ___ ___ ___ ___   |   __|___| |___ ___| |_|_|___ ___ ");
             Console.WriteLine("|     | -_|  _| . | -_|_ -|  |__   | -_| | -_|  _|  _| | . |   |");
             Console.WriteLine("|__|__|___|_| |___|___|___|  |_____|___|_|___|___|_| |_|___|_|_|");
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
+            Console.WriteLine("\n\n\n\n\n");
             Hero.DisplayList(Heroes, $"{nameofP2.ToUpper()} , ITS YOUR TURN !!!");
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
+            Console.WriteLine("\n\n\n\n\n");
             Hero choice2 = Player.GetPlayerChoice(Heroes);
             if (choice2 != null)
             {
                 Console.Clear();
-                Console.WriteLine();
-                Console.WriteLine();
+                Console.WriteLine("\n\n");
                 Console.WriteLine($"{nameofP2} has chosen {choice2.name}");
                 Player2.Party.Add(choice2);
                 Heroes.Remove(choice2);
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine("(press a key to continue)");
-                Console.ReadKey(true);
+                Console.WriteLine("\n\n");
+                Menu.KeyToContinue();
             }
             continue;
         }
         Console.Clear();
-        Console.WriteLine();
-        Console.WriteLine();
+        Console.WriteLine("\n\n");
         Console.WriteLine("Heroes selection finished...");
         Console.WriteLine("The victory awaits, for the champion of the maze!");
-        Console.WriteLine();
-        Console.WriteLine();
-        Console.WriteLine("(press a key to continue)");
-        Console.ReadKey(true);
+        Console.WriteLine("\n\n");
+        Menu.KeyToContinue();
 
         ///Heroes Spwans
         //                       Player 1
@@ -759,8 +674,8 @@ while (true)
                 {
                     Console.Clear();
                     Console.WriteLine("thats not a valid action)");
-                    Console.WriteLine("(press a key to continue)");
-                    Console.ReadKey(true);
+                    Console.WriteLine("\n\n\n");
+                    Menu.KeyToContinue();
                     Console.Clear();
                     action = GetAction(map, p, hero);
 
@@ -958,10 +873,8 @@ while (true)
                         {
                             Console.Clear();
                             Console.WriteLine("You can't move in that direction mate! :/");
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine("(press a key to continue)");
-                            Console.ReadKey(true);
+                            Console.WriteLine("\n\n\n");
+                            Menu.KeyToContinue();
                             action = GetAction(map, Player1, choice1);
                             continue;
 
@@ -998,6 +911,8 @@ while (true)
                                 else if (choosing != "yess" && choosing != "no")
                                 {
                                     Console.WriteLine("thats not a valid action!");
+                                    Console.WriteLine("\n\n\n");
+                                    Menu.KeyToContinue();
                                 }
                             }
                             else
@@ -1040,10 +955,8 @@ while (true)
                         {
                             Console.Clear();
                             Console.WriteLine("You can't move in that direction mate! :/");
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine("(press a key to continue)");
-                            Console.ReadKey(true);
+                            Console.WriteLine("\n\n\n");
+                            Menu.KeyToContinue();
                             action = GetAction(map, Player1, choice1);
                             continue;
 

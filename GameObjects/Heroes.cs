@@ -42,6 +42,14 @@ namespace GameObjects
 
         }
         /////methods/////
+        public int[] move(int[] location, int[,] Maze)
+        {
+            location[1]++;
+            return location;
+        }
+
+
+
         public int[] moveright(int[] location, int[,] Maze)
         {
             location[1]++;
@@ -136,7 +144,7 @@ namespace GameObjects
                     table1.AddRow(" 🔪 [bold #e9e9e9]Attack[/]   >  " + list[i].attack);
                     table1.AddRow(" 💠 [bold #e9e9e9]Super Requires[/] > Mana " + list[i].cooldown + "💙");
                     table.AddRow(table1);
-                    table1.BorderColor(Color.OrangeRed1);
+                    table1.BorderColor(Color.Yellow);
                 }
             }
             table.AddRow("");

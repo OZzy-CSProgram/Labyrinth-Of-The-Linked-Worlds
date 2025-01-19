@@ -242,7 +242,7 @@ namespace GameObjects
                             cellMarkup = "[#3A6089]███[/]"; // Wall blue
                             break;
                         case 0: // FreePath
-                            cellMarkup = "[#232324]███[/]"; // Gray Pathes♥
+                            cellMarkup = "[#232324]   [/]"; // Gray Pathes♥
                             break;
                         case 3: // Trap
                             cellMarkup = "[red] ✸ [/]"; // Red Trap
@@ -303,7 +303,7 @@ namespace GameObjects
                             cellMarkup = "[#3A6089]███[/]"; // Wall blue
                             break;
                         case 0: // FreePath
-                            cellMarkup = "[#232324]███[/]"; // Gray Pathes♥
+                            cellMarkup = "[#232324]   [/]"; // Gray Pathes♥
                             break;
                         case 3: // Trap
                             cellMarkup = "[red] ✸ [/]"; // Red Trap

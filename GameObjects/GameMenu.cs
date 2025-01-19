@@ -47,6 +47,32 @@ namespace GameObjects
             Console.ReadKey(true);
             
         }
+        public static void KeyToContinue()
+        {
+            var table = new Table()
+            .RoundedBorder();
+            table.AddColumn(new TableColumn("[#91e4f2] Press a key to continue [/]").Centered());
+            AnsiConsole.Write(table);
+            Console.ReadKey(true);
+            
+        }
+        public static void KeyToContinueCentered()
+        {
+            var table = new Table()
+            .RoundedBorder();
+            table.AddColumn(new TableColumn("[#91e4f2] Press a key to continue [/]").Centered());
+            table.Centered();
+            AnsiConsole.Write(table);
+            Console.ReadKey(true);
+            
+        }
+        public static Table CreateTable(string col)
+        {
+            var table = new Table()
+            .RoundedBorder();
+            table.AddColumn(new TableColumn(col).Centered());
+            return table;            
+        }
         public static void LadyElaraAskname(Table gamemenu, Table table)
         {
             gamemenu.AddColumn(new TableColumn("")).HideHeaders();
