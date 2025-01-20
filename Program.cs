@@ -727,7 +727,7 @@ while (true)
                 }
                 Hero choice1 = Player.GetPlayerChoice(Player1.Party);
                 ConsoleKeyInfo action;
-                action = Player.GetAction(map, Player1, choice1);
+                action = Player.GetAction(map, Player1, Player2, choice1);
                 //method play
 
 
@@ -861,7 +861,7 @@ while (true)
                 // keep it going
                 Hero choice2 = Player.GetPlayerChoice(Player2.Party);
                 ConsoleKeyInfo action;
-                action = Player.GetAction(map, Player2, choice2);
+                action = Player.GetAction(map, Player2, Player1, choice2);
 
                 Player.Play(action, choice2, Player2, Player1, map, Traps);
                 

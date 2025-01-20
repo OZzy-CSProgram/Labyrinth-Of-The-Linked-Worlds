@@ -42,9 +42,8 @@ namespace GameObjects
             var dialogue = new Table()
             .RoundedBorder();
             dialogue.AddColumn(new TableColumn("[bold #000000]" + hero.icon + "[/]").Centered());
-            dialogue.AddColumn(new TableColumn("[bold blue]> [/]" + s + "\n press a key to continue...").Centered());
+            dialogue.AddColumn(new TableColumn("[bold blue]> [/]" + s ).Centered());
             AnsiConsole.Write(dialogue);
-            Console.ReadKey(true);
             
         }
         public static void KeyToContinue()
@@ -72,6 +71,13 @@ namespace GameObjects
             .RoundedBorder();
             table.AddColumn(new TableColumn(col).Centered());
             return table;            
+        }
+        public static void WriteTable(string col)
+        {
+            var table = new Table()
+            .RoundedBorder();
+            table.AddColumn(new TableColumn(col).Centered());
+            AnsiConsole.Write(table);
         }
         public static void LadyElaraAskname(Table gamemenu, Table table)
         {

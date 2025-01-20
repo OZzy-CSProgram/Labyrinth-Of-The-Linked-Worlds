@@ -42,30 +42,43 @@ namespace GameObjects
 
         }
         /////methods/////
-        
 
 
 
-        public int[] moveright(int[] location, int[,] Maze)
+
+        public void moveright(int[] location, int[,] map)
         {
+            //make path where player is standing
+            map[location[0], location[1]] = 0;
+            //Change Player location
             location[1]++;
-            return location;
+            map[location[0], location[1]] = id;
         }
-        public int[] moveleft(int[] location, int[,] Maze)
+        public void moveleft(int[] location, int[,] map)
         {
+            //make path where player is standing
+            map[location[0], location[1]] = 0;
+            //Change Player location
             location[1]--;
-            return location;
+            map[location[0], location[1]] = id;
         }
-        public int[] moveup(int[] location, int[,] Maze)
+        public void moveup(int[] location, int[,] map)
         {
-
+            //make path where player is standing
+            map[location[0], location[1]] = 0;
+            //Change Player location
             location[0]--;
-            return location;
+            // Make map value = hero.id so when map is display hero appears in that position
+            map[location[0], location[1]] = id;
         }
-        public int[] movedown(int[] location, int[,] Maze)
+        public void movedown(int[] location, int[,] map)
         {
+            //make path where player is standing
+            map[location[0], location[1]] = 0;
+            //Change Player location
             location[0]++;
-            return location;
+            // Make map value = hero.id so when map is display hero appears in that position
+            map[location[0], location[1]] = id;
         }
 
         public static void DisplayList(List<Hero> list, string s)
@@ -403,9 +416,7 @@ namespace GameObjects
             dialogue.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
             dialogue.AddColumn(new TableColumn("[bold blue]> [/] Nobody can jump like I can! .... Ahahahaha ?\n\n ").Centered());
             AnsiConsole.Write(dialogue);
-            Console.WriteLine();
-            Console.WriteLine("Press a key to continue...");
-            Console.ReadKey(true);
+            Menu.KeyToContinue();
 
             Console.Clear();
             Maze.PrintMaze(map, "What direction should I you want to jump?");
@@ -599,10 +610,8 @@ namespace GameObjects
                 while (Direction.KeyChar != 'w' && Direction.KeyChar != 'W' && Direction.KeyChar != 'a' && Direction.KeyChar != 'A' && Direction.KeyChar != 's' && Direction.KeyChar != 'S' && Direction.KeyChar != 'd' && Direction.KeyChar != 'D' && Direction.KeyChar != 'r' && Direction.KeyChar != 'R')
                 {
                     Console.Clear();
-
-                    Console.WriteLine("thats not a valid Direction)");
-                    Console.WriteLine("(press a key to continue)");
-                    Console.ReadKey(true);
+                    Menu.WriteTable("[red]That is not a valid direction![/]");
+                    Menu.KeyToContinue();
 
                     Console.Clear();
                     AnsiConsole.Write(dialogue);
@@ -659,19 +668,23 @@ namespace GameObjects
             if (location[0] + dirRow == 0 || location[0] + dirRow == Maze.size - 1 || location[1] + dirCol == 0 || location[1] + dirCol == Maze.size - 1)
             {
                 Console.Clear();
-                Console.WriteLine("You can not break in that Direction, Thats the edge of the map!");
-                Console.WriteLine();
-                Console.WriteLine("Press a key to continue...");
-                Console.ReadKey();
+                var dialogue = new Table()
+                .RoundedBorder();
+                dialogue.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+                dialogue.AddColumn(new TableColumn("[bold blue]> [/]I can not break that wall :(").Centered());
+                AnsiConsole.Write(dialogue);
+                Menu.KeyToContinue();
                 return false;
             }
             if (map[location[0] + dirRow, location[1] + dirCol] != 1)
             {
                 Console.Clear();
-                Console.WriteLine("There is no wall there mate, was your head on the clouds?!");
-                Console.WriteLine();
-                Console.WriteLine("Press a key to continue...");
-                System.Console.ReadKey();
+                var dialogue = new Table()
+                .RoundedBorder();
+                dialogue.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+                dialogue.AddColumn(new TableColumn("[bold blue]> [/]There is no wall there!!! , is your head on the clouds? :/").Centered());
+                AnsiConsole.Write(dialogue);
+                Menu.KeyToContinue();
                 return false;
             }
             map[location[0] + dirRow, location[1] + dirCol] = 0;
