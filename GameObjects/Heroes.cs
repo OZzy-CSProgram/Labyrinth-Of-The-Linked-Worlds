@@ -11,6 +11,7 @@ namespace GameObjects
         public string info;
         public int id;
         public int speed;
+        public int maxspeed = 1;
         public string icon;
         public int health;
         public int attack;
@@ -44,42 +45,477 @@ namespace GameObjects
         }
         /////methods/////
 
+        public int Movenumber(Hero hero, int speed, int[,] map, string dir)
+        {
+            if (dir == "up")
+            {
+                for (int i = 1; i <= speed; i++)
+                {
+                    if (map[hero.location[0] - i, hero.location[1]] == 1)
+                    {
+                        return i - 1;
+                    }
+                    if (map[hero.location[0] - i, hero.location[1]] != 0)
+                    {
+                        return i;
+                    }
+                    // if (map[hero.location[0] - i, hero.location[1]] == 0 && (map[hero.location[0] - i, hero.location[1] - 1] == 0 || map[hero.location[0] - i, hero.location[1] + 1] == 0 ))
+                    // {
+                    //     return i;
+                    // }
+                }
+            }
+            else if (dir == "down")
+            {
+                for (int i = 1; i <= speed; i++)
+                {
+                    if (map[hero.location[0] + i, hero.location[1]] == 1)
+                    {
+                        return i - 1;
+                    }
+                    if (map[hero.location[0] + i, hero.location[1]] != 0)
+                    {
+                        return i;
+                    }
+                }
+            }
+            else if (dir == "left")
+            {
+                for (int i = 1; i <= speed; i++)
+                {
+                    if (map[hero.location[0], hero.location[1] - i] == 1)
+                    {
+                        return i - 1;
+                    }
+                    if (map[hero.location[0], hero.location[1] - i] != 0)
+                    {
+                        return i;
+                    }
+                }
+            }
+            else if (dir == "right")
+            {
+                for (int i = 1; i <= speed; i++)
+                {
+                    if (map[hero.location[0], hero.location[1] + i] == 1)
+                    {
+                        return i - 1;
+                    }
+                    if (map[hero.location[0], hero.location[1] + i] != 0)
+                    {
+                        return i;
+                    }
+                }
+            }
+
+
+            return speed;
+
+        }
+
+
+        public void moveright(Hero hero, Player player, int[,] map)
+        {
+            while (true)
+            {
+                int movenumber = Movenumber(hero, hero.speed, map, "right");
+                if (movenumber == 0)
+                {
+                    Console.Clear();
+                    Menu.HeroDialogue(hero, "I can not move in that direction mate!\n\n");
+                    Menu.KeyToContinue();
+                    break;
+                }
+                else if (movenumber != 0)
+                {
+                    if (map[hero.location[0], hero.location[1] + movenumber] == 3)
+                    {
+                        ///                                    moveup
+                        map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
+                        hero.location[1] += movenumber;                        //Change Player location
+                        map[hero.location[0], hero.location[1]] = id;    // Make map value = hero.id so when map is display hero appears in that position
+
+                        //add new position to the log
+                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
+                        hero.trapped = true;
+                        hero.actionsRemaining--;
+
+                    }
+                    ///moving to a Door
+                    else if (map[hero.location[0], hero.location[1] + movenumber] == 6)
+                    {
+                        if (hero.haveKey)
+                        {
+                            Console.Clear();
+                            Menu.WriteTable("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                            string choosing = Console.ReadLine().ToLower();
+                            if (choosing == "yes")
+                            {
+                                Console.Clear();
+                                Menu.WriteTable($"{hero.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                map[hero.location[0], hero.location[1] + movenumber] = 0;
+                                Menu.KeyToContinue();
+                            }
+                            else if (choosing != "yess" && choosing != "no")
+                            {
+                                Console.Clear();
+                                Menu.WriteTable("[red]That is not a valid action![/]\n\n");
+                                Menu.KeyToContinue();
+                            }
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Menu.HeroDialogue(hero, "I need a key to open that door!");
+                            Menu.KeyToContinue();
+                        }
+
+                    }
+                    //moving to a key
+                    else if (map[hero.location[0], hero.location[1] + movenumber] == 8)
+                    {
+                        ///                                    moveup
+                        map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
+                        hero.location[1] += movenumber;                        //Change Player location
+                        map[hero.location[0], hero.location[1]] = id;    // Make map value = hero.id so when map is display hero appears in that position
+
+                        Console.Clear();
+                        Menu.HeroDialogue(hero, "Finally, the master key to open the doors of the treasure chamber!");
+                        Menu.KeyToContinue();
+                        hero.haveKey = true;
+                        player.haveKey = true;
 
 
 
-        public void moveright(int[] location, int speed, int[,] map)
-        {
-            //make path where player is standing
-            map[location[0], location[1]] = 0;
-            //Change Player location
-            location[1]+= speed;
-            map[location[0], location[1]] = id;
+                    }
+                    //moving to the centre, the goal
+                    else if (map[hero.location[0], hero.location[1] + movenumber] == 4)
+                    {
+                        // Make player current position equals 0
+                        map[hero.location[0], hero.location[1]] = 0;
+                        //remove from list
+                        player.Party.Remove(hero);
+                        player.HeroesInCentre++;
+                        hero.actionsRemaining = 0;
+                        break;
+                    }
+                    //moving to a path
+                    else if (map[hero.location[0], hero.location[1] + movenumber] == 0)
+                    {
+                        ///                                    moveup
+                        map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
+                        hero.location[1] += movenumber;                        //Change Player location
+                        map[hero.location[0], hero.location[1]] = id;    // Make map value = hero.id so when map is display hero appears in that position
+
+                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
+                        hero.actionsRemaining--;
+                    }
+                }
+                break;
+            }
         }
-        public void moveleft(int[] location, int speed, int[,] map)
+        public void moveleft(Hero hero, Player player, int[,] map)
         {
-            //make path where player is standing
-            map[location[0], location[1]] = 0;
-            //Change Player location
-            location[1]-= speed;
-            map[location[0], location[1]] = id;
+             while (true)
+            {
+                int movenumber = Movenumber(hero, hero.speed, map, "left");
+                if (movenumber == 0)
+                {
+                    Console.Clear();
+                    Menu.HeroDialogue(hero, "I can not move in that direction mate!\n\n");
+                    Menu.KeyToContinue();
+                    break;
+                }
+                else if (movenumber != 0)
+                {
+                    if (map[hero.location[0], hero.location[1] - movenumber] == 3)
+                    {
+                        ///                                    moveup
+                        map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
+                        hero.location[1] -= movenumber;                        //Change Player location
+                        map[hero.location[0], hero.location[1]] = id;    // Make map value = hero.id so when map is display hero appears in that position
+
+                        //add new position to the log
+                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
+                        hero.trapped = true;
+                        hero.actionsRemaining--;
+
+                    }
+                    ///moving to a Door
+                    else if (map[hero.location[0], hero.location[1] - movenumber] == 6)
+                    {
+                        if (hero.haveKey)
+                        {
+                            Console.Clear();
+                            Menu.WriteTable("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                            string choosing = Console.ReadLine().ToLower();
+                            if (choosing == "yes")
+                            {
+                                Console.Clear();
+                                Menu.WriteTable($"{hero.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                map[hero.location[0], hero.location[1] - movenumber] = 0;
+                                Menu.KeyToContinue();
+                            }
+                            else if (choosing != "yess" && choosing != "no")
+                            {
+                                Console.Clear();
+                                Menu.WriteTable("[red]That is not a valid action![/]\n\n");
+                                Menu.KeyToContinue();
+                            }
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Menu.HeroDialogue(hero, "I need a key to open that door!");
+                            Menu.KeyToContinue();
+                        }
+
+                    }
+                    //moving to a key
+                    else if (map[hero.location[0], hero.location[1] - movenumber] == 8)
+                    {
+                        ///                                    moveup
+                        map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
+                        hero.location[1] -= movenumber;                        //Change Player location
+                        map[hero.location[0], hero.location[1]] = id;    // Make map value = hero.id so when map is display hero appears in that position
+
+                        Console.Clear();
+                        Menu.HeroDialogue(hero, "Finally, the master key to open the doors of the treasure chamber!");
+                        Menu.KeyToContinue();
+                        hero.haveKey = true;
+                        player.haveKey = true;
+
+
+
+                    }
+                    //moving to the centre, the goal
+                    else if (map[hero.location[0], hero.location[1] - movenumber] == 4)
+                    {
+                        // Make player current position equals 0
+                        map[hero.location[0], hero.location[1]] = 0;
+                        //remove from list
+                        player.Party.Remove(hero);
+                        player.HeroesInCentre++;
+                        hero.actionsRemaining = 0;
+                        break;
+                    }
+                    //moving to a path
+                    else if (map[hero.location[0], hero.location[1] - movenumber] == 0)
+                    {
+                        ///                                    moveup
+                        map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
+                        hero.location[1] -= movenumber;                        //Change Player location
+                        map[hero.location[0], hero.location[1]] = id;    // Make map value = hero.id so when map is display hero appears in that position
+
+                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
+                        hero.actionsRemaining--;
+                    }
+                }
+                break;
+            }
         }
-        public void moveup(int[] location, int speed, int[,] map)
+        
+        public void moveup(Hero hero, Player player, int[,] map)
         {
-            //make path where player is standing
-            map[location[0], location[1]] = 0;
-            //Change Player location
-            location[0]-= speed;
-            // Make map value = hero.id so when map is display hero appears in that position
-            map[location[0], location[1]] = id;
+
+            while (true)
+            {
+                int movenumber = Movenumber(hero, hero.speed, map, "up");
+                if (movenumber == 0)
+                {
+                    Console.Clear();
+                    Menu.HeroDialogue(hero, "I can not move in that direction mate!\n\n");
+                    Menu.KeyToContinue();
+                    break;
+                }
+                else if (movenumber != 0)
+                {
+                    if (map[hero.location[0] - movenumber, hero.location[1]] == 3)
+                    {
+                        ///                                    moveup
+                        map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
+                        hero.location[0] -= movenumber;                        //Change Player location
+                        map[hero.location[0], hero.location[1]] = id;    // Make map value = hero.id so when map is display hero appears in that position
+
+                        //add new position to the log
+                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
+                        hero.trapped = true;
+                        hero.actionsRemaining--;
+
+                    }
+                    ///moving to a Door
+                    else if (map[hero.location[0] - movenumber, hero.location[1]] == 6)
+                    {
+                        if (hero.haveKey)
+                        {
+                            Console.Clear();
+                            Menu.WriteTable("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                            string choosing = Console.ReadLine().ToLower();
+                            if (choosing == "yes")
+                            {
+                                Console.Clear();
+                                Menu.WriteTable($"{hero.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                map[hero.location[0] - movenumber, hero.location[1]] = 0;
+                                Menu.KeyToContinue();
+                            }
+                            else if (choosing != "yess" && choosing != "no")
+                            {
+                                Console.Clear();
+                                Menu.WriteTable("[red]That is not a valid action![/]\n\n");
+                                Menu.KeyToContinue();
+                            }
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Menu.HeroDialogue(hero, "I need a key to open that door!");
+                            Menu.KeyToContinue();
+                        }
+
+                    }
+                    //moving to a key
+                    else if (map[hero.location[0] - movenumber, hero.location[1]] == 8)
+                    {
+                        ///                                    moveup
+                        map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
+                        hero.location[0] -= movenumber;                        //Change Player location
+                        map[hero.location[0], hero.location[1]] = id;    // Make map value = hero.id so when map is display hero appears in that position
+
+                        Console.Clear();
+                        Menu.HeroDialogue(hero, "Finally, the master key to open the doors of the treasure chamber!");
+                        Menu.KeyToContinue();
+                        hero.haveKey = true;
+                        player.haveKey = true;
+
+
+
+                    }
+                    //moving to the centre, the goal
+                    else if (map[hero.location[0] - movenumber, hero.location[1]] == 4)
+                    {
+                        // Make player current position equals 0
+                        map[hero.location[0], hero.location[1]] = 0;
+                        //remove from list
+                        player.Party.Remove(hero);
+                        player.HeroesInCentre++;
+                        hero.actionsRemaining = 0;
+                        break;
+                    }
+                    //moving to a path
+                    else if (map[hero.location[0] - movenumber, hero.location[1]] == 0)
+                    {
+                        ///                                    moveup
+                        map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
+                        hero.location[0] -= movenumber;                        //Change Player location
+                        map[hero.location[0], hero.location[1]] = id;    // Make map value = hero.id so when map is display hero appears in that position
+
+                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
+                        hero.actionsRemaining--;
+                    }
+                }
+                break;
+            }
+
         }
-        public void movedown(int[] location, int speed, int[,] map)
+        public void movedown(Hero hero, Player player, int[,] map)
         {
-            //make path where player is standing
-            map[location[0], location[1]] = 0;
-            //Change Player location
-            location[0]+= speed;
-            // Make map value = hero.id so when map is display hero appears in that position
-            map[location[0], location[1]] = id;
+            while (true)
+            {
+                int movenumber = Movenumber(hero, hero.speed, map, "down");
+                if (movenumber == 0)
+                {
+                    Console.Clear();
+                    Menu.HeroDialogue(hero, "I can not move in that direction mate!\n\n");
+                    Menu.KeyToContinue();
+                    break;
+                }
+                else if (movenumber != 0)
+                {
+                    if (map[hero.location[0] + movenumber, hero.location[1]] == 3)
+                    {
+                        ///                                    moveup
+                        map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
+                        hero.location[0] += movenumber;                        //Change Player location
+                        map[hero.location[0], hero.location[1]] = id;    // Make map value = hero.id so when map is display hero appears in that position
+
+                        //add new position to the log
+                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
+                        hero.trapped = true;
+                        hero.actionsRemaining--;
+
+                    }
+                    ///moving to a Door
+                    else if (map[hero.location[0] + movenumber, hero.location[1]] == 6)
+                    {
+                        if (hero.haveKey)
+                        {
+                            Console.Clear();
+                            Menu.WriteTable("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                            string choosing = Console.ReadLine().ToLower();
+                            if (choosing == "yes")
+                            {
+                                Console.Clear();
+                                Menu.WriteTable($"{hero.name} has open the gates of the Chamber Of The Heart of Ebony.");
+                                map[hero.location[0] + movenumber, hero.location[1]] = 0;
+                                Menu.KeyToContinue();
+                            }
+                            else if (choosing != "yess" && choosing != "no")
+                            {
+                                Console.Clear();
+                                Menu.WriteTable("[red]That is not a valid action![/]\n\n");
+                                Menu.KeyToContinue();
+                            }
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Menu.HeroDialogue(hero, "I need a key to open that door!");
+                            Menu.KeyToContinue();
+                        }
+
+                    }
+                    //moving to a key
+                    else if (map[hero.location[0] + movenumber, hero.location[1]] == 8)
+                    {
+                        ///                                    moveup
+                        map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
+                        hero.location[0] += movenumber;                        //Change Player location
+                        map[hero.location[0], hero.location[1]] = id;    // Make map value = hero.id so when map is display hero appears in that position
+
+                        Console.Clear();
+                        Menu.HeroDialogue(hero, "Finally, the master key to open the doors of the treasure chamber!");
+                        Menu.KeyToContinue();
+                        hero.haveKey = true;
+                        player.haveKey = true;
+
+
+
+                    }
+                    //moving to the centre, the goal
+                    else if (map[hero.location[0] + movenumber, hero.location[1]] == 4)
+                    {
+                        // Make player current position equals 0
+                        map[hero.location[0], hero.location[1]] = 0;
+                        //remove from list
+                        player.Party.Remove(hero);
+                        player.HeroesInCentre++;
+                        hero.actionsRemaining = 0;
+                        break;
+                    }
+                    //moving to a path
+                    else if (map[hero.location[0] + movenumber, hero.location[1]] == 0)
+                    {
+                        ///                                    moveup
+                        map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
+                        hero.location[0] += movenumber;                        //Change Player location
+                        map[hero.location[0], hero.location[1]] = id;    // Make map value = hero.id so when map is display hero appears in that position
+
+                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
+                        hero.actionsRemaining--;
+                    }
+                }
+                break;
+            }
         }
 
         public static void DisplayList(List<Hero> list, string s)

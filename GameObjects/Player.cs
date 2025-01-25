@@ -83,7 +83,7 @@ namespace GameObjects
 
         public static ConsoleKeyInfo ValidPosition(ConsoleKeyInfo action, int[,] map, Player p, Player otherp, Hero hero)
         {
-            while (action.KeyChar != 'k' && action.KeyChar != 'w' && action.KeyChar != 'W' && action.KeyChar != 'a' && action.KeyChar != 'A' && action.KeyChar != 's' && action.KeyChar != 'S' && action.KeyChar != 'd' && action.KeyChar != 'D' && action.KeyChar != 'r' && action.KeyChar != 'R')
+            while (action.KeyChar != 'k' && action.KeyChar != 'g' && action.KeyChar != 'f' && action.KeyChar != 'w' && action.KeyChar != 'W' && action.KeyChar != 'a' && action.KeyChar != 'A' && action.KeyChar != 's' && action.KeyChar != 'S' && action.KeyChar != 'd' && action.KeyChar != 'D' && action.KeyChar != 'r' && action.KeyChar != 'R')
             {
                 Console.Clear();
                 Console.WriteLine("thats not a valid action)");
@@ -235,315 +235,51 @@ namespace GameObjects
                 // PRESSED W
                 if (action.KeyChar == 'w' || action.KeyChar == 'W')
                 {
-                    if (map[hero.location[0] - 1, hero.location[1]] == 1)
-                    {
-                        Console.Clear();
-                        Menu.HeroDialogue(hero, "I can not move in that direction mate!\n\n");
-                        Menu.KeyToContinue();
-                        action = GetAction(map, player, otherplayer, hero);
-                        continue;
-
-                    }
-                    else if (map[hero.location[0] - 1, hero.location[1]] == 3)
-                    {
-                        hero.moveup(hero.location, hero.speed, map);
-                        //add new position to the log
-                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
-                        hero.trapped = true;
-                        hero.actionsRemaining--;
-
-                    }
-                    ///moving to a Door
-                    else if (map[hero.location[0] - 1, hero.location[1]] == 6)
-                    {
-                        if (hero.haveKey)
-                        {
-                            Console.Clear();
-                            Menu.WriteTable("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
-                            string choosing = Console.ReadLine().ToLower();
-                            if (choosing == "yes")
-                            {
-                                Console.Clear();
-                                Menu.WriteTable($"{hero.name} has open the gates of the Chamber Of The Heart of Ebony.");
-                                map[hero.location[0] - 1, hero.location[1]] = 0;
-                                Menu.KeyToContinue();
-                            }
-                            else if (choosing != "yess" && choosing != "no")
-                            {
-                                Console.Clear();
-                                Menu.WriteTable("[red]That is not a valid action![/]\n\n");
-                                Menu.KeyToContinue();
-                            }
-                        }
-                        else
-                        {
-                            Console.Clear();
-                            Menu.HeroDialogue(hero, "I need a key to open that door!");
-                            Menu.KeyToContinue();
-                        }
-
-                    }
-                    //moving to a key
-                    else if (map[hero.location[0] - 1, hero.location[1]] == 8)
-                    {
-                        hero.moveup(hero.location, hero.speed, map);
-                        Console.Clear();
-                        Menu.HeroDialogue(hero, "Finally, the master key to open the doors of the treasure chamber!");
-                        Menu.KeyToContinue();
-                        hero.haveKey = true;
-                        player.haveKey = true;
-
-
-
-                    }
-                    //moving to the centre, the goal
-                    else if (map[hero.location[0] - 1, hero.location[1]] == 4)
-                    {
-                        // Make player current position equals 0
-                        map[hero.location[0], hero.location[1]] = 0;
-                        //remove from list
-                        player.Party.Remove(hero);
-                        player.HeroesInCentre++;
-                        hero.actionsRemaining = 0;
-                        break;
-                    }
-                    //moving to a path
-                    else if (map[hero.location[0] - 1, hero.location[1]] == 0)
-                    {
-                        //moveup
-                        hero.moveup(hero.location, hero.speed, map);
-                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
-                        hero.actionsRemaining--;
-                    }
+                    hero.moveup(hero, player, map);
                 }
                 ///PRESSED A
                 else if (action.KeyChar == 'a' || action.KeyChar == 'A')
                 {
-                    if (map[hero.location[0], hero.location[1] - 1] == 1)
-                    {
-                        Console.Clear();
-                        Menu.HeroDialogue(hero, "I can not move in that direction mate!\n\n");
-                        Menu.KeyToContinue();
-                        action = GetAction(map, player, otherplayer, hero);
-                        continue;
-                    }
-                    else if (map[hero.location[0], hero.location[1] - 1] == 3)
-                    {
-                        //execute move method
-                        hero.moveleft(hero.location, hero.speed, map);
-                        //add new position to the log
-                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
-                        hero.trapped = true;
-                        hero.actionsRemaining--;
-                    }
-                    ///moving to a Door
-                    else if (map[hero.location[0], hero.location[1] - 1] == 6)
-                    {
-                        if (hero.haveKey)
-                        {
-                            Console.Clear();
-                            Menu.WriteTable("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
-                            string choosing = Console.ReadLine().ToLower();
-                            if (choosing == "yes")
-                            {
-                                Console.Clear();
-                                Menu.WriteTable($"{hero.name} has open the gates of the Chamber Of The Heart of Ebony.");
-                                map[hero.location[0], hero.location[1] - 1] = 0;
-                            }
-                            else if (choosing != "yess" && choosing != "no")
-                            {
-                                Console.Clear();
-                                Menu.WriteTable("[red]That is not a valid action![/]\n\n");
-                                Menu.KeyToContinue();
-                            }
-                        }
-                        else
-                        {
-                            Console.Clear();
-                            Menu.HeroDialogue(hero, "I need a key to open that door!");
-                            Menu.KeyToContinue();
-                        }
-
-                    }
-                    //moving to a key
-                    else if (map[hero.location[0], hero.location[1] - 1] == 8)
-                    {
-                        hero.moveleft(hero.location, hero.speed, map);
-                        Console.Clear();
-                        Menu.HeroDialogue(hero, "Finally, the master key to open the doors of the treasure chamber!");
-                        Menu.KeyToContinue();
-                        hero.haveKey = true;
-                        player.haveKey = true;
-
-                    }
-                    else if (map[hero.location[0], hero.location[1] - 1] == 4)
-                    {
-                        // Make player current position equals 0
-                        map[hero.location[0], hero.location[1]] = 0;
-                        player.Party.Remove(hero);
-                        player.HeroesInCentre++;
-                        hero.actionsRemaining = 0;
-                        break;
-                    }
-                    else if (map[hero.location[0], hero.location[1] - 1] == 0)
-                    {
-                        hero.moveleft(hero.location, hero.speed, map);
-                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
-                        hero.actionsRemaining--;
-                    }
+                    hero.moveleft(hero, player, map);
                 }
+                /// PRESSED S
                 else if (action.KeyChar == 's' || action.KeyChar == 'S')
                 {
-                    if (map[hero.location[0] + 1, hero.location[1]] == 1)
-                    {
-                        Console.Clear();
-                        Menu.HeroDialogue(hero, "I can not move in that direction mate!\n\n");
-                        Menu.KeyToContinue();
-                        action = GetAction(map, player, otherplayer, hero);
-                        continue;
-                    }
-                    else if (map[hero.location[0] + 1, hero.location[1]] == 3)
-                    {
-                        hero.movedown(hero.location, hero.speed, map);
-                        //add new position to the log
-                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
-                        hero.trapped = true;
-                        hero.actionsRemaining--;
-                    }
-                    ///moving to a Door
-                    else if (map[hero.location[0] + 1, hero.location[1]] == 6)
-                    {
-                        if (hero.haveKey)
-                        {
-                            Console.Clear();
-                            Menu.WriteTable("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
-                            string choosing = Console.ReadLine().ToLower();
-                            if (choosing == "yes")
-                            {
-                                Console.Clear();
-                                Menu.WriteTable($"{hero.name} has open the gates of the Chamber Of The Heart of Ebony.");
-                                map[hero.location[0] + 1, hero.location[1]] = 0;
-                            }
-                            else if (choosing != "yess" && choosing != "no")
-                            {
-                                Console.Clear();
-                                Menu.WriteTable("[red]That is not a valid action![/]\n\n");
-                                Menu.KeyToContinue();
-                            }
-                        }
-                        else
-                        {
-                            Console.Clear();
-                            Menu.HeroDialogue(hero, "I need a key to open that door!");
-                            Menu.KeyToContinue();
-                        }
-
-                    }
-                    //moving to a key
-                    else if (map[hero.location[0] + 1, hero.location[1]] == 8)
-                    {
-                        hero.movedown(hero.location, hero.speed, map);
-                        Console.Clear();
-                        Menu.HeroDialogue(hero, "Finally, the master key to open the doors of the treasure chamber!");
-                        Menu.KeyToContinue();
-                        hero.haveKey = true;
-                        player.haveKey = true;
-
-                    }
-                    else if (map[hero.location[0] + 1, hero.location[1]] == 4)
-                    {
-                        // Make player current position equals 0
-                        map[hero.location[0], hero.location[1]] = 0;
-                        player.Party.Remove(hero);
-                        player.HeroesInCentre++;
-                        hero.actionsRemaining = 0;
-                        break;
-                    }
-                    else if (map[hero.location[0] + 1, hero.location[1]] == 0)
-                    {
-                        hero.movedown(hero.location, hero.speed, map);
-                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
-                        hero.actionsRemaining--;
-                    }
+                    hero.movedown(hero, player, map);
                 }
-
+                /// PRESED D
                 else if (action.KeyChar == 'd' || action.KeyChar == 'D')
                 {
-                    if (map[hero.location[0], hero.location[1] + 1] == 1)
-                    {
-                        Console.Clear();
-                        Menu.HeroDialogue(hero, "I can not move in that direction mate!\n\n");
-                        Menu.KeyToContinue();
-                        action = GetAction(map, player, otherplayer, hero);
-                        continue;
-                    }
-                    else if (map[hero.location[0], hero.location[1] + 1] == 3)
-                    {
-                        //execute move method
-                        hero.moveright(hero.location, hero.speed, map);
-                        //add new position to the log
-                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
-                        hero.trapped = true;
-                        hero.actionsRemaining--;
-                    }
-                    ///moving to a Door
-                    else if (map[hero.location[0], hero.location[1] + 1] == 6)
-                    {
-                        if (hero.haveKey)
-                        {
-                            Console.Clear();
-                            Menu.WriteTable("Do you want to use the key to open the door?\n\nWrite '[green]yes[/]' to accept or '[red]no[/]' to cancel");
-                            string choosing = Console.ReadLine().ToLower();
-                            if (choosing == "yes")
-                            {
-                                Console.Clear();
-                                Menu.WriteTable($"{hero.name} has open the gates of the Chamber Of The Heart of Ebony.");
-                                map[hero.location[0], hero.location[1] + 1] = 0;
-                            }
-                            else if (choosing != "yess" && choosing != "no")
-                            {
-                                Console.Clear();
-                                Menu.WriteTable("[red]That is not a valid action![/]\n\n");
-                                Menu.KeyToContinue();
-                            }
-                        }
-                        else
-                        {
-                            Console.Clear();
-                            Menu.HeroDialogue(hero, "I need a key to open that door!");
-                            Menu.KeyToContinue();
-                        }
-
-                    }
-                    else if (map[hero.location[0], hero.location[1] + 1] == 8)
-                    {
-                        hero.moveright(hero.location, hero.speed, map);
-                        Console.Clear();
-                        Menu.HeroDialogue(hero, "Finally, the master key to open the doors of the treasure chamber!");
-                        Menu.KeyToContinue();
-                        hero.haveKey = true;
-                        player.haveKey = true;
-                    }
-                    else if (map[hero.location[0], hero.location[1] + 1] == 4)
-                    {
-                        // Make player current position equals 0
-                        map[hero.location[0], hero.location[1]] = 0;
-                        player.Party.Remove(hero);
-                        player.HeroesInCentre++;
-                        hero.actionsRemaining = 0;
-                        break;
-                    }
-                    else if (map[hero.location[0], hero.location[1] + 1] == 0)
-                    {
-                        hero.moveright(hero.location, hero.speed, map);
-                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
-                        hero.actionsRemaining--;
-                    }
+                    hero.moveright(hero, player, map);
                 }
+
+                ///// HACK FOR TESTNG
                 else if (action.KeyChar == 'k')
                 {
-                   hero.speed++;
-                   Console.Write($"hacked speed x{hero.speed}");
+                    hero.maxspeed++;
+                    hero.speed++;
+                    Menu.WriteTable($"[red]hacked speed[/] [bold yellow]x{hero.speed}/{hero.maxspeed}[/]");
+                    Menu.KeyToContinue();
+                }
+                else if (action.KeyChar == 'f')
+                {
+                    if (hero.speed > 1)
+                    {
+                        hero.speed--;
+                        Menu.WriteTable($"[blue]changed speed to[/] [bold yellow]x{hero.speed}/{hero.maxspeed}[/]");
+                        Menu.KeyToContinue();
+                    }
+
+                }
+                else if (action.KeyChar == 'g')
+                {
+                    if (hero.speed >= 1 && hero.speed < hero.maxspeed)
+                    {
+                        hero.speed++;
+                        Menu.WriteTable($"[blue]changed speed to[/] [bold yellow]x{hero.speed}/{hero.maxspeed}[/]");
+                        Menu.KeyToContinue();
+                    }
+
                 }
                 else if (action.KeyChar == 'r' || action.KeyChar == 'R')
                 {
@@ -551,7 +287,7 @@ namespace GameObjects
                     {
                         hero.mana = hero.mana - hero.cooldown;
                         Console.Clear();
-                        Console.WriteLine($"Activating the Super of {hero.name}!");
+                        Console.WriteLine($"Activating the Super of {hero.name}/!");
                         Console.WriteLine();
                         Console.WriteLine("Press a key to continue...");
                         Console.ReadKey(true);
