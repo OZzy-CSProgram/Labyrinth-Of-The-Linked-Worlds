@@ -532,7 +532,7 @@ namespace GameObjects
                 table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
                 table1.AddRow(" 💙 [bold] Max Mana[/] >  20");
                 table1.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
-                table1.AddRow(" 🥾 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
+                table1.AddRow(" 👢 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
                 table1.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
                 table.AddRow(table1);
                 table1.BorderColor(Color.DarkGoldenrod);
@@ -553,7 +553,7 @@ namespace GameObjects
             for (int i = 0; i < list.Count; i++)
             {
                 var stats = new BarChart()
-                .Width(60)
+                .Width(50)
                 .AddItem("💗 [bold #e9e9e9]Health[/]", list[i].health, Color.DarkRed)
                 .AddItem("💙 [bold #e9e9e9]Mana[/]", list[i].mana, Color.DarkBlue);
 
@@ -565,7 +565,7 @@ namespace GameObjects
                     table1.AddRow(" 📜 [bold #e9e9e9]Info  [/]   >  [#f9d380]" + list[i].info + "[/]");
                     table1.AddRow(stats);
                     table1.AddRow(" 🔪 [bold #e9e9e9]Attack[/]   >  " + list[i].attack);
-                    table1.AddRow(" 🥾 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
+                    table1.AddRow(" 👢 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
                     table1.AddRow(" 💠 [bold #e9e9e9]Super Requires[/] > Mana " + list[i].cooldown + "💙");
                     table.AddRow(table1);
                     table1.BorderColor(Color.Red);
@@ -579,7 +579,7 @@ namespace GameObjects
                     table1.AddRow(" 📜 [bold #e9e9e9]Info  [/]   >  [#f9d380]" + list[i].info + "[/]");
                     table1.AddRow(stats);
                     table1.AddRow(" 🔪 [bold #e9e9e9]Attack[/]   >  " + list[i].attack);
-                    table1.AddRow(" 🥾 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
+                    table1.AddRow(" 👢 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
                     table1.AddRow(" 💠 [bold #e9e9e9]Super Requires[/] > Mana " + list[i].cooldown + "💙");
                     table.AddRow(table1);
                     table1.BorderColor(Color.Red);
@@ -591,7 +591,7 @@ namespace GameObjects
                     table1.AddRow(" 📜 [bold #e9e9e9]Info  [/]   >  [#f9d380]" + list[i].info + "[/]");
                     table1.AddRow(stats);
                     table1.AddRow(" 🔪 [bold #e9e9e9]Attack[/]   >  " + list[i].attack);
-                    table1.AddRow(" 🥾 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
+                    table1.AddRow(" 👢 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
                     table1.AddRow(" 💠 [bold #e9e9e9]Super Requires[/] > Mana " + list[i].cooldown + "💙");
                     table.AddRow(table1);
                     table1.BorderColor(Color.DarkGreen);

@@ -965,23 +965,4 @@ while (true)
         Console.ReadKey(true);
         break;
     }
-    // int desire = int.Parse(Console.ReadLine());
-    // if (desire == 1)
-    // {
-    //     Console.WriteLine("Letsss goooo!!!");
-    //     Console.ReadKey();
-    //     Console.WriteLine("Genering The Maze!!")
-    //     int[,] maze = Maze.Generator();
-
-    // }
-    // if (desire == 2)
-    // {
-    //     Console.WriteLine("I was not expecting that mate! but see you next time");
-    //     Console.ReadKey();
-    //     break;
-    // }
-    // if (desire != 1 && desire != 2)
-    // {
-    //     Console.WriteLine("MARCEEEEEELLOOO WHAT you doing!!!!");
-    //     Console.ReadKey();
 }

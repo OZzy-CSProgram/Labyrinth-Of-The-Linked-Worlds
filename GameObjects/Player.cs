@@ -83,7 +83,7 @@ namespace GameObjects
 
         public static ConsoleKeyInfo ValidPosition(ConsoleKeyInfo action, int[,] map, Player p, Player otherp, Hero hero)
         {
-            while (action.KeyChar != 'k' && action.KeyChar != 'g' && action.KeyChar != 'f' && action.KeyChar != 'w' && action.KeyChar != 'W' && action.KeyChar != 'a' && action.KeyChar != 'A' && action.KeyChar != 's' && action.KeyChar != 'S' && action.KeyChar != 'd' && action.KeyChar != 'D' && action.KeyChar != 'r' && action.KeyChar != 'R')
+            while (action.KeyChar != 'k' && action.KeyChar != 'q' && action.KeyChar != 'e' && action.KeyChar != 'w' && action.KeyChar != 'W' && action.KeyChar != 'a' && action.KeyChar != 'A' && action.KeyChar != 's' && action.KeyChar != 'S' && action.KeyChar != 'd' && action.KeyChar != 'D' && action.KeyChar != 'r' && action.KeyChar != 'R')
             {
                 Console.Clear();
                 Console.WriteLine("thats not a valid action)");
@@ -107,22 +107,32 @@ namespace GameObjects
             var w = new Table()
             .Border(TableBorder.Double)
             .BorderColor(Color.SandyBrown)
-            .AddColumn(new TableColumn("W ⬆ ").Centered());
+            .AddColumn(new TableColumn("W ⬆  ").Centered());
+
+            var q = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Color.SkyBlue3)
+            .AddColumn(new TableColumn("Q 👢[bold red]↙[/]"));
+
+            var e = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Color.SkyBlue3)
+            .AddColumn(new TableColumn("E 👢[bold green]↗[/]"));
 
             var a = new Table()
             .Border(TableBorder.Double)
             .BorderColor(Color.SandyBrown)
-            .AddColumn(new TableColumn("A ⬅ ").Centered());
+            .AddColumn(new TableColumn("A ⬅  ").Centered());
 
             var s = new Table()
             .Border(TableBorder.Double)
             .BorderColor(Color.SandyBrown)
-            .AddColumn(new TableColumn("S ⬇ ").Centered());
+            .AddColumn(new TableColumn("S ⬇  ").Centered());
 
             var d = new Table()
             .Border(TableBorder.Double)
             .BorderColor(Color.SandyBrown)
-            .AddColumn(new TableColumn("D ➡ ").Centered());
+            .AddColumn(new TableColumn("D ➡  ").Centered());
 
             var r = new Table()
             .Border(TableBorder.Double)
@@ -138,75 +148,83 @@ namespace GameObjects
 
 
                 var NearKey = new BarChart()
-                .Label("[yellow bold]" + hero.actionsRemaining + " actions left\n[/]");
+                .Label("Key Distance");
 
                 if (Distance == 1)
                 {
-                    NearKey.Width(60);
-                    NearKey.AddItem("Key Distance", Distance, Color.Red3);
+                    NearKey.Width(10);
+                    NearKey.AddItem("Block(s)", Distance, Color.Red3);
                 }
                 else if (Distance == 2)
                 {
-                    NearKey.Width(60);
-                    NearKey.AddItem("Key Distance", Distance, Color.Red1);
+                    NearKey.Width(20);
+                    NearKey.AddItem("Block(s)", Distance, Color.Red1);
                 }
                 else if (Distance == 3)
                 {
-                    NearKey.Width(60);
-                    NearKey.AddItem("Key Distance", Distance, Color.OrangeRed1);
+                    NearKey.Width(30);
+                    NearKey.AddItem("Block(s)", Distance, Color.OrangeRed1);
                 }
                 else if (Distance == 4)
                 {
-                    NearKey.Width(60);
-                    NearKey.AddItem("Key Distance", Distance, Color.Orange3);
+                    NearKey.Width(30);
+                    NearKey.AddItem("Block(s)", Distance, Color.Orange3);
                 }
                 else if (Distance == 5)
                 {
-                    NearKey.Width(60);
-                    NearKey.AddItem("Key Distance", Distance, Color.Orange1);
+                    NearKey.Width(30);
+                    NearKey.AddItem("Block(s)", Distance, Color.Orange1);
                 }
                 else if (Distance == 6)
                 {
-                    NearKey.Width(60);
-                    NearKey.AddItem("Key Distance", Distance, Color.Yellow2);
+                    NearKey.Width(30);
+                    NearKey.AddItem("Block(s)", Distance, Color.Yellow2);
                 }
                 else if (Distance == 7)
                 {
-                    NearKey.Width(60);
-                    NearKey.AddItem("Key Distance", Distance, Color.Yellow3_1);
+                    NearKey.Width(30);
+                    NearKey.AddItem("Block(s)", Distance, Color.Yellow3_1);
                 }
                 else if (Distance == 8)
                 {
-                    NearKey.Width(60);
-                    NearKey.AddItem("Key Distance", Distance, Color.Yellow);
+                    NearKey.Width(30);
+                    NearKey.AddItem("Block(s)", Distance, Color.Yellow);
                 }
                 else if (Distance == 9)
                 {
-                    NearKey.Width(60);
-                    NearKey.AddItem("Key Distance", Distance, Color.LightYellow3);
+                    NearKey.Width(30);
+                    NearKey.AddItem("Block(s)", Distance, Color.LightYellow3);
                 }
                 else if (Distance >= 10)
                 {
-                    NearKey.Width(60);
-                    NearKey.AddItem("Key Distance", Distance, Color.White);
+                    NearKey.Width(30);
+                    NearKey.AddItem("Block(s)", Distance, Color.White);
                 }
 
 
 
                 actionsleft.AddColumn(new TableColumn(NearKey).Centered());
             }
+            if (hero.maxspeed == 1)
+            {
+                table.AddColumn(new TableColumn("").Centered()).NoBorder();
+                table.AddColumn(new TableColumn(w).Centered()).NoBorder();
+                table.AddColumn(new TableColumn("").Centered()).NoBorder();
+                table.AddColumn(new TableColumn(r).Centered()).NoBorder();
+
+                table.AddRow(a.Centered(), s.Centered(), d.Centered(), actionsleft.Centered());
+                Maze.PrintMaze2(map, $" {p.name}'s Turn!!!    {hero.actionsRemaining} Actions Remaining     ", table, hero);
+            }
             else
             {
+                table.AddColumn(new TableColumn(q).Centered()).NoBorder();
+                table.AddColumn(new TableColumn(w).Centered()).NoBorder();
+                table.AddColumn(new TableColumn(e).Centered()).NoBorder();
+                table.AddColumn(new TableColumn(r).Centered()).NoBorder();
 
-                actionsleft.AddColumn(new TableColumn("[yellow bold]" + hero.actionsRemaining + " actions left\n[/]").Centered());
+                table.AddRow(a.Centered(), s.Centered(), d.Centered(), actionsleft.Centered());
+                Maze.PrintMaze2(map, $" {p.name}'s Turn!!!    {hero.actionsRemaining} Actions Remaining     ", table, hero);
             }
-            table.AddColumn(new TableColumn("").Centered()).NoBorder();
-            table.AddColumn(new TableColumn(w).Centered()).NoBorder();
-            table.AddColumn(new TableColumn("").Centered()).NoBorder();
-            table.AddColumn(new TableColumn(r).Centered()).NoBorder();
-
-            table.AddRow(a.Centered(), s.Centered(), d.Centered(), actionsleft.Centered());
-            Maze.PrintMaze2(map, $" {p.name}'s Turn!!!    {hero.actionsRemaining} Actions Remaining     ", table, hero);
             ConsoleKeyInfo action = Console.ReadKey(true);
             action = ValidPosition(action, map, p, otherp, hero);
             return action;
@@ -261,23 +279,19 @@ namespace GameObjects
                     Menu.WriteTable($"[red]hacked speed[/] [bold yellow]x{hero.speed}/{hero.maxspeed}[/]");
                     Menu.KeyToContinue();
                 }
-                else if (action.KeyChar == 'f')
+                else if (action.KeyChar == 'q')
                 {
                     if (hero.speed > 1)
                     {
                         hero.speed--;
-                        Menu.WriteTable($"[blue]changed speed to[/] [bold yellow]x{hero.speed}/{hero.maxspeed}[/]");
-                        Menu.KeyToContinue();
                     }
 
                 }
-                else if (action.KeyChar == 'g')
+                else if (action.KeyChar == 'e')
                 {
                     if (hero.speed >= 1 && hero.speed < hero.maxspeed)
                     {
                         hero.speed++;
-                        Menu.WriteTable($"[blue]changed speed to[/] [bold yellow]x{hero.speed}/{hero.maxspeed}[/]");
-                        Menu.KeyToContinue();
                     }
 
                 }
