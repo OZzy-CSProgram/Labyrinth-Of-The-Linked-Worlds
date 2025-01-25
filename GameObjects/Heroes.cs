@@ -10,7 +10,7 @@ namespace GameObjects
         public string name;
         public string info;
         public int id;
-
+        public int speed;
         public string icon;
         public int health;
         public int attack;
@@ -28,7 +28,7 @@ namespace GameObjects
         public int[,] map;
         public int[] location = new int[2];
         /////constructor////
-        public Hero(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze)
+        public Hero(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int[,] maze)
         {
             this.id = id;
             this.icon = icon;
@@ -36,6 +36,7 @@ namespace GameObjects
             this.info = info;
             this.health = health;
             this.attack = attack;
+            this.speed = speed;
             this.mana = mana;
             this.cooldown = cooldown;
             this.map = maze;
@@ -46,37 +47,37 @@ namespace GameObjects
 
 
 
-        public void moveright(int[] location, int[,] map)
+        public void moveright(int[] location, int speed, int[,] map)
         {
             //make path where player is standing
             map[location[0], location[1]] = 0;
             //Change Player location
-            location[1]++;
+            location[1]+= speed;
             map[location[0], location[1]] = id;
         }
-        public void moveleft(int[] location, int[,] map)
+        public void moveleft(int[] location, int speed, int[,] map)
         {
             //make path where player is standing
             map[location[0], location[1]] = 0;
             //Change Player location
-            location[1]--;
+            location[1]-= speed;
             map[location[0], location[1]] = id;
         }
-        public void moveup(int[] location, int[,] map)
+        public void moveup(int[] location, int speed, int[,] map)
         {
             //make path where player is standing
             map[location[0], location[1]] = 0;
             //Change Player location
-            location[0]--;
+            location[0]-= speed;
             // Make map value = hero.id so when map is display hero appears in that position
             map[location[0], location[1]] = id;
         }
-        public void movedown(int[] location, int[,] map)
+        public void movedown(int[] location, int speed, int[,] map)
         {
             //make path where player is standing
             map[location[0], location[1]] = 0;
             //Change Player location
-            location[0]++;
+            location[0]+= speed;
             // Make map value = hero.id so when map is display hero appears in that position
             map[location[0], location[1]] = id;
         }
@@ -95,6 +96,7 @@ namespace GameObjects
                 table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
                 table1.AddRow(" 💙 [bold] Max Mana[/] >  20");
                 table1.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
+                table1.AddRow(" 🥾 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
                 table1.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
                 table.AddRow(table1);
                 table1.BorderColor(Color.DarkGoldenrod);
@@ -127,6 +129,7 @@ namespace GameObjects
                     table1.AddRow(" 📜 [bold #e9e9e9]Info  [/]   >  [#f9d380]" + list[i].info + "[/]");
                     table1.AddRow(stats);
                     table1.AddRow(" 🔪 [bold #e9e9e9]Attack[/]   >  " + list[i].attack);
+                    table1.AddRow(" 🥾 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
                     table1.AddRow(" 💠 [bold #e9e9e9]Super Requires[/] > Mana " + list[i].cooldown + "💙");
                     table.AddRow(table1);
                     table1.BorderColor(Color.Red);
@@ -140,6 +143,7 @@ namespace GameObjects
                     table1.AddRow(" 📜 [bold #e9e9e9]Info  [/]   >  [#f9d380]" + list[i].info + "[/]");
                     table1.AddRow(stats);
                     table1.AddRow(" 🔪 [bold #e9e9e9]Attack[/]   >  " + list[i].attack);
+                    table1.AddRow(" 🥾 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
                     table1.AddRow(" 💠 [bold #e9e9e9]Super Requires[/] > Mana " + list[i].cooldown + "💙");
                     table.AddRow(table1);
                     table1.BorderColor(Color.Red);
@@ -151,9 +155,10 @@ namespace GameObjects
                     table1.AddRow(" 📜 [bold #e9e9e9]Info  [/]   >  [#f9d380]" + list[i].info + "[/]");
                     table1.AddRow(stats);
                     table1.AddRow(" 🔪 [bold #e9e9e9]Attack[/]   >  " + list[i].attack);
+                    table1.AddRow(" 🥾 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
                     table1.AddRow(" 💠 [bold #e9e9e9]Super Requires[/] > Mana " + list[i].cooldown + "💙");
                     table.AddRow(table1);
-                    table1.BorderColor(Color.Yellow);
+                    table1.BorderColor(Color.DarkGreen);
                 }
             }
             table.AddRow("");
@@ -272,7 +277,7 @@ namespace GameObjects
     public class Teleporter : Hero
     {
         //Constructor for Teleporter//
-        public Teleporter(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, mana, cooldown, maze)
+        public Teleporter(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, maze)
         //Call to base constructor
         {
         }
@@ -303,7 +308,7 @@ namespace GameObjects
     public class Switcher : Hero
     {
         //Constructor for Teleporter//
-        public Switcher(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, mana, cooldown, maze)
+        public Switcher(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, maze)
         //Call to base constructor
         {
         }
@@ -341,7 +346,7 @@ namespace GameObjects
     public class Witcher : Hero
     {
         //Constructor for Teleporter//
-        public Witcher(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, mana, cooldown, maze)
+        public Witcher(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, maze)
         //Call to base constructor
         {
         }
@@ -366,7 +371,7 @@ namespace GameObjects
     public class Manner : Hero
     {
         //Constructor for Teleporter//
-        public Manner(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, mana, cooldown, maze)
+        public Manner(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, maze)
         //Call to base constructor
         {
         }
@@ -404,7 +409,7 @@ namespace GameObjects
     public class Jumper : Hero
     {
         //Constructor for Teleporter//
-        public Jumper(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, mana, cooldown, maze)
+        public Jumper(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, maze)
         //Call to base constructor
         {
         }
@@ -556,7 +561,7 @@ namespace GameObjects
     public class WallBreaker : Hero
     {
         //Constructor for WallBreaker//
-        public WallBreaker(int id, string icon, string name, string info, int health, int attack, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, mana, cooldown, maze)//Call to base constructor
+        public WallBreaker(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, maze)//Call to base constructor
         {
         }
         public override void CastSpell(int[,] map, Player player, Player otherplayer)

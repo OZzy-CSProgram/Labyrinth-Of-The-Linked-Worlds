@@ -83,7 +83,7 @@ namespace GameObjects
 
         public static ConsoleKeyInfo ValidPosition(ConsoleKeyInfo action, int[,] map, Player p, Player otherp, Hero hero)
         {
-            while (action.KeyChar != 'w' && action.KeyChar != 'W' && action.KeyChar != 'a' && action.KeyChar != 'A' && action.KeyChar != 's' && action.KeyChar != 'S' && action.KeyChar != 'd' && action.KeyChar != 'D' && action.KeyChar != 'r' && action.KeyChar != 'R')
+            while (action.KeyChar != 'k' && action.KeyChar != 'w' && action.KeyChar != 'W' && action.KeyChar != 'a' && action.KeyChar != 'A' && action.KeyChar != 's' && action.KeyChar != 'S' && action.KeyChar != 'd' && action.KeyChar != 'D' && action.KeyChar != 'r' && action.KeyChar != 'R')
             {
                 Console.Clear();
                 Console.WriteLine("thats not a valid action)");
@@ -92,7 +92,7 @@ namespace GameObjects
                 Console.Clear();
                 action = GetAction(map, p, otherp, hero);
 
-                if (action.KeyChar == 'w' || action.KeyChar == 'W' || action.KeyChar == 'a' || action.KeyChar == 'A' || action.KeyChar == 's' || action.KeyChar == 'S' || action.KeyChar == 'd' || action.KeyChar == 'D')
+                if (action.KeyChar == 'k' || action.KeyChar == 'w' || action.KeyChar == 'W' || action.KeyChar == 'a' || action.KeyChar == 'A' || action.KeyChar == 's' || action.KeyChar == 'S' || action.KeyChar == 'd' || action.KeyChar == 'D')
                 {
                     break;
                 }
@@ -246,7 +246,7 @@ namespace GameObjects
                     }
                     else if (map[hero.location[0] - 1, hero.location[1]] == 3)
                     {
-                        hero.moveup(hero.location, map);
+                        hero.moveup(hero.location, hero.speed, map);
                         //add new position to the log
                         hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
                         hero.trapped = true;
@@ -286,7 +286,7 @@ namespace GameObjects
                     //moving to a key
                     else if (map[hero.location[0] - 1, hero.location[1]] == 8)
                     {
-                        hero.moveup(hero.location, map);
+                        hero.moveup(hero.location, hero.speed, map);
                         Console.Clear();
                         Menu.HeroDialogue(hero, "Finally, the master key to open the doors of the treasure chamber!");
                         Menu.KeyToContinue();
@@ -311,7 +311,7 @@ namespace GameObjects
                     else if (map[hero.location[0] - 1, hero.location[1]] == 0)
                     {
                         //moveup
-                        hero.moveup(hero.location, map);
+                        hero.moveup(hero.location, hero.speed, map);
                         hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
                         hero.actionsRemaining--;
                     }
@@ -330,7 +330,7 @@ namespace GameObjects
                     else if (map[hero.location[0], hero.location[1] - 1] == 3)
                     {
                         //execute move method
-                        hero.moveleft(hero.location, map);
+                        hero.moveleft(hero.location, hero.speed, map);
                         //add new position to the log
                         hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
                         hero.trapped = true;
@@ -368,7 +368,7 @@ namespace GameObjects
                     //moving to a key
                     else if (map[hero.location[0], hero.location[1] - 1] == 8)
                     {
-                        hero.moveleft(hero.location, map);
+                        hero.moveleft(hero.location, hero.speed, map);
                         Console.Clear();
                         Menu.HeroDialogue(hero, "Finally, the master key to open the doors of the treasure chamber!");
                         Menu.KeyToContinue();
@@ -387,7 +387,7 @@ namespace GameObjects
                     }
                     else if (map[hero.location[0], hero.location[1] - 1] == 0)
                     {
-                        hero.moveleft(hero.location, map);
+                        hero.moveleft(hero.location, hero.speed, map);
                         hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
                         hero.actionsRemaining--;
                     }
@@ -404,7 +404,7 @@ namespace GameObjects
                     }
                     else if (map[hero.location[0] + 1, hero.location[1]] == 3)
                     {
-                        hero.movedown(hero.location, map);
+                        hero.movedown(hero.location, hero.speed, map);
                         //add new position to the log
                         hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
                         hero.trapped = true;
@@ -442,7 +442,7 @@ namespace GameObjects
                     //moving to a key
                     else if (map[hero.location[0] + 1, hero.location[1]] == 8)
                     {
-                        hero.movedown(hero.location, map);
+                        hero.movedown(hero.location, hero.speed, map);
                         Console.Clear();
                         Menu.HeroDialogue(hero, "Finally, the master key to open the doors of the treasure chamber!");
                         Menu.KeyToContinue();
@@ -461,7 +461,7 @@ namespace GameObjects
                     }
                     else if (map[hero.location[0] + 1, hero.location[1]] == 0)
                     {
-                        hero.movedown(hero.location, map);
+                        hero.movedown(hero.location, hero.speed, map);
                         hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
                         hero.actionsRemaining--;
                     }
@@ -480,7 +480,7 @@ namespace GameObjects
                     else if (map[hero.location[0], hero.location[1] + 1] == 3)
                     {
                         //execute move method
-                        hero.moveright(hero.location, map);
+                        hero.moveright(hero.location, hero.speed, map);
                         //add new position to the log
                         hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
                         hero.trapped = true;
@@ -492,7 +492,7 @@ namespace GameObjects
                         if (hero.haveKey)
                         {
                             Console.Clear();
-                            Menu.WriteTable("Do you want to use the key to open the door?\n\nWrite 'yes' to accept or 'no' to cancel");
+                            Menu.WriteTable("Do you want to use the key to open the door?\n\nWrite '[green]yes[/]' to accept or '[red]no[/]' to cancel");
                             string choosing = Console.ReadLine().ToLower();
                             if (choosing == "yes")
                             {
@@ -517,7 +517,7 @@ namespace GameObjects
                     }
                     else if (map[hero.location[0], hero.location[1] + 1] == 8)
                     {
-                        hero.moveright(hero.location, map);
+                        hero.moveright(hero.location, hero.speed, map);
                         Console.Clear();
                         Menu.HeroDialogue(hero, "Finally, the master key to open the doors of the treasure chamber!");
                         Menu.KeyToContinue();
@@ -535,12 +535,16 @@ namespace GameObjects
                     }
                     else if (map[hero.location[0], hero.location[1] + 1] == 0)
                     {
-                        hero.moveright(hero.location, map);
+                        hero.moveright(hero.location, hero.speed, map);
                         hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
                         hero.actionsRemaining--;
                     }
                 }
-
+                else if (action.KeyChar == 'k')
+                {
+                   hero.speed++;
+                   Console.Write($"hacked speed x{hero.speed}");
+                }
                 else if (action.KeyChar == 'r' || action.KeyChar == 'R')
                 {
                     if (hero.mana >= hero.cooldown)

@@ -34,7 +34,6 @@ namespace GameObjects
             ladyelara.AddRow(@"     w * W * W * W * w   ");
 
             gamemenu.AddRow(ladyelara, table);
-            gamemenu.Centered();
             return gamemenu;
         }
         public static void HeroDialogue(Hero hero, string s)

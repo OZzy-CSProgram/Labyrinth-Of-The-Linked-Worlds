@@ -350,40 +350,34 @@ while (true)
         //////////////////////////      Heroes Selection         //////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////
         Console.Clear();
-        Console.WriteLine(" _____                        _____     _         _   _         ");
-        Console.WriteLine("|  |  |___ ___ ___ ___ ___   |   __|___| |___ ___| |_|_|___ ___ ");
-        Console.WriteLine("|     | -_|  _| . | -_|_ -|  |__   | -_| | -_|  _|  _| | . |   |");
-        Console.WriteLine("|__|__|___|_| |___|___|___|  |_____|___|_|___|___|_| |_|___|_|_|");
-        Console.WriteLine("\n\n\n");
+        var HeroSelectionTable = Menu.CreateTable("[bold #ff1e00] _____                        _____     _         _   _         [/]\n[bold #ff3800]|  |  |___ ___ ___ ___ ___   |   __|___| |___ ___| |_|_|___ ___ [/]\n[bold #ff4e00]|     | -_|  _| . | -_|_ -|  |__   | -_| | -_|  _|  _| | . |   |[/]\n[bold #ff6400]|__|__|___|_| |___|___|___|  |_____|___|_|___|___|_| |_|___|_|_|[/]\n");
+        AnsiConsole.Write(HeroSelectionTable);
         Console.WriteLine("Allright, Lets proceed to the Heroes Selection");
         Console.WriteLine("\n\n\n");
         Menu.KeyToContinue();
         List<Hero> Heroes = new List<Hero>();
-        Teleporter Mediv = new Teleporter(11, "🧙🏻‍♂️", "Mediv The Guardian", "A powerfull mage with the magical power \n of teleporting to a random position in the maze!", 10, 6, 0, 12, map);
+        Teleporter Mediv = new Teleporter(11, "🧙🏻‍♂️", "Mediv The Guardian", "A powerfull mage with the magical power \n of teleporting to a random position in the maze!", 10, 6, 1, 0, 12, map);
         Heroes.Add(Mediv);
-        WallBreaker Eledron = new WallBreaker(13, "👳‍♂️", "Eledron The WallBreaker", "A strong Dwarv with a big Hammer\n He has got the ability to break walls!", 16, 4, 0, 10, map);
+        WallBreaker Eledron = new WallBreaker(13, "👳‍♂️", "Eledron The WallBreaker", "A strong Dwarv with a big Hammer\n He has got the ability to break walls!", 16, 4, 1, 0, 10, map);
         Heroes.Add(Eledron);
-        Jumper Monkinho = new Jumper(15, "🐵", "Monkinho The Jumper", "A monkey with the ability to jump 3 cells \n in front of him, but obstacles can interrupt his jump!", 12, 5, 0, 8, map);
+        Jumper Monkinho = new Jumper(15, "🐵", "Monkinho The Jumper", "A monkey with the ability to jump 3 cells \n in front of him, but obstacles can interrupt his jump!", 12, 5, 1, 0, 8, map);
         Heroes.Add(Monkinho);
-        Switcher Warlus = new Switcher(17, "🧞", "Warlus The Genius", "A Genius with the great power of,\n switching position with an enemy hero selected!", 10, 5, 0, 2, map);
+        Switcher Warlus = new Switcher(17, "🧞", "Warlus The Genius", "A Genius with the great power of,\n switching position with an enemy hero selected!", 10, 5, 1, 0, 2, map);
         Heroes.Add(Warlus);
-        Witcher Galia = new Witcher(19, "👹", "Galia The Witch", "A tenebrous witch with the dangerous power,\n of paralyzing the enemy hero selected!", 9, 7, 0, 2, map);
+        Witcher Galia = new Witcher(19, "👹", "Galia The Witch", "A tenebrous witch with the dangerous power,\n of paralyzing the enemy hero selected!", 9, 7, 1, 0, 2, map);
         Heroes.Add(Galia);
-        Manner Elymnis = new Manner(21, "👽", "Elymnis The Creator", "One of the first mages that used mana,\nas a supply of energy, she can remove 5 points\nof mana to the selected enemy hero and transfer it\nto a random player in the host!", 13, 4, 0, 2, map);
+        Manner Elymnis = new Manner(21, "👽", "Elymnis The Creator", "One of the first mages that used mana,\nas a supply of energy, she can remove 5 points\nof mana to the selected enemy hero and transfer it\nto a random player in the host!", 13, 4, 1, 0, 2, map);
         Heroes.Add(Elymnis);
-
+        HeroSelectionTable.Centered();
 
         while (Heroes.Count > 0)
         {
             ////Player 1 Choose
             Console.Clear();
-            Console.WriteLine(" _____                        _____     _         _   _         ");
-            Console.WriteLine("|  |  |___ ___ ___ ___ ___   |   __|___| |___ ___| |_|_|___ ___ ");
-            Console.WriteLine("|     | -_|  _| . | -_|_ -|  |__   | -_| | -_|  _|  _| | . |   |");
-            Console.WriteLine("|__|__|___|_| |___|___|___|  |_____|___|_|___|___|_| |_|___|_|_|");
-            Console.WriteLine("\n\n\n\n\n");
+            AnsiConsole.Write(HeroSelectionTable);
+            Console.WriteLine();
             Hero.DisplayList(Heroes, $"{nameofP1.ToUpper()} , ITS YOUR TURN !!!");
-            Console.WriteLine("\n\n\n\n\n");
+            Console.WriteLine();
 
             Hero choice1 = Player.GetPlayerChoice(Heroes);
             if (choice1 != null)
@@ -402,13 +396,10 @@ while (true)
             }
             //// Player 2 Choose
             Console.Clear();
-            Console.WriteLine(" _____                        _____     _         _   _         ");
-            Console.WriteLine("|  |  |___ ___ ___ ___ ___   |   __|___| |___ ___| |_|_|___ ___ ");
-            Console.WriteLine("|     | -_|  _| . | -_|_ -|  |__   | -_| | -_|  _|  _| | . |   |");
-            Console.WriteLine("|__|__|___|_| |___|___|___|  |_____|___|_|___|___|_| |_|___|_|_|");
-            Console.WriteLine("\n\n\n\n\n");
+            AnsiConsole.Write(HeroSelectionTable);
+            Console.WriteLine();
             Hero.DisplayList(Heroes, $"{nameofP2.ToUpper()} , ITS YOUR TURN !!!");
-            Console.WriteLine("\n\n\n\n\n");
+            Console.WriteLine();
             Hero choice2 = Player.GetPlayerChoice(Heroes);
             if (choice2 != null)
             {
@@ -424,9 +415,7 @@ while (true)
         }
         Console.Clear();
         Console.WriteLine("\n\n");
-        Console.WriteLine("Heroes selection finished...");
-        Console.WriteLine("The victory awaits, for the champion of the maze!");
-        Console.WriteLine("\n\n");
+        Menu.WriteTable("Heroes selection finished...\n\n\n The victory awaits, for the champion of the maze!");
         Menu.KeyToContinue();
 
         ///Heroes Spwans
