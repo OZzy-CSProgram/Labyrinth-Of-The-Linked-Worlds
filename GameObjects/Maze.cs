@@ -10,7 +10,7 @@ namespace GameObjects
         public static int size = 43;
         public int Trap;
         public int Path;
-
+        public static int[] KeyLocation;
         public bool KeyOnMap;
         public int obstacle;
         public static List<int[]> FreePath = new List<int[]>();
@@ -387,6 +387,26 @@ namespace GameObjects
             downtable.Expand();
             table.AddRow(downtable.Centered());
             AnsiConsole.Write(table);
+        }
+        public static void SpawnKey(int[,] map)
+        {
+            List<int[]> posiblespawns = new List<int[]>();
+            for (int i = 15; i < 27; i++)
+            {
+                for (int j = 11; j < 29; j++)
+                {
+                    if (map[i, j] == 0)
+                    {
+                        posiblespawns.Add(new int[] { i, j });
+                    }
+                }
+            }
+            
+            ///take a random
+            Random coord = new Random();
+            int index = coord.Next(posiblespawns.Count);
+            map[posiblespawns[index][0],posiblespawns[index][1]] = 8;
+            Maze.KeyLocation = posiblespawns[index];
         }
         public static int DistanceFromKey(Hero hero, int v, int w, int size)
         {

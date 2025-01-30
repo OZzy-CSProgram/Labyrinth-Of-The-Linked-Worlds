@@ -149,7 +149,7 @@ namespace GameObjects
 
             if (p.haveKey == false && otherp.haveKey == false)
             {
-                int Distance = Maze.DistanceFromKey(hero, Maze.size / 2 + 2, Maze.size / 2 + 1, Maze.size);
+                int Distance = Maze.DistanceFromKey(hero, Maze.KeyLocation[0], Maze.KeyLocation[1], Maze.size);
 
 
                 var NearKey = new BarChart()

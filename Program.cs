@@ -329,7 +329,6 @@ while (true)
                                                        //🟩🟦🟦🟦🟩
                                                        //🟩🟩🟩🟩🟩
                                                        ////
-        map[Maze.size / 2 + 2, Maze.size / 2 + 1] = 8; // 
         Random random = new Random();
         List<int[]> DoorSpawn = new List<int[]>();
         DoorSpawn.Add(new int[] { Maze.size / 2, Maze.size / 2 - 1 });
@@ -627,6 +626,8 @@ while (true)
             default:
                 break;
         }
+        //SPAWN KEY
+        Maze.SpawnKey(map);
         //TRAP SETTINGS
 
         Maze.GetPathes(map);
