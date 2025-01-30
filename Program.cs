@@ -55,7 +55,7 @@ while (true)
         Console.Clear();
         Console.WriteLine("\n\n\n");
         Console.WriteLine("Letsss goooo!!!");
-        var letsgo = Menu.CreateTable("[bold #c159ff]" + @"  _    ___ _____ _ ___    ___  ___  _ " + "\n" + @" | |  | __|_   _( ) __|  / __|/ _ \| |" + "\n" + @" | |__| _|  | | |/\__ \ | (_ | (_) |_|" + "\n" + @" |____|___| |_|   |___/  \___|\___/(_)"  + "\n" +  "[/]");
+        var letsgo = Menu.CreateTable("[bold #c159ff]" + @"  _    ___ _____ _ ___    ___  ___  _ " + "\n" + @" | |  | __|_   _( ) __|  / __|/ _ \| |" + "\n" + @" | |__| _|  | | |/\__ \ | (_ | (_) |_|" + "\n" + @" |____|___| |_|   |___/  \___|\___/(_)" + "\n" + "[/]");
         AnsiConsole.Write(letsgo);
         Menu.KeyToContinue();
 
@@ -219,7 +219,7 @@ while (true)
         AnsiConsole.Write(ForP2);
         Console.WriteLine("\n\n\n");
         Menu.KeyToContinue();
-        
+
         Console.Clear();
         Console.WriteLine("Lord Kaelg> Wake up!, You are now under my command Switcher!!!");
         Console.WriteLine("\n\n\n");
@@ -254,7 +254,6 @@ while (true)
 
         Console.WriteLine("Genering The Map...");
         int[,] map = Maze.Generator();
-        Trap.SpawnTraps(map);
 
         //spawn artifact
         map[Maze.size / 2, Maze.size / 2] = 4;
@@ -356,17 +355,17 @@ while (true)
         Console.WriteLine("\n\n\n");
         Menu.KeyToContinue();
         List<Hero> Heroes = new List<Hero>();
-        Teleporter Mediv = new Teleporter(11, "🧙🏻‍♂️", "Mediv The Guardian", "A powerfull mage with the magical power \n of teleporting to a random position in the maze!", 10, 6, 1, 0, 12, map);
+        Teleporter Mediv = new Teleporter(11, "🧙🏻‍♂️", "Mediv The Guardian", "A powerfull mage with the magical power \n of teleporting to a random position in the maze!", /*health*/10, /*attack*/6, /*speed*/1, /*mana*/0, /*superreq*/8, /*toughness*/ 35, map);            ///Mage
         Heroes.Add(Mediv);
-        WallBreaker Eledron = new WallBreaker(13, "👳‍♂️", "Eledron The WallBreaker", "A strong Dwarv with a big Hammer\n He has got the ability to break walls!", 16, 4, 1, 0, 10, map);
+        WallBreaker Eledron = new WallBreaker(13, "👳‍♂️", "Eledron The WallBreaker", "A strong Dwarv with a big Hammer\n He has got the ability to break walls!",  /*health*/16, /*attack*/4, /*speed*/1, /*mana*/0, /*superreq*/10, /*toughness*/45, map);                    //Wallbreaker
         Heroes.Add(Eledron);
-        Jumper Monkinho = new Jumper(15, "🐵", "Monkinho The Jumper", "A monkey with the ability to jump 3 cells \n in front of him, but obstacles can interrupt his jump!", 12, 5, 1, 0, 8, map);
+        Jumper Monkinho = new Jumper(15, "🐵", "Monkinho The Jumper", "A monkey with the ability to jump 3 cells \n in front of him, but obstacles can interrupt his jump!", /*health*/12, /*attack*/5, /*speed*/1, /*mana*/0, /*superreq*/6, /*toughness*/25, map);         //Monkey
         Heroes.Add(Monkinho);
-        Switcher Warlus = new Switcher(17, "🧞", "Warlus The Genius", "A Genius with the great power of,\n switching position with an enemy hero selected!", 10, 5, 1, 0, 2, map);
-        Heroes.Add(Warlus);
-        Witcher Galia = new Witcher(19, "👹", "Galia The Witch", "A tenebrous witch with the dangerous power,\n of paralyzing the enemy hero selected!", 9, 7, 1, 0, 2, map);
+        Switcher Warlus = new Switcher(17, "🧞", "Warlus The Genius", "A Genius with the great power of,\n switching position with an enemy hero selected!", /*health*/10, /*attack*/5, /*speed*/1, /*mana*/0, /*superreq*/8,/*toughness*/30, map);                       ///switcher
+        Heroes.Add(Warlus);                        
+        Witcher Galia = new Witcher(19, "👹", "Galia The Witch", "A tenebrous witch with the dangerous power,\n of paralyzing the enemy hero selected!", /*health*/9, /*attack*/7, /*speed*/1, /*mana*/0, /*superreq*/10,/*toughness*/15, map);                              ///witch
         Heroes.Add(Galia);
-        Manner Elymnis = new Manner(21, "👽", "Elymnis The Creator", "One of the first mages that used mana,\nas a supply of energy, she can remove 5 points\nof mana to the selected enemy hero and transfer it\nto a random player in the host!", 13, 4, 1, 0, 2, map);
+        Manner Elymnis = new Manner(21, "👽", "Elymnis The Creator", "One of the first mages that used mana,\nas a supply of energy, she can remove 3 points\nof mana to the selected enemy hero and transfer it\nto a random player in the host!", /*health*/13, /*attack*/4, /*speed*/1, /*mana*/0, /*superreq*/8, /*toughness*/20, map);
         Heroes.Add(Elymnis);
         HeroSelectionTable.Centered();
 
@@ -628,7 +627,12 @@ while (true)
             default:
                 break;
         }
-        //Creating Trap List
+        //TRAP SETTINGS
+
+        Maze.GetPathes(map);
+        Trap.SpawnTraps(map);//spawn 12 traps
+        Trap.SpawnTraps(map);//spawn 12 more traps
+
         List<Trap> Traps = new List<Trap>();
         TReturn5 Return5 = new TReturn5();
         Traps.Add(Return5);
@@ -657,9 +661,9 @@ while (true)
 
 
             //////Methods for Game Actions
-            
-            
-            
+
+
+
             while (Player1.turn == true)
             {
 
@@ -670,7 +674,7 @@ while (true)
                 {
                     if (!(Player1.Party[0].stunned == 0 || Player1.Party[1].stunned == 0 || Player1.Party[2].stunned == 0))
                     {
-                        Console.WriteLine("You have no hero avalaible to select right now, Press a key to finish your turn...");
+                        Menu.WriteTable("You have no hero avalaible to select right now, Press a key to finish your turn...");
                         Console.ReadKey(true);
                         //Decrease Stun
 
@@ -687,7 +691,7 @@ while (true)
                 {
                     if (!(Player1.Party[0].stunned == 0 || Player1.Party[1].stunned == 0))
                     {
-                        Console.WriteLine("You have no hero avalaible to select right now, Press a key to finish your turn...");
+                        Menu.WriteTable("You have no hero avalaible to select right now, Press a key to finish your turn...");
                         Console.ReadKey(true);
                         //Decrease Stun
 
@@ -703,7 +707,7 @@ while (true)
                 {
                     if (!(Player1.Party[0].stunned == 0))
                     {
-                        Console.WriteLine("You have no hero avalaible to select right now, Press a key to finish your turn...");
+                        Menu.WriteTable("You have no hero avalaible to select right now, Press a key to finish your turn...");
                         Console.ReadKey(true);
                         //Decrease Stun
 
@@ -729,7 +733,6 @@ while (true)
                     Player1.Victory = true;
                     break;
                 }
-
 
                 ///Decrease Stun points before passing turn
                 if (Player1.Party.Count == 3)
@@ -765,38 +768,53 @@ while (true)
                         Player1.Party[0].stunned--;
                     }
                 }
+
+                ///HERO IS DEAD
+
+                if (choice1.health == 0)
+                {
+                    map[choice1.location[0], choice1.location[1]] = 0;
+                    choice1.location[0] = choice1.locationlog[0][0];
+                    choice1.location[1] = choice1.locationlog[0][1];
+                    map[choice1.location[0], choice1.location[1]] = choice1.id;
+
+                    choice1.restturns = 10;
+
+                }
+
+
                 Player.PassTurn(map, nameofP1, choice1);
 
                 ///check if he's mana is at the maximum amount
                 if (Player1.Party.Count == 3)
                 {
-                    if (Player1.Party[0].mana < 20)
+                    if (Player1.Party[0].mana < Player2.Party[0].cooldown)
                     {
                         Player1.Party[0].mana++;
                     }
-                    if (Player1.Party[1].mana < 20)
+                    if (Player1.Party[1].mana < Player2.Party[1].cooldown)
                     {
                         Player1.Party[1].mana++;
                     }
-                    if (Player1.Party[2].mana < 20)
+                    if (Player1.Party[2].mana < Player2.Party[2].cooldown)
                     {
                         Player1.Party[2].mana++;
                     }
                 }
                 if (Player1.Party.Count == 2)
                 {
-                    if (Player1.Party[0].mana < 20)
+                    if (Player1.Party[0].mana < Player2.Party[0].cooldown)
                     {
                         Player1.Party[0].mana++;
                     }
-                    if (Player1.Party[1].mana < 20)
+                    if (Player1.Party[1].mana < Player2.Party[1].cooldown)
                     {
                         Player1.Party[1].mana++;
                     }
                 }
                 if (Player1.Party.Count == 1)
                 {
-                    if (Player1.Party[0].mana < 20)
+                    if (Player1.Party[0].mana < Player2.Party[0].cooldown)
                     {
                         Player1.Party[0].mana++;
                     }
@@ -853,7 +871,7 @@ while (true)
                 action = Player.GetAction(map, Player2, Player1, choice2);
 
                 Player.Play(action, choice2, Player2, Player1, map, Traps);
-                
+
                 //victory condition
                 if (Player2.HeroesInCentre == 3)
                 {
@@ -896,6 +914,18 @@ while (true)
                         Player2.Party[0].stunned--;
                     }
                 }
+
+                ///HERO IS DEAD
+
+                if (choice2.health == 0)
+                {
+                    map[choice2.location[0], choice2.location[1]] = 0;
+                    choice2.location[0] = choice2.locationlog[0][0];
+                    choice2.location[1] = choice2.locationlog[0][1];
+                    map[choice2.location[0], choice2.location[1]] = choice2.id;
+                    choice2.restturns = 10;
+                }
+
                 Console.Clear();
                 Player.PassTurn(map, nameofP2, choice2);
 
@@ -903,33 +933,33 @@ while (true)
                 ///check if he's mana is at the maximum amount
                 if (Player2.Party.Count == 3)
                 {
-                    if (Player2.Party[0].mana < 20)
+                    if (Player2.Party[0].mana < Player2.Party[0].cooldown)
                     {
                         Player2.Party[0].mana++;
                     }
-                    if (Player2.Party[1].mana < 20)
+                    if (Player2.Party[1].mana < Player2.Party[1].cooldown)
                     {
                         Player2.Party[1].mana++;
                     }
-                    if (Player2.Party[2].mana < 20)
+                    if (Player2.Party[2].mana < Player2.Party[2].cooldown)
                     {
                         Player2.Party[2].mana++;
                     }
                 }
                 if (Player2.Party.Count == 2)
                 {
-                    if (Player2.Party[0].mana < 20)
+                    if (Player2.Party[0].mana < Player2.Party[0].cooldown)
                     {
                         Player2.Party[0].mana++;
                     }
-                    if (Player2.Party[1].mana < 20)
+                    if (Player2.Party[1].mana < Player2.Party[1].cooldown)
                     {
                         Player2.Party[1].mana++;
                     }
                 }
                 if (Player2.Party.Count == 1)
                 {
-                    if (Player2.Party[0].mana < 20)
+                    if (Player2.Party[0].mana < Player2.Party[0].cooldown)
                     {
                         Player2.Party[0].mana++;
                     }
@@ -942,15 +972,14 @@ while (true)
         //Out of Game PlayerTurns WhileTrue
         if (Player1.Victory == true)
         {
-            Console.WriteLine($"{nameofP1.ToUpper()}'s VICTORY\n\n");
-            Console.WriteLine($"Congratulations!!!!! YOU'VE WONNNN!! {nameofP1.ToUpper()}");
+            Console.Clear();
+            Menu.WriteTable($"{nameofP1.ToUpper()}'s VICTORY\n\nCongratulations!!!!! YOU'VE WONNNN!! {nameofP1.ToUpper()}");
             Console.ReadKey(true);
             continue;
         }
         if (Player2.Victory == true)
         {
-            Console.WriteLine($"{nameofP2.ToUpper()}'s VICTORY\n\n");
-            Console.WriteLine($"Congratulations!!!!! YOU'VE WONNNN!! {nameofP2.ToUpper()}");
+            Menu.WriteTable($"{nameofP1.ToUpper()}'s VICTORY\n\nCongratulations!!!!! YOU'VE WONNNN!! {nameofP1.ToUpper()}");
             Console.ReadKey(true);
             continue;
         }
@@ -959,10 +988,10 @@ while (true)
     if (Selection.KeyChar == (char)13 && Player.play == false)
     {
         Console.Clear();
-        Console.WriteLine("🔹🔷 I was not expecting that mate! but see you next time ...🔷🔹");
-        Console.WriteLine();
-        Console.WriteLine("press a key to exit game '-'");
+        Menu.WriteTable("🔹🔷 I was not expecting that mate! but see you next time ...🔷🔹");
+        Menu.WriteTable("press a key to exit game '-'");
         Console.ReadKey(true);
         break;
     }
 }
+

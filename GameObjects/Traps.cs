@@ -39,8 +39,14 @@ namespace GameObjects
 
             int[] Trap10 = GetTrap(map);
             map[Trap10[0], Trap10[1]] = 3;
+
+            int[] Trap11 = GetTrap(map);
+            map[Trap11[0], Trap11[1]] = 3;
+
+            int[] Trap12 = GetTrap(map);
+            map[Trap12[0], Trap12[1]] = 3;
         }
-        
+
         public static int[] GetTrap(int[,] map)
         {
             int[] Trap;
@@ -117,10 +123,8 @@ namespace GameObjects
         public override void CastTrap(Hero hero, int[,] map)
         {
             Console.Clear();
-            Console.WriteLine("YOU SHALL TRAVEL IN TIME TO THE PLACE YOU WERE 5 MOVEMENTS AGO!");
-            Console.WriteLine("");
-            Console.WriteLine("Press a key to continue");
-            Console.ReadKey(true);
+            Menu.WriteTable("[red bold]TRAP[/][bold] >[/] YOU SHALL TRAVEL IN TIME TO THE PLACE YOU WERE [yellow]5 MOVEMENTS AGO![/]");
+            Menu.KeyToContinue();
             if (hero.locationlog.Count < 6)
             {
                 map[hero.location[0], hero.location[1]] = 0;
@@ -142,10 +146,8 @@ namespace GameObjects
         public override void CastTrap(Hero hero, int[,] map)
         {
             Console.Clear();
-            Console.WriteLine("YOU SHALL TRAVEL IN TIME TO THE PLACE YOU WERE 10 MOVEMENTS AGO!");
-            Console.WriteLine("");
-            Console.WriteLine("Press a key to continue");
-            Console.ReadKey(true);
+            Menu.WriteTable("[red bold]TRAP[/][bold] >[/] YOU SHALL TRAVEL IN TIME TO THE PLACE YOU WERE [yellow]10 MOVEMENTS AGO[/] !");
+            Menu.KeyToContinue();
             if (hero.locationlog.Count < 11)
             {
                 map[hero.location[0], hero.location[1]] = 0;
@@ -167,17 +169,15 @@ namespace GameObjects
         public override void CastTrap(Hero hero, int[,] map)
         {
             Console.Clear();
-            Console.WriteLine("5 POINTS OF MANA ARE TAKEN FROM YOU!");
-            Console.WriteLine("");
-            Console.WriteLine("Press a key to continue");
-            Console.ReadKey(true);
+            Menu.WriteTable("[red bold]TRAP[/][bold] >[/] [blue]5 POINTS OF MANA[/] SHALL BE TAKEN FROM YOU!");
+            Menu.KeyToContinue();
             if (hero.mana < 5)
             {
                 hero.mana = 0;
             }
             else
             {
-                hero.mana = hero.mana -5;
+                hero.mana = hero.mana - 5;
             }
         }
     }
@@ -186,17 +186,15 @@ namespace GameObjects
         public override void CastTrap(Hero hero, int[,] map)
         {
             Console.Clear();
-            Console.WriteLine("THIS TRAP HAS DAMAGED YOU, AND YOU HAVE LOST 6 POINTS OF YOUR HEALTH!");
-            Console.WriteLine("");
-            Console.WriteLine("Press a key to continue");
-            Console.ReadKey(true);
+            Menu.WriteTable("[red bold]TRAP[/][bold] >[/] THIS TRAP HAS DAMAGED YOU, AND YOU HAVE LOST [red]6 POINTS OF YOUR HEALTH[/] !");
+            Menu.KeyToContinue();
             if (hero.health < 6)
             {
                 hero.health = 0;
             }
             else
             {
-                hero.health = hero.health -6;
+                hero.health = hero.health - 6;
             }
         }
     }

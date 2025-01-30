@@ -45,6 +45,11 @@ namespace GameObjects
                         Console.WriteLine("\n\nYou cant play with that hero yet!");
                         continue;
                     }
+                    if (list[index - 1].restturns > 0)
+                    {
+                        Console.WriteLine("\n\nYou cant play with that hero yet!");
+                        continue;
+                    }
                     return list[index - 1]; // Retorna el token elegido
                 }
 
@@ -250,25 +255,31 @@ namespace GameObjects
                     hero.actionsRemaining = 5;
                     break;
                 }
+                ///break whiletrue
+                if (hero.health == 0)
+                {
+                    hero.actionsRemaining = 5;
+                    break;
+                }
                 // PRESSED W
                 if (action.KeyChar == 'w' || action.KeyChar == 'W')
                 {
-                    hero.moveup(hero, player, map);
+                    hero.moveup(hero, player, otherplayer, map);
                 }
                 ///PRESSED A
                 else if (action.KeyChar == 'a' || action.KeyChar == 'A')
                 {
-                    hero.moveleft(hero, player, map);
+                    hero.moveleft(hero, player, otherplayer, map);
                 }
                 /// PRESSED S
                 else if (action.KeyChar == 's' || action.KeyChar == 'S')
                 {
-                    hero.movedown(hero, player, map);
+                    hero.movedown(hero, player, otherplayer, map);
                 }
                 /// PRESED D
                 else if (action.KeyChar == 'd' || action.KeyChar == 'D')
                 {
-                    hero.moveright(hero, player, map);
+                    hero.moveright(hero, player, otherplayer, map);
                 }
 
                 ///// HACK FOR TESTNG

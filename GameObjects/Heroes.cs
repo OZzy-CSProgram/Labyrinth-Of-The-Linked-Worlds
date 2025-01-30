@@ -16,9 +16,8 @@ namespace GameObjects
         public int health;
         public int attack;
         public int mana;
-
         public bool haveKey;
-
+        public int restturns;
         public bool trapped = false;
         public int stunned = 0;
         public int toughness;
@@ -29,7 +28,7 @@ namespace GameObjects
         public int[,] map;
         public int[] location = new int[2];
         /////constructor////
-        public Hero(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int[,] maze)
+        public Hero(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int toughness, int[,] maze)
         {
             this.id = id;
             this.icon = icon;
@@ -40,6 +39,7 @@ namespace GameObjects
             this.speed = speed;
             this.mana = mana;
             this.cooldown = cooldown;
+            this.toughness = toughness;
             this.map = maze;
 
         }
@@ -113,8 +113,37 @@ namespace GameObjects
 
         }
 
-
-        public void moveright(Hero hero, Player player, int[,] map)
+        public Hero GetHeroById(Player player, Player otherplayer, int id)
+        {
+            for (int i = 0; i < player.Party.Count; i++)
+            {
+                if (player.Party[i].id == id)
+                {
+                    return player.Party[i];
+                }
+            }
+            for (int i = 0; i < otherplayer.Party.Count; i++)
+            {
+                if (otherplayer.Party[i].id == id)
+                {
+                    return otherplayer.Party[i];
+                }
+            }
+            //esto nunca pasa es para q no me de Not all codes return a value error;
+            return player.Party[0];
+        }
+        public bool isHeroInParty(Player player, Hero hero)
+        {
+            for (int i = 0; i < player.Party.Count; i++)
+            {
+                if (player.Party[i].id == hero.id)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public void moveright(Hero hero, Player player, Player otherplayer, int[,] map)
         {
             while (true)
             {
@@ -128,7 +157,9 @@ namespace GameObjects
                 }
                 else if (movenumber != 0)
                 {
-                    if (map[hero.location[0], hero.location[1] + movenumber] == 3)
+                    int newposition = map[hero.location[0], hero.location[1] + movenumber];
+
+                    if (newposition == 3)
                     {
                         ///                                    moveup
                         map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
@@ -141,8 +172,49 @@ namespace GameObjects
                         hero.actionsRemaining--;
 
                     }
+                    //moving to a player
+                    else if (newposition == 11 || newposition == 13 || newposition == 15 || newposition == 17 || newposition == 19 || newposition == 21)
+                    {
+                        Hero herotomove = GetHeroById(player, otherplayer, newposition);
+                        if (hero.toughness > herotomove.toughness)
+                        {
+                            map[hero.location[0], hero.location[1]] = 0;
+
+                            hero.location[0] = herotomove.location[0];
+                            hero.location[1] = herotomove.location[1];
+
+                            herotomove.location[1]--;
+
+                            map[hero.location[0], hero.location[1]] = hero.id;
+                            map[herotomove.location[0], herotomove.location[1]] = herotomove.id;
+                            hero.actionsRemaining--;
+                        }
+                        if (hero.toughness < herotomove.toughness)
+                        {
+                            if (isHeroInParty(player, herotomove))//means hero is in my team so I will be able to move
+                            {
+                                map[hero.location[0], hero.location[1]] = 0;
+
+                                hero.location[0] = herotomove.location[0];
+                                hero.location[1] = herotomove.location[1];
+
+                                herotomove.location[1]--;
+
+                                map[hero.location[0], hero.location[1]] = hero.id;
+                                map[herotomove.location[0], herotomove.location[1]] = herotomove.id;
+                                hero.actionsRemaining--;
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(hero, "My god, look at that hero's toughness 'tis hugelly higher than mine, I cant dare to make him to move! Let the choco do it! :D");//que lo haga el choco!!XXD
+                                Menu.KeyToContinue();
+                            }
+                        }
+
+                    }
                     ///moving to a Door
-                    else if (map[hero.location[0], hero.location[1] + movenumber] == 6)
+                    else if (newposition == 6)
                     {
                         if (hero.haveKey)
                         {
@@ -169,10 +241,9 @@ namespace GameObjects
                             Menu.HeroDialogue(hero, "I need a key to open that door!");
                             Menu.KeyToContinue();
                         }
-
                     }
                     //moving to a key
-                    else if (map[hero.location[0], hero.location[1] + movenumber] == 8)
+                    else if (newposition == 8)
                     {
                         ///                                    moveup
                         map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
@@ -189,7 +260,7 @@ namespace GameObjects
 
                     }
                     //moving to the centre, the goal
-                    else if (map[hero.location[0], hero.location[1] + movenumber] == 4)
+                    else if (newposition == 4)
                     {
                         // Make player current position equals 0
                         map[hero.location[0], hero.location[1]] = 0;
@@ -200,7 +271,7 @@ namespace GameObjects
                         break;
                     }
                     //moving to a path
-                    else if (map[hero.location[0], hero.location[1] + movenumber] == 0)
+                    else if (newposition == 0)
                     {
                         ///                                    moveup
                         map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
@@ -214,9 +285,9 @@ namespace GameObjects
                 break;
             }
         }
-        public void moveleft(Hero hero, Player player, int[,] map)
+        public void moveleft(Hero hero, Player player, Player otherplayer, int[,] map)
         {
-             while (true)
+            while (true)
             {
                 int movenumber = Movenumber(hero, hero.speed, map, "left");
                 if (movenumber == 0)
@@ -228,7 +299,8 @@ namespace GameObjects
                 }
                 else if (movenumber != 0)
                 {
-                    if (map[hero.location[0], hero.location[1] - movenumber] == 3)
+                    int newposition = map[hero.location[0], hero.location[1] - movenumber];
+                    if (newposition == 3)
                     {
                         ///                                    moveup
                         map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
@@ -241,8 +313,48 @@ namespace GameObjects
                         hero.actionsRemaining--;
 
                     }
+                    //moving to a hero
+                    else if (newposition == 11 || newposition == 13 || newposition == 15 || newposition == 17 || newposition == 19 || newposition == 21)
+                    {
+                        Hero herotomove = GetHeroById(player, otherplayer, newposition);
+                        if (hero.toughness > herotomove.toughness)
+                        {
+                            map[hero.location[0], hero.location[1]] = 0;
+
+                            hero.location[0] = herotomove.location[0];
+                            hero.location[1] = herotomove.location[1];
+
+                            herotomove.location[1]++;
+
+                            map[hero.location[0], hero.location[1]] = hero.id;
+                            map[herotomove.location[0], herotomove.location[1]] = herotomove.id;
+                            hero.actionsRemaining--;
+                        }
+                        if (hero.toughness < herotomove.toughness)
+                        {
+                            if (isHeroInParty(player, herotomove))//means hero is in my team so I will be able to move
+                            {
+                                map[hero.location[0], hero.location[1]] = 0;
+
+                                hero.location[0] = herotomove.location[0];
+                                hero.location[1] = herotomove.location[1];
+
+                                herotomove.location[1]++;
+
+                                map[hero.location[0], hero.location[1]] = hero.id;
+                                map[herotomove.location[0], herotomove.location[1]] = herotomove.id;
+                                hero.actionsRemaining--;
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(hero, "My god, look at that hero's toughness 'tis hugelly higher than mine, is [yellow bold]" + herotomove.toughness + "[/]  I cant dare to make him to move! Let the choco do it! :D");//que lo haga el choco!!XXD
+                                Menu.KeyToContinue();
+                            }
+                        }
+                    }
                     ///moving to a Door
-                    else if (map[hero.location[0], hero.location[1] - movenumber] == 6)
+                    else if (newposition == 6)
                     {
                         if (hero.haveKey)
                         {
@@ -272,7 +384,7 @@ namespace GameObjects
 
                     }
                     //moving to a key
-                    else if (map[hero.location[0], hero.location[1] - movenumber] == 8)
+                    else if (newposition == 8)
                     {
                         ///                                    moveup
                         map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
@@ -289,7 +401,7 @@ namespace GameObjects
 
                     }
                     //moving to the centre, the goal
-                    else if (map[hero.location[0], hero.location[1] - movenumber] == 4)
+                    else if (newposition == 4)
                     {
                         // Make player current position equals 0
                         map[hero.location[0], hero.location[1]] = 0;
@@ -300,7 +412,7 @@ namespace GameObjects
                         break;
                     }
                     //moving to a path
-                    else if (map[hero.location[0], hero.location[1] - movenumber] == 0)
+                    else if (newposition == 0)
                     {
                         ///                                    moveup
                         map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
@@ -314,8 +426,8 @@ namespace GameObjects
                 break;
             }
         }
-        
-        public void moveup(Hero hero, Player player, int[,] map)
+
+        public void moveup(Hero hero, Player player, Player otherplayer, int[,] map)
         {
 
             while (true)
@@ -330,7 +442,8 @@ namespace GameObjects
                 }
                 else if (movenumber != 0)
                 {
-                    if (map[hero.location[0] - movenumber, hero.location[1]] == 3)
+                    int newposition = map[hero.location[0] - movenumber, hero.location[1]];
+                    if (newposition == 3)
                     {
                         ///                                    moveup
                         map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
@@ -343,8 +456,48 @@ namespace GameObjects
                         hero.actionsRemaining--;
 
                     }
+                    //moving to a hero
+                    else if (newposition == 11 || newposition == 13 || newposition == 15 || newposition == 17 || newposition == 19 || newposition == 21)
+                    {
+                        Hero herotomove = GetHeroById(player, otherplayer, newposition);
+                        if (hero.toughness > herotomove.toughness)
+                        {
+                            map[hero.location[0], hero.location[1]] = 0;
+
+                            hero.location[0] = herotomove.location[0];
+                            hero.location[1] = herotomove.location[1];
+
+                            herotomove.location[0]++;
+
+                            map[hero.location[0], hero.location[1]] = hero.id;
+                            map[herotomove.location[0], herotomove.location[1]] = herotomove.id;
+                            hero.actionsRemaining--;
+                        }
+                        if (hero.toughness < herotomove.toughness)
+                        {
+                            if (isHeroInParty(player, herotomove))//means hero is in my team so I will be able to move
+                            {
+                                map[hero.location[0], hero.location[1]] = 0;
+
+                                hero.location[0] = herotomove.location[0];
+                                hero.location[1] = herotomove.location[1];
+
+                                herotomove.location[0]++;
+
+                                map[hero.location[0], hero.location[1]] = hero.id;
+                                map[herotomove.location[0], herotomove.location[1]] = herotomove.id;
+                                hero.actionsRemaining--;
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(hero, "My god, look at that hero's toughness 'tis hugelly higher than mine, is [yellow bold]" + herotomove.toughness + "[/]  I cant dare to make him to move!");//que lo haga el choco!!XXD
+                                Menu.KeyToContinue();
+                            }
+                        }
+                    }
                     ///moving to a Door
-                    else if (map[hero.location[0] - movenumber, hero.location[1]] == 6)
+                    else if (newposition == 6)
                     {
                         if (hero.haveKey)
                         {
@@ -374,7 +527,7 @@ namespace GameObjects
 
                     }
                     //moving to a key
-                    else if (map[hero.location[0] - movenumber, hero.location[1]] == 8)
+                    else if (newposition == 8)
                     {
                         ///                                    moveup
                         map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
@@ -391,7 +544,7 @@ namespace GameObjects
 
                     }
                     //moving to the centre, the goal
-                    else if (map[hero.location[0] - movenumber, hero.location[1]] == 4)
+                    else if (newposition == 4)
                     {
                         // Make player current position equals 0
                         map[hero.location[0], hero.location[1]] = 0;
@@ -402,7 +555,7 @@ namespace GameObjects
                         break;
                     }
                     //moving to a path
-                    else if (map[hero.location[0] - movenumber, hero.location[1]] == 0)
+                    else if (newposition == 0)
                     {
                         ///                                    moveup
                         map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
@@ -417,7 +570,7 @@ namespace GameObjects
             }
 
         }
-        public void movedown(Hero hero, Player player, int[,] map)
+        public void movedown(Hero hero, Player player, Player otherplayer, int[,] map)
         {
             while (true)
             {
@@ -431,7 +584,8 @@ namespace GameObjects
                 }
                 else if (movenumber != 0)
                 {
-                    if (map[hero.location[0] + movenumber, hero.location[1]] == 3)
+                    int newposition = map[hero.location[0] + movenumber, hero.location[1]];
+                    if (newposition == 3)
                     {
                         ///                                    moveup
                         map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
@@ -444,8 +598,47 @@ namespace GameObjects
                         hero.actionsRemaining--;
 
                     }
+                    else if (newposition == 11 || newposition == 13 || newposition == 15 || newposition == 17 || newposition == 19 || newposition == 21)
+                    {
+                        Hero herotomove = GetHeroById(player, otherplayer, newposition);
+                        if (hero.toughness > herotomove.toughness)
+                        {
+                            map[hero.location[0], hero.location[1]] = 0;
+
+                            hero.location[0] = herotomove.location[0];
+                            hero.location[1] = herotomove.location[1];
+
+                            herotomove.location[0]--;
+
+                            map[hero.location[0], hero.location[1]] = hero.id;
+                            map[herotomove.location[0], herotomove.location[1]] = herotomove.id;
+                            hero.actionsRemaining--;
+                        }
+                        if (hero.toughness < herotomove.toughness)
+                        {
+                            if (isHeroInParty(player, herotomove))//means hero is in my team so I will be able to move
+                            {
+                                map[hero.location[0], hero.location[1]] = 0;
+
+                                hero.location[0] = herotomove.location[0];
+                                hero.location[1] = herotomove.location[1];
+
+                                herotomove.location[0]--;
+
+                                map[hero.location[0], hero.location[1]] = hero.id;
+                                map[herotomove.location[0], herotomove.location[1]] = herotomove.id;
+                                hero.actionsRemaining--;
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Menu.HeroDialogue(hero, "My god, look at that hero's toughness 'tis hugelly higher than mine, is [yellow bold]" + herotomove.toughness + "[/]  I cant dare to make him to move!");//que lo haga el choco!!XXD
+                                Menu.KeyToContinue();
+                            }
+                        }
+                    }
                     ///moving to a Door
-                    else if (map[hero.location[0] + movenumber, hero.location[1]] == 6)
+                    else if (newposition == 6)
                     {
                         if (hero.haveKey)
                         {
@@ -475,7 +668,7 @@ namespace GameObjects
 
                     }
                     //moving to a key
-                    else if (map[hero.location[0] + movenumber, hero.location[1]] == 8)
+                    else if (newposition == 8)
                     {
                         ///                                    moveup
                         map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
@@ -492,7 +685,7 @@ namespace GameObjects
 
                     }
                     //moving to the centre, the goal
-                    else if (map[hero.location[0] + movenumber, hero.location[1]] == 4)
+                    else if (newposition == 4)
                     {
                         // Make player current position equals 0
                         map[hero.location[0], hero.location[1]] = 0;
@@ -503,7 +696,7 @@ namespace GameObjects
                         break;
                     }
                     //moving to a path
-                    else if (map[hero.location[0] + movenumber, hero.location[1]] == 0)
+                    else if (newposition == 0)
                     {
                         ///                                    moveup
                         map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
@@ -552,12 +745,33 @@ namespace GameObjects
 
             for (int i = 0; i < list.Count; i++)
             {
-                var stats = new BarChart()
-                .Width(50)
-                .AddItem("💗 [bold #e9e9e9]Health[/]", list[i].health, Color.DarkRed)
-                .AddItem("💙 [bold #e9e9e9]Mana[/]", list[i].mana, Color.DarkBlue);
+                var stats = new BarChart();
 
-
+                if (list[i].health >= 7)
+                {
+                    stats.Width(50);
+                    stats.AddItem("💓", list[i].health, Color.Green4);
+                    stats.AddItem("💙", list[i].mana, Color.Blue);
+                }
+                else if (list[i].health >= 5)
+                {
+                    stats.Width(50);
+                    stats.AddItem("💓", list[i].health, Color.Yellow2);
+                    stats.AddItem("💙", list[i].mana, Color.Blue);
+                }
+                else if (list[i].health >= 3)
+                {
+                    stats.Width(50);
+                    stats.AddItem("💓", list[i].health, Color.Orange1);
+                    stats.AddItem("💙", list[i].mana, Color.Blue);
+                }
+                else if (list[i].health >= 0)
+                {
+                    stats.Width(50);
+                    stats.AddItem("💓", list[i].health, Color.DarkRed);
+                    stats.AddItem("💙", list[i].mana, Color.Blue);
+                }
+                ///////////////////////////////////////////////////////////////////
                 if (list[i].stunned > 0)
                 {
                     var table1 = new Table();
@@ -570,21 +784,21 @@ namespace GameObjects
                     table.AddRow(table1);
                     table1.BorderColor(Color.Red);
                 }
-                if (list[i].health == 0)
+                else if (list[i].restturns > 0)
                 {
-                    list[i].stunned = 10;
-                    list[i].health = 6;
+                    list[i].health++;
                     var table1 = new Table();
-                    table1.AddColumn("[bold #fbd022] " + (i + 1) + "[/][#783806] >>[/]  [black] " + list[i].icon + "[/][bold] " + list[i].name + "[/] [bold red]RECOVERING, WAIT " + list[i].stunned + " TURN(S)[/]");
+                    table1.AddColumn("[bold #fbd022] " + (i + 1) + "[/][#783806] >>[/]  [black] " + list[i].icon + "[/][bold] " + list[i].name + "[/] [bold red]RECOVERING, WAIT " + list[i].restturns + " TURN(S)[/]");
                     table1.AddRow(" 📜 [bold #e9e9e9]Info  [/]   >  [#f9d380]" + list[i].info + "[/]");
                     table1.AddRow(stats);
                     table1.AddRow(" 🔪 [bold #e9e9e9]Attack[/]   >  " + list[i].attack);
                     table1.AddRow(" 👢 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
                     table1.AddRow(" 💠 [bold #e9e9e9]Super Requires[/] > Mana " + list[i].cooldown + "💙");
+                    list[i].restturns--;
                     table.AddRow(table1);
                     table1.BorderColor(Color.Red);
                 }
-                if (list[i].stunned <= 0 && list[i].health > 0)
+                else if (list[i].stunned <= 0 && list[i].health > 0 && list[i].restturns <= 0)
                 {
                     var table1 = new Table();
                     table1.AddColumn("[bold #fbd022] " + (i + 1) + "[/][#783806] >>[/]  [black] " + list[i].icon + "[/][bold] " + list[i].name + "[/]");
@@ -594,7 +808,7 @@ namespace GameObjects
                     table1.AddRow(" 👢 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
                     table1.AddRow(" 💠 [bold #e9e9e9]Super Requires[/] > Mana " + list[i].cooldown + "💙");
                     table.AddRow(table1);
-                    table1.BorderColor(Color.DarkGreen);
+                    table1.BorderColor(Color.Chartreuse1);
                 }
             }
             table.AddRow("");
@@ -709,11 +923,11 @@ namespace GameObjects
         }
     }
 
-
+    ////////////////////    Other Classes of Hero
     public class Teleporter : Hero
     {
         //Constructor for Teleporter//
-        public Teleporter(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, maze)
+        public Teleporter(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int toughness, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, toughness, maze)
         //Call to base constructor
         {
         }
@@ -744,7 +958,7 @@ namespace GameObjects
     public class Switcher : Hero
     {
         //Constructor for Teleporter//
-        public Switcher(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, maze)
+        public Switcher(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int toughness, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, toughness, maze)
         //Call to base constructor
         {
         }
@@ -782,7 +996,7 @@ namespace GameObjects
     public class Witcher : Hero
     {
         //Constructor for Teleporter//
-        public Witcher(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, maze)
+        public Witcher(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int toughness, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, toughness, maze)
         //Call to base constructor
         {
         }
@@ -807,7 +1021,7 @@ namespace GameObjects
     public class Manner : Hero
     {
         //Constructor for Teleporter//
-        public Manner(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, maze)
+        public Manner(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int toughness, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, toughness, maze)
         //Call to base constructor
         {
         }
@@ -822,7 +1036,7 @@ namespace GameObjects
             //select random hero to transfer mana
             Random randomhero = new Random();
             int index = randomhero.Next(player.Party.Count);
-            if (heroselected.mana < 5)
+            if (heroselected.mana < 3)
             {
                 savedmana = heroselected.mana;
                 heroselected.mana = 0;
@@ -830,9 +1044,9 @@ namespace GameObjects
             }
             else
             {
-                savedmana = 5;
-                heroselected.mana -= 5;
-                player.Party[index].mana += 5;
+                savedmana = 3;
+                heroselected.mana -= 3;
+                player.Party[index].mana += 3;
             }
             Console.Clear();
             var dialogue = new Table()
@@ -845,7 +1059,7 @@ namespace GameObjects
     public class Jumper : Hero
     {
         //Constructor for Teleporter//
-        public Jumper(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, maze)
+        public Jumper(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int toughness, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, toughness, maze)
         //Call to base constructor
         {
         }
@@ -997,7 +1211,7 @@ namespace GameObjects
     public class WallBreaker : Hero
     {
         //Constructor for WallBreaker//
-        public WallBreaker(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, maze)//Call to base constructor
+        public WallBreaker(int id, string icon, string name, string info, int health, int attack, int speed, int mana, int cooldown, int toughness, int[,] maze) : base(id, icon, name, info, health, attack, speed, mana, cooldown, toughness, maze)//Call to base constructor
         {
         }
         public override void CastSpell(int[,] map, Player player, Player otherplayer)

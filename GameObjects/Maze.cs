@@ -20,7 +20,7 @@ namespace GameObjects
             {
                 for (int j = 0; j < size; j++)
                 {
-                    if (maze[i, j] != 1)
+                    if (maze[i, j] == 0 || maze[i,j] == 3)
                     {
                         FreePath.Add(new int[] { i, j });
                     }
@@ -135,7 +135,7 @@ namespace GameObjects
             // { 1,0,0,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1},
             // { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
             };
-            GetPathes(maze);
+            
             //                        ALDOUS-BRODER ALGORYTHM
 
             //1 Mark all cells as unvisited
@@ -344,41 +344,41 @@ namespace GameObjects
                 table.AddRow(new Markup(rowMarkup).Centered());
             }
             var healthmanabar = new BarChart();
-            if(hero.health >= 10)
+            if(hero.health >= 7)
             {
                healthmanabar.Width(50);
-               healthmanabar.Label($"[blue bold]| {hero.icon} |[/][black]  >>  [/][white] {hero.name}[/]\n").LeftAlignLabel();
+               healthmanabar.Label($"[blue bold]| [/][bold #000000]{hero.icon}[/][blue bold] |[/][black]  >>  [/][white] {hero.name}[/]\n").LeftAlignLabel();
                healthmanabar.AddItem("💓", hero.health, Color.Green4);
-               healthmanabar.AddItem("💙", hero.mana, Color.Blue);;
+               healthmanabar.AddItem("💙", hero.mana, Color.Blue);
             }
-            else if(hero.health >= 6)
+            else if(hero.health >= 5)
             {
                healthmanabar.Width(50);
-               healthmanabar.Label($"[blue bold]Selected {hero.icon} [/][black]  >>  [/][white] {hero.name}[/]\n").LeftAlignLabel();
+               healthmanabar.Label($"[blue bold]| [/][bold #000000]{hero.icon}[/][blue bold] |[/][black]  >>  [/][white] {hero.name}[/]\n").LeftAlignLabel();
                healthmanabar.AddItem("💓", hero.health, Color.Yellow2);
-               healthmanabar.AddItem("💙", hero.mana, Color.Blue);;
+               healthmanabar.AddItem("💙", hero.mana, Color.Blue);
             }
-            else if(hero.health >= 4)
+            else if(hero.health >= 3)
             {
                healthmanabar.Width(50);
-               healthmanabar.Label($"[blue bold]Selected {hero.icon} [/][black]  >>  [/][white] {hero.name}[/]\n").LeftAlignLabel();
+               healthmanabar.Label($"[blue bold]| [/][bold #000000]{hero.icon}[/][blue bold] |[/][black]  >>  [/][white] {hero.name}[/]\n").LeftAlignLabel();
                healthmanabar.AddItem("💓", hero.health, Color.Orange1);
-               healthmanabar.AddItem("💙", hero.mana, Color.Blue);;
+               healthmanabar.AddItem("💙", hero.mana, Color.Blue);
             }
             else if(hero.health >= 0)
             {
                healthmanabar.Width(50);
-               healthmanabar.Label($"[blue bold]Selected {hero.icon} [/][black]  >>  [/][white] {hero.name}[/]\n").LeftAlignLabel();
+               healthmanabar.Label($"[blue bold]| [/][bold #000000]{hero.icon}[/][blue bold] |[/][black]  >>  [/][white] {hero.name}[/]\n").LeftAlignLabel();
                healthmanabar.AddItem("💓", hero.health, Color.DarkRed);
-               healthmanabar.AddItem("💙", hero.mana, Color.Blue);;
+               healthmanabar.AddItem("💙", hero.mana, Color.Blue);
             }
             var stats = new Table()
             .NoBorder()
-            .AddColumn(new TableColumn($"[bold #91e4f2] Hero Stats [/]"))
-            .AddRow($"\n👢[green bold]↗[/]      x[bold #ebff6d]{hero.speed}[/] / x[bold #ebff6d]{hero.maxspeed}[/]").LeftAligned()
-            .AddRow($"💓       [bold]{hero.health}[/]").LeftAligned()
-            .AddRow($"💙       [bold]{hero.mana}[/]").LeftAligned()
-            .AddRow($"🎬[yellow bold] actions left[/] [bold]{hero.actionsRemaining}[/]").LeftAligned();
+            .AddColumn(new TableColumn($"🎬[yellow bold] actions left[/] [bold]{hero.actionsRemaining}[/]"))
+            .AddRow($"\n👢[green bold]↗[/] Speed      x[bold #ebff6d]{hero.speed}[/] / x[bold #ebff6d]{hero.maxspeed}[/]").LeftAligned()
+            .AddRow($"[black]⚓[/] Toughness   [bold]{hero.toughness}[/]").LeftAligned()
+            .AddRow($"💓 Health      [bold]{hero.health}[/]").LeftAligned()
+            .AddRow($"💙 Mana        [bold]{hero.mana}[/]").LeftAligned();
 
             var downtable = new Table();
             downtable.AddColumn(new TableColumn(healthmanabar));
