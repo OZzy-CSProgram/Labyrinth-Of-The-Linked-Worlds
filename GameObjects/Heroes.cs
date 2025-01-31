@@ -44,14 +44,13 @@ namespace GameObjects
 
         }
         /////methods/////
-
         public int Movenumber(Hero hero, int speed, int[,] map, string dir)
         {
             if (dir == "up")
             {
                 for (int i = 1; i <= speed; i++)
                 {
-                    if (map[hero.location[0] - i, hero.location[1]] == 1)
+                    if (map[hero.location[0] - i, hero.location[1]] == 1 || map[hero.location[0] - i, hero.location[1]] == 2)
                     {
                         return i - 1;
                     }
@@ -59,17 +58,13 @@ namespace GameObjects
                     {
                         return i;
                     }
-                    // if (map[hero.location[0] - i, hero.location[1]] == 0 && (map[hero.location[0] - i, hero.location[1] - 1] == 0 || map[hero.location[0] - i, hero.location[1] + 1] == 0 ))
-                    // {
-                    //     return i;
-                    // }
                 }
             }
             else if (dir == "down")
             {
                 for (int i = 1; i <= speed; i++)
                 {
-                    if (map[hero.location[0] + i, hero.location[1]] == 1)
+                    if (map[hero.location[0] + i, hero.location[1]] == 1 || map[hero.location[0] + i, hero.location[1]] == 2)
                     {
                         return i - 1;
                     }
@@ -83,7 +78,7 @@ namespace GameObjects
             {
                 for (int i = 1; i <= speed; i++)
                 {
-                    if (map[hero.location[0], hero.location[1] - i] == 1)
+                    if (map[hero.location[0], hero.location[1] - i] == 1 || map[hero.location[0], hero.location[1] - i] == 2)
                     {
                         return i - 1;
                     }
@@ -97,7 +92,7 @@ namespace GameObjects
             {
                 for (int i = 1; i <= speed; i++)
                 {
-                    if (map[hero.location[0], hero.location[1] + i] == 1)
+                    if (map[hero.location[0], hero.location[1] + i] == 1 || map[hero.location[0], hero.location[1] + i] == 2)
                     {
                         return i - 1;
                     }
@@ -818,22 +813,11 @@ namespace GameObjects
             print.AddRow(Maze.PrintMaze(map, " MAP "), table);
             AnsiConsole.Write(print);
         }
-        public static void FallInTrap(Hero hero, int[,] map)
-        {
-            Console.Clear();
-            Console.WriteLine("Upppss!! It seems like you have fell in a trap");
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("(press a key to proceed)");
-            Console.ReadKey(true);
-            Console.Clear();
-        }
-
         public virtual void CastSpell(int[,] map, Player player, Player otherplayer)
         {
             Console.WriteLine("Casting Spell");
         }
-        public static int[] GetADirection(int[,] map)
+        public static int[] GetADirection(int[,] map, string s)
         {
             // public ConsoleKeyInfo ValidDirection(ConsoleKeyInfo action);
             {
@@ -842,48 +826,24 @@ namespace GameObjects
                 while (true)
                 {
                     Console.Clear();
-                    var table = new Table()
-                    .NoBorder();
-                    var w = new Table()
-                    .Border(TableBorder.Double)
-                    .BorderColor(Color.SandyBrown)
-                    .AddColumn(new TableColumn("W ⬆ above").Centered());
-
-                    var a = new Table()
-                    .Border(TableBorder.Double)
-                    .BorderColor(Color.SandyBrown)
-                    .AddColumn(new TableColumn("A ⬅ left").Centered());
-
-                    var s = new Table()
-                    .Border(TableBorder.Double)
-                    .BorderColor(Color.SandyBrown)
-                    .AddColumn(new TableColumn("S ⬇ below").Centered());
-
-                    var d = new Table()
-                    .Border(TableBorder.Double)
-                    .BorderColor(Color.SandyBrown)
-                    .AddColumn(new TableColumn("D ➡ right").Centered());
-
-
-                    table.AddColumn(new TableColumn("").Centered()).NoBorder();
-                    table.AddColumn(new TableColumn(w).Centered()).NoBorder();
-                    table.AddColumn(new TableColumn("").Centered()).NoBorder();
-
-                    table.AddRow(a.Centered(), s.Centered(), d.Centered());
-                    AnsiConsole.Write(table);
+                    var printmap = Maze.PrintMaze(map, s);
+                    AnsiConsole.Write(printmap);
+                    Menu.PrintDirections();
                     Direction = Console.ReadKey(true);
-
+                    if (Direction.Key == ConsoleKey.Tab)
+                    {
+                    break;
+                    }
                     while (Direction.KeyChar != 'w' && Direction.KeyChar != 'W' && Direction.KeyChar != 'a' && Direction.KeyChar != 'A' && Direction.KeyChar != 's' && Direction.KeyChar != 'S' && Direction.KeyChar != 'd' && Direction.KeyChar != 'D' && Direction.KeyChar != 'r' && Direction.KeyChar != 'R')
                     {
                         Console.Clear();
 
-                        Console.WriteLine("thats not a valid Direction)");
-                        Console.WriteLine("(press a key to continue)");
-                        Console.ReadKey(true);
+                        Menu.WriteTable("[red]That is not a valid action![/]\n\n");
+                        Menu.KeyToContinue();
 
                         Console.Clear();
                         Maze.PrintMaze(map, "Select A valid Direction !");
-                        AnsiConsole.Write(table);
+                        Menu.PrintDirections();
                         Direction = Console.ReadKey(true);
 
                         if (Direction.KeyChar == 'w' || Direction.KeyChar == 'W' || Direction.KeyChar == 'a' || Direction.KeyChar == 'A' || Direction.KeyChar == 's' || Direction.KeyChar == 'S' || Direction.KeyChar == 'd' || Direction.KeyChar == 'D')
@@ -953,6 +913,7 @@ namespace GameObjects
             Console.ReadKey(true);
             Console.Clear();
             Console.WriteLine($"{name} has Teleported to  [  {location[0]}  ,  {location[1]}  ]");
+            Menu.KeyToContinue();
         }
     }
     public class Switcher : Hero
@@ -990,6 +951,7 @@ namespace GameObjects
             //update the display map for the PrintMaze method
             map[heroselected.location[0], heroselected.location[1]] = heroselected.id;
             map[location[0], location[1]] = id;
+            Menu.KeyToContinue();
 
         }
     }
@@ -1015,6 +977,7 @@ namespace GameObjects
             AnsiConsole.Write(dialogue);
             //stun hero
             heroselected.stunned = 5;
+            Menu.KeyToContinue();
 
         }
     }
@@ -1054,6 +1017,7 @@ namespace GameObjects
             dialogue.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
             dialogue.AddColumn(new TableColumn("[bold blue]> [/] Thy mana does not belongs to you [bold]" + heroselected.name + "[/], and I will transfer[bold blue] " + savedmana + "[/] points of it to[bold] " + player.Party[index].name + "[/], haha ⧹(⦁ᴗ⦁)⧸").Centered());
             AnsiConsole.Write(dialogue);
+            Menu.KeyToContinue();
         }
     }
     public class Jumper : Hero
@@ -1066,148 +1030,297 @@ namespace GameObjects
         public override void CastSpell(int[,] map, Player player, Player otherplayer)
         {
             Console.Clear();
-            var dialogue = new Table()
-            .RoundedBorder();
+            var dialogue = new Table();
             dialogue.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
             dialogue.AddColumn(new TableColumn("[bold blue]> [/] Nobody can jump like I can! .... Ahahahaha ?\n\n ").Centered());
             AnsiConsole.Write(dialogue);
             Menu.KeyToContinue();
-
-            Console.Clear();
-            Maze.PrintMaze(map, "What direction should I you want to jump?");
-
-            map[location[0], location[1]] = 0;
-            int[] Dir = Hero.GetADirection(map);
-
-            if (map[location[0] + Dir[0], location[1] + Dir[1]] != 1)
+            while (true)
             {
-                if (map[location[0] + Dir[0] + Dir[0], location[1] + Dir[1] + Dir[1]] != 1)
+                int[] Dir = Hero.GetADirection(map, "[bold #000000]" + icon + "[/][bold blue]> [/] What direction should I you want to jump?");
+                if(Dir[0] == 0 && Dir[1] == 0)//means the player selected the option, Cancel
                 {
-                    if (map[location[0] + Dir[0] + Dir[0] + Dir[0], location[1] + Dir[1] + Dir[1] + Dir[1]] != 1)
-                    {
-                        if (map[location[0] + Dir[0] + Dir[0] + Dir[0], location[1] + Dir[1] + Dir[1] + Dir[1]] == 3)
-                        {
-                            // Make player current position equals 0
-                            map[location[0], location[1]] = 0;
-
-                            // Remove trap, and move player to trap
-                            location[0] = location[0] + Dir[0] + Dir[0];
-                            location[1] = location[1] + Dir[1] + Dir[1];
-                            map[location[0], location[1]] = id;
-
-                            //add new position to the log
-                            locationlog.Add(new int[] { location[0], location[1] });
-
-                            //point that the player is in a trap
-                            trapped = true;
-                            Console.Clear();
-                            Maze.PrintMaze(map, "Super Activated successfully!");
-                            var dialogue2 = new Table()
-                            .RoundedBorder();
-                            dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
-                            dialogue2.AddColumn(new TableColumn("[bold blue]> [/] It's amazing!, my jump reached the maximum distance :D").Centered());
-                            AnsiConsole.Write(dialogue2);
-                            Console.WriteLine();
-                        }
-                        else if (map[location[0] + Dir[0] + Dir[0] + Dir[0], location[1] + Dir[1] + Dir[1] + Dir[1]] == 0)
-                        {
-                            location[0] = location[0] + Dir[0] + Dir[0] + Dir[0];
-                            location[1] = location[1] + Dir[1] + Dir[1] + Dir[1];
-                            map[location[0], location[1]] = id;
-                            Console.Clear();
-                            Maze.PrintMaze(map, "Super Activated successfully!");
-                            var dialogue2 = new Table()
-                            .RoundedBorder();
-                            dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
-                            dialogue2.AddColumn(new TableColumn("[bold blue]> [/] It's amazing!, my jump reached the maximum distance :D").Centered());
-                            AnsiConsole.Write(dialogue2);
-                            Console.WriteLine();
-                        }
-
-                    }
-                    else
-                    {
-                        if (map[location[0] + Dir[0] + Dir[0], location[1] + Dir[1] + Dir[1]] == 3)
-                        {
-                            // Make player current position equals 0
-                            map[location[0], location[1]] = 0;
-
-                            // Remove trap, and move player to trap
-                            location[0] = location[0] + Dir[0] + Dir[0];
-                            location[1] = location[1] + Dir[1] + Dir[1];
-                            map[location[0], location[1]] = id;
-
-                            //add new position to the log
-                            locationlog.Add(new int[] { location[0], location[1] });
-
-                            //point that the player is in a trap
-                            trapped = true;
-                            Console.Clear();
-                            Maze.PrintMaze(map, "Super Activated successfully!");
-
-                            var dialogue2 = new Table()
-                            .RoundedBorder();
-                            dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
-                            dialogue2.AddColumn(new TableColumn("[bold blue]> [/] I could have jumped a higher distance but my jump was interruped due to an obstacle :(").Centered());
-                            AnsiConsole.Write(dialogue2);
-
-                        }
-                        else if (map[location[0] + Dir[0] + Dir[0], location[1] + Dir[1] + Dir[1]] == 0)
-                        {
-                            location[0] = location[0] + Dir[0] + Dir[0];
-                            location[1] = location[1] + Dir[1] + Dir[1];
-                            map[location[0], location[1]] = id;
-                            Console.Clear();
-                            Maze.PrintMaze(map, "Super Activated successfully!");
-                            var dialogue2 = new Table()
-                            .RoundedBorder();
-                            dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
-                            dialogue2.AddColumn(new TableColumn("[bold blue]> [/] I could have jumped a higher distance but my jump was interruped due to an obstacle :(").Centered());
-                            AnsiConsole.Write(dialogue2);
-                        }
-                    }
+                    mana += cooldown;
+                    break;
                 }
-                else
+                int positionbetween = map[location[0] + Dir[0], location[1] + Dir[1]];
+                int[] newlocation = { location[0] + Dir[0] + Dir[0], location[1] + Dir[1] + Dir[1] };
+                if (positionbetween == 1)//there is a wal wall
                 {
-                    if (map[location[0] + Dir[0], location[1] + Dir[1]] == 3)
+                    int newposition = map[newlocation[0], newlocation[1]];
+                    //landing in a wall
+                    if (newposition == 1)
                     {
-                        // Make player current position equals 0
+                        Console.Clear();
+                        var dialogue2 = new Table();
+                        dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+                        dialogue2.AddColumn(new TableColumn("[bold blue]> [/] I can't jump that wall, it seems that through that wall there is not a room! or any space at all \n\n ").Centered());
+                        AnsiConsole.Write(dialogue2);
+                        Menu.KeyToContinue();
+                        continue;
+                    }
+                    //landing in a trap
+                    else if (newposition == 3)
+                    {
                         map[location[0], location[1]] = 0;
-
-                        // Remove trap, and move player to trap
-                        location[0] = location[0] + Dir[0];
-                        location[1] = location[1] + Dir[1];
+                        location[0] += Dir[0];
+                        location[0] += Dir[0];
+                        location[1] += Dir[1];
+                        location[1] += Dir[1];
                         map[location[0], location[1]] = id;
-                        //add new position to the log
-                        locationlog.Add(new int[] { location[0], location[1] });
-                        //select a random trap in the trap list, to execute to the hero
                         trapped = true;
-                        Console.Clear();
-                        Maze.PrintMaze(map, "Super Activated successfully!");
-                        var dialogue2 = new Table()
-                        .RoundedBorder();
-                        dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
-                        dialogue2.AddColumn(new TableColumn("[bold blue]> [/] I could have jumped a higher distance but my jump was interruped due to an obstacle :(").Centered());
-                        AnsiConsole.Write(dialogue2);
+                        break;
                     }
-                    else if (map[location[0] + Dir[0], location[1] + Dir[1]] == 0)
+                    //landing in path
+                    else if (newposition == 0)
                     {
-                        location[0] = location[0] + Dir[0];
-                        location[1] = location[1] + Dir[1];
+                        map[location[0], location[1]] = 0;
+                        location[0] += Dir[0];
+                        location[0] += Dir[0];
+                        location[1] += Dir[1];
+                        location[1] += Dir[1];
+                        map[location[0], location[1]] = id;
+                        break;
+                    }
+                    //landing in a hero
+                    else if (newposition == 11 || newposition == 13 || newposition == 15 || newposition == 17 || newposition == 19 || newposition == 21)
+                    {
+                        Hero herotomove = GetHeroById(player, otherplayer, newposition);
+                        if (toughness > herotomove.toughness)
+                        {
+                            map[location[0], location[1]] = 0;
+
+                            location[0] = herotomove.location[0];
+                            location[1] = herotomove.location[1];
+
+                            if (map[newlocation[0] - 1, newlocation[1]] == 0)
+                            {
+                                herotomove.location[0]--;
+                            }
+                            else if (map[newlocation[0] + 1, newlocation[1]] == 0)
+                            {
+                                herotomove.location[0]++;
+                            }
+                            else if (map[newlocation[0], newlocation[1] - 1] == 0)
+                            {
+                                herotomove.location[1]--;
+                            }
+                            else if (map[newlocation[0], newlocation[1] + 1] == 0)
+                            {
+                                herotomove.location[1]++;
+                            }
+                            map[location[0], location[1]] = id;
+                            map[herotomove.location[0], herotomove.location[1]] = herotomove.id;
+                            break;
+                        }
+                        else if (toughness < herotomove.toughness)
+                        {
+                            if (isHeroInParty(player, herotomove))//means hero is in my team so I will be able to move
+                            {
+                                map[location[0], location[1]] = 0;
+
+                                location[0] = herotomove.location[0];
+                                location[1] = herotomove.location[1];
+
+                                if (map[newlocation[0] - 1, newlocation[1]] == 0)
+                                {
+                                    herotomove.location[0]--;
+                                }
+                                else if (map[newlocation[0] + 1, newlocation[1]] == 0)
+                                {
+                                    herotomove.location[0]++;
+                                }
+                                else if (map[newlocation[0], newlocation[1] - 1] == 0)
+                                {
+                                    herotomove.location[1]--;
+                                }
+                                else if (map[newlocation[0], newlocation[1] + 1] == 0)
+                                {
+                                    herotomove.location[1]++;
+                                }
+                                map[location[0], location[1]] = id;
+                                map[herotomove.location[0], herotomove.location[1]] = herotomove.id;
+                                break;
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                var dialogue2 = new Table();
+                                dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+                                dialogue2.AddColumn(new TableColumn("[bold blue]> [/] My god, look at that hero's toughness 'tis hugelly higher than mine, is [yellow bold]" + herotomove.toughness + "[/]  I wont dare to move there!").Centered());
+                                AnsiConsole.Write(dialogue2);
+                                Menu.KeyToContinue();
+                                continue;
+                            }
+                        }
+                    }
+                    ///moving to a Key
+                    else if (newposition == 8)
+                    {
+                        map[location[0], location[1]] = 0;
+                        location[0] += Dir[0];
+                        location[0] += Dir[0];
+                        location[1] += Dir[1];
+                        location[1] += Dir[1];
                         map[location[0], location[1]] = id;
                         Console.Clear();
-                        Maze.PrintMaze(map, "Super Activated successfully!");
-                        var dialogue2 = new Table()
-                        .RoundedBorder();
+                        var dialogue2 = new Table();
                         dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
-                        dialogue2.AddColumn(new TableColumn("[bold blue]> [/] I could have jumped a higher distance but my jump was interruped due to an obstacle :(").Centered());
+                        dialogue2.AddColumn(new TableColumn("[bold blue]> [/] Finally, the master key to open the doors of the treasure chamber!").Centered());
                         AnsiConsole.Write(dialogue2);
+                        Menu.KeyToContinue();
+                        haveKey = true;
+                        player.haveKey = true;
+                        break;
                     }
                 }
+                else if (positionbetween == 2)
+                {
+                    Console.Clear();
+                    var dialogue2 = new Table();
+                    dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+                    dialogue2.AddColumn(new TableColumn("[bold blue]> [/] I can't jump that wall, itsss quite high, don't you see it?\n\n ").Centered());
+                    AnsiConsole.Write(dialogue2);
+                    Menu.KeyToContinue();
+                    continue;
+                }
+                else if (positionbetween == 0)
+                {
+                    int newposition = map[newlocation[0], newlocation[1]];
+                    //landing in a wall
+                    if (newposition == 1)
+                    {
+                        Console.Clear();
+                        var dialogue2 = new Table();
+                        dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+                        dialogue2.AddColumn(new TableColumn("[bold blue]> [/] I can't jump that wall, it seems that through that wall there is not a room! or any space at all \n\n ").Centered());
+                        AnsiConsole.Write(dialogue2);
+                        Menu.KeyToContinue();
+                        continue;
+                    }
+                    //landing in a trap
+                    else if (newposition == 3)
+                    {
+                        map[location[0], location[1]] = 0;
+                        location[0] += Dir[0];
+                        location[0] += Dir[0];
+                        location[1] += Dir[1];
+                        location[1] += Dir[1];
+                        map[location[0], location[1]] = id;
+                        trapped = true;
+                        break;
+                    }
+                    //landing in path
+                    else if (newposition == 0)
+                    {
+                        map[location[0], location[1]] = 0;
+                        location[0] += Dir[0];
+                        location[0] += Dir[0];
+                        location[1] += Dir[1];
+                        location[1] += Dir[1];
+                        map[location[0], location[1]] = id;
+                        break;
+                    }
+                    //landing in a hero
+                    else if (newposition == 11 || newposition == 13 || newposition == 15 || newposition == 17 || newposition == 19 || newposition == 21)
+                    {
+                        Hero herotomove = GetHeroById(player, otherplayer, newposition);
+                        if (toughness > herotomove.toughness)
+                        {
+                            map[location[0], location[1]] = 0;
+
+                            location[0] = herotomove.location[0];
+                            location[1] = herotomove.location[1];
+
+                            if (map[newlocation[0] - 1, newlocation[1]] == 0)
+                            {
+                                herotomove.location[0]--;
+                            }
+                            else if (map[newlocation[0] + 1, newlocation[1]] == 0)
+                            {
+                                herotomove.location[0]++;
+                            }
+                            else if (map[newlocation[0], newlocation[1] - 1] == 0)
+                            {
+                                herotomove.location[1]--;
+                            }
+                            else if (map[newlocation[0], newlocation[1] + 1] == 0)
+                            {
+                                herotomove.location[1]++;
+                            }
+                            map[location[0], location[1]] = id;
+                            map[herotomove.location[0], herotomove.location[1]] = herotomove.id;
+                            break;
+                        }
+                        else if (toughness < herotomove.toughness)
+                        {
+                            if (isHeroInParty(player, herotomove))//means hero is in my team so I will be able to move
+                            {
+                                map[location[0], location[1]] = 0;
+
+                                location[0] = herotomove.location[0];
+                                location[1] = herotomove.location[1];
+
+                                if (map[newlocation[0] - 1, newlocation[1]] == 0)
+                                {
+                                    herotomove.location[0]--;
+                                }
+                                else if (map[newlocation[0] + 1, newlocation[1]] == 0)
+                                {
+                                    herotomove.location[0]++;
+                                }
+                                else if (map[newlocation[0], newlocation[1] - 1] == 0)
+                                {
+                                    herotomove.location[1]--;
+                                }
+                                else if (map[newlocation[0], newlocation[1] + 1] == 0)
+                                {
+                                    herotomove.location[1]++;
+                                }
+                                map[location[0], location[1]] = id;
+                                map[herotomove.location[0], herotomove.location[1]] = herotomove.id;
+                                break;
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                var dialogue2 = new Table();
+                                dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+                                dialogue2.AddColumn(new TableColumn("[bold blue]> [/] My god, look at that hero's toughness 'tis hugelly higher than mine, is [yellow bold]" + herotomove.toughness + "[/]  I wont dare to move there!").Centered());
+                                AnsiConsole.Write(dialogue2);
+                                Menu.KeyToContinue();
+                                continue;
+                            }
+                        }
+                    }
+                    ///moving to a Key
+                    else if (newposition == 8)
+                    {
+                        map[location[0], location[1]] = 0;
+                        location[0] += Dir[0];
+                        location[0] += Dir[0];
+                        location[1] += Dir[1];
+                        location[1] += Dir[1];
+                        map[location[0], location[1]] = id;
+                        Console.Clear();
+                        var dialogue2 = new Table();
+                        dialogue2.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+                        dialogue2.AddColumn(new TableColumn("[bold blue]> [/] Finally, the master key to open the doors of the treasure chamber!").Centered());
+                        AnsiConsole.Write(dialogue2);
+                        Menu.KeyToContinue();
+                        haveKey = true;
+                        player.haveKey = true;
+                        break;
+                    }
+                }
+                // else if (newposition != 2 && newposition != 1)
+                // {
+
+                // }
             }
-            map[location[0], location[1]] = id;
         }
     }
+
     public class WallBreaker : Hero
     {
         //Constructor for WallBreaker//
@@ -1220,48 +1333,22 @@ namespace GameObjects
             while (true)
             {
                 Console.Clear();
-                var dialogue = new Table()
-                .RoundedBorder();
-                dialogue.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
-                dialogue.AddColumn(new TableColumn("[bold blue]> [/]Which wall would you like me to destroy mate ? ヽ(ヅ)ノ").Centered());
-                AnsiConsole.Write(dialogue);
+                // var dialogue = new Table()
+                // .RoundedBorder();
+                // dialogue.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
+                // dialogue.AddColumn(new TableColumn("[bold blue]> [/]Which wall would you like me to destroy mate ? ヽ(ヅ)ノ").Centered());
+                // AnsiConsole.Write(dialogue);
+                var printmap = Maze.PrintMaze(map, "[bold #000000]" + icon + "[/] [bold blue]> [/]Which wall would you like me to destroy mate ? ヽ(ヅ)ノ");
+                AnsiConsole.Write(printmap);
+                Menu.PrintDirections();
+                
 
-
-                var table = new Table()
-                .NoBorder();
-                var w = new Table()
-                .Border(TableBorder.Double)
-                .BorderColor(Color.SandyBrown)
-                .AddColumn(new TableColumn("W ⬆ above").Centered());
-
-                var a = new Table()
-                .Border(TableBorder.Double)
-                .BorderColor(Color.SandyBrown)
-                .AddColumn(new TableColumn("A ⬅ left").Centered());
-
-                var s = new Table()
-                .Border(TableBorder.Double)
-                .BorderColor(Color.SandyBrown)
-                .AddColumn(new TableColumn("S ⬇ below").Centered());
-
-                var d = new Table()
-                .Border(TableBorder.Double)
-                .BorderColor(Color.SandyBrown)
-                .AddColumn(new TableColumn("D ➡ right").Centered());
-
-
-                table.AddColumn(new TableColumn("").Centered()).NoBorder();
-                table.AddColumn(new TableColumn(w).Centered()).NoBorder();
-                table.AddColumn(new TableColumn("").Centered()).NoBorder();
-
-                table.AddRow(a.Centered(), s.Centered(), d.Centered());
-                AnsiConsole.Write(table);
-
-
-
-
-
-                ConsoleKeyInfo Direction = Console.ReadKey(true);
+                var Direction = Console.ReadKey(true);
+                if (Direction.Key == ConsoleKey.Tab)
+                {
+                    mana += cooldown;
+                    break;
+                }
                 while (Direction.KeyChar != 'w' && Direction.KeyChar != 'W' && Direction.KeyChar != 'a' && Direction.KeyChar != 'A' && Direction.KeyChar != 's' && Direction.KeyChar != 'S' && Direction.KeyChar != 'd' && Direction.KeyChar != 'D' && Direction.KeyChar != 'r' && Direction.KeyChar != 'R')
                 {
                     Console.Clear();
@@ -1269,10 +1356,9 @@ namespace GameObjects
                     Menu.KeyToContinue();
 
                     Console.Clear();
-                    AnsiConsole.Write(dialogue);
-                    AnsiConsole.Write(table);
+                    AnsiConsole.Write(printmap);
+                    Menu.PrintDirections();
                     Direction = Console.ReadKey(true);
-
                     if (Direction.KeyChar == 'w' || Direction.KeyChar == 'W' || Direction.KeyChar == 'a' || Direction.KeyChar == 'A' || Direction.KeyChar == 's' || Direction.KeyChar == 'S' || Direction.KeyChar == 'd' || Direction.KeyChar == 'D')
                     {
                         break;
@@ -1320,7 +1406,7 @@ namespace GameObjects
         }
         private bool HandleWallBreaking(int dirRow, int dirCol, int[,] map)
         {
-            if (location[0] + dirRow == 0 || location[0] + dirRow == Maze.size - 1 || location[1] + dirCol == 0 || location[1] + dirCol == Maze.size - 1)
+            if (map[location[0] + dirRow, location[1] + dirCol] == 2)
             {
                 Console.Clear();
                 var dialogue = new Table()
@@ -1331,7 +1417,7 @@ namespace GameObjects
                 Menu.KeyToContinue();
                 return false;
             }
-            if (map[location[0] + dirRow, location[1] + dirCol] != 1)
+            else if (map[location[0] + dirRow, location[1] + dirCol] != 1)
             {
                 Console.Clear();
                 var dialogue = new Table()

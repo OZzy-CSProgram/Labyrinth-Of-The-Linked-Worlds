@@ -35,16 +35,32 @@ while (true)
     Menu.GetMainMenu(GameGui1);
 
     ConsoleKeyInfo Selection = Console.ReadKey(true);
-    if (Selection.KeyChar == 's')
+    if (Selection.KeyChar == 's' || Selection.Key == ConsoleKey.DownArrow)
     {
-        Player.exit = true;
-        Player.play = false;
+        if (Player.exit)
+        {
+            Player.exit = false;
+            Player.play = true;
+        }
+        else if (Player.play)
+        {
+            Player.exit = true;
+            Player.play = false;
+        }
         continue;
     }
-    if (Selection.KeyChar == 'w')
+    if (Selection.KeyChar == 'w' || Selection.Key == ConsoleKey.UpArrow)
     {
-        Player.exit = false;
-        Player.play = true;
+         if (Player.exit)
+        {
+            Player.exit = false;
+            Player.play = true; 
+        }
+        else if (Player.play)
+        {
+            Player.exit = true;
+            Player.play = false;
+        }
         continue;
     }
     if (Selection.KeyChar == (char)13 && Player.play == true)
@@ -106,7 +122,7 @@ while (true)
         instance2.AddRow("\n\n\n");
         var Stage2 = Menu.LadyElara(GameGui3, instance2);
         AnsiConsole.Write(Stage2);
-        Menu.KeyToContinueCentered();
+        Menu.KeyToContinue();
 
         Console.Clear();
         var EnterName = Menu.CreateTable("[bold #91e4f2] \nEnter your name to continue\n[/]");
@@ -127,7 +143,7 @@ while (true)
         instance3.AddRow("\n\n\n");
         var Stage3 = Menu.LadyElara(GameGui4, instance3);
         AnsiConsole.Write(Stage3);
-        Menu.KeyToContinueCentered();
+        Menu.KeyToContinue();
 
         Console.Clear();
         var instance4 = new Table()
@@ -255,92 +271,6 @@ while (true)
         Console.WriteLine("Genering The Map...");
         int[,] map = Maze.Generator();
 
-        //spawn artifact
-        map[Maze.size / 2, Maze.size / 2] = 4;
-        /// build walls around it
-        map[Maze.size / 2 - 1, Maze.size / 2] = 1; // up
-        map[Maze.size / 2 + 1, Maze.size / 2] = 1;//down
-        map[Maze.size / 2, Maze.size / 2 - 1] = 1;//left
-        map[Maze.size / 2, Maze.size / 2 + 1] = 1;//right
-        map[Maze.size / 2 - 1, Maze.size / 2 - 1] = 1;//upleft
-        map[Maze.size / 2 + 1, Maze.size / 2 + 1] = 1;//downright
-        map[Maze.size / 2 - 1, Maze.size / 2 + 1] = 1;//upright
-        map[Maze.size / 2 + 1, Maze.size / 2 - 1] = 1;//downleft 
-                                                      //
-                                                      //🟦🟦🟦
-                                                      //🟦💜🟦
-                                                      //🟦🟦🟦
-                                                      //
-                                                      //paths arround
-        map[Maze.size / 2 - 2, Maze.size / 2] = 0; // up
-        map[Maze.size / 2 - 2, Maze.size / 2 - 1] = 0; // up
-                                                       //🟩🟩
-                                                       //🟦🟦🟦
-                                                       //🟦💜🟦
-                                                       //🟦🟦🟦
-                                                       //
-        map[Maze.size / 2 - 2, Maze.size / 2 - 2] = 0; // up
-        map[Maze.size / 2 - 1, Maze.size / 2 - 2] = 0; // up
-                                                       //🟩🟩🟩
-                                                       //🟩🟦🟦🟦
-                                                       //⬛🟦💜🟦
-                                                       //⬛🟦🟦🟦
-                                                       //
-        map[Maze.size / 2, Maze.size / 2 - 2] = 0; // up
-        map[Maze.size / 2 + 1, Maze.size / 2 - 2] = 0; // up
-                                                       //🟩🟩🟩
-                                                       //🟩🟦🟦🟦
-                                                       //🟩🟦💜🟦
-                                                       //🟩🟦🟦🟦
-                                                       //
-        map[Maze.size / 2 + 2, Maze.size / 2 - 2] = 0; // up
-        map[Maze.size / 2 + 2, Maze.size / 2 - 1] = 0; // up
-                                                       //🟩🟩🟩
-                                                       //🟩🟦🟦🟦
-                                                       //🟩🟦💜🟦
-                                                       //🟩🟦🟦🟦
-                                                       //🟩🟩
-        map[Maze.size / 2 + 2, Maze.size / 2] = 0; // up
-        map[Maze.size / 2 + 2, Maze.size / 2 + 1] = 0; // up
-                                                       //🟩🟩🟩
-                                                       //🟩🟦🟦🟦
-                                                       //🟩🟦💜🟦
-                                                       //🟩🟦🟦🟦
-                                                       //🟩🟩🟩🟩
-        map[Maze.size / 2 + 2, Maze.size / 2 + 2] = 0; // up
-        map[Maze.size / 2 + 1, Maze.size / 2 + 2] = 0; // up
-                                                       //🟩🟩🟩
-                                                       //🟩🟦🟦🟦
-                                                       //🟩🟦💜🟦
-                                                       //🟩🟦🟦🟦🟩
-                                                       //🟩🟩🟩🟩🟩
-        map[Maze.size / 2, Maze.size / 2 + 2] = 0; // up
-        map[Maze.size / 2 - 1, Maze.size / 2 + 2] = 0; // up
-                                                       //🟩🟩🟩
-                                                       //🟩🟦🟦🟦🟩
-                                                       //🟩🟦💜🟦🟩
-                                                       //🟩🟦🟦🟦🟩
-                                                       //🟩🟩🟩🟩🟩
-        map[Maze.size / 2 - 2, Maze.size / 2 + 2] = 0; // up
-        map[Maze.size / 2 - 2, Maze.size / 2 + 1] = 0; // up
-                                                       //🟩🟩🟩🟩🟩
-                                                       //🟩🟦🟦🟦🟩
-                                                       //🟩🟦💜🟦🟩
-                                                       //🟩🟦🟦🟦🟩
-                                                       //🟩🟩🟩🟩🟩
-                                                       ////
-        Random random = new Random();
-        List<int[]> DoorSpawn = new List<int[]>();
-        DoorSpawn.Add(new int[] { Maze.size / 2, Maze.size / 2 - 1 });
-        DoorSpawn.Add(new int[] { Maze.size / 2, Maze.size / 2 + 1 });
-
-        int doorspawnindex = random.Next(DoorSpawn.Count);
-        map[DoorSpawn[doorspawnindex][0], DoorSpawn[doorspawnindex][1]] = 6;
-
-        int[] KeyLocation = new int[2];
-        KeyLocation[0] = Maze.size / 2 + 2;
-        KeyLocation[1] = Maze.size / 2 + 1;
-
         var mapprinted = Maze.PrintMaze(map, "  Generated Map !");
         AnsiConsole.Write(mapprinted);
         Menu.KeyToContinue();
@@ -361,7 +291,7 @@ while (true)
         Jumper Monkinho = new Jumper(15, "🐵", "Monkinho The Jumper", "A monkey with the ability to jump 3 cells \n in front of him, but obstacles can interrupt his jump!", /*health*/12, /*attack*/5, /*speed*/1, /*mana*/0, /*superreq*/6, /*toughness*/25, map);         //Monkey
         Heroes.Add(Monkinho);
         Switcher Warlus = new Switcher(17, "🧞", "Warlus The Genius", "A Genius with the great power of,\n switching position with an enemy hero selected!", /*health*/10, /*attack*/5, /*speed*/1, /*mana*/0, /*superreq*/8,/*toughness*/30, map);                       ///switcher
-        Heroes.Add(Warlus);                        
+        Heroes.Add(Warlus);
         Witcher Galia = new Witcher(19, "👹", "Galia The Witch", "A tenebrous witch with the dangerous power,\n of paralyzing the enemy hero selected!", /*health*/9, /*attack*/7, /*speed*/1, /*mana*/0, /*superreq*/10,/*toughness*/15, map);                              ///witch
         Heroes.Add(Galia);
         Manner Elymnis = new Manner(21, "👽", "Elymnis The Creator", "One of the first mages that used mana,\nas a supply of energy, she can remove 3 points\nof mana to the selected enemy hero and transfer it\nto a random player in the host!", /*health*/13, /*attack*/4, /*speed*/1, /*mana*/0, /*superreq*/8, /*toughness*/20, map);
@@ -626,10 +556,7 @@ while (true)
             default:
                 break;
         }
-        //SPAWN KEY
-        Maze.SpawnKey(map);
         //TRAP SETTINGS
-
         Maze.GetPathes(map);
         Trap.SpawnTraps(map);//spawn 12 traps
         Trap.SpawnTraps(map);//spawn 12 more traps
@@ -980,6 +907,7 @@ while (true)
         }
         if (Player2.Victory == true)
         {
+            Console.Clear();
             Menu.WriteTable($"{nameofP1.ToUpper()}'s VICTORY\n\nCongratulations!!!!! YOU'VE WONNNN!! {nameofP1.ToUpper()}");
             Console.ReadKey(true);
             continue;
@@ -995,4 +923,3 @@ while (true)
         break;
     }
 }
-

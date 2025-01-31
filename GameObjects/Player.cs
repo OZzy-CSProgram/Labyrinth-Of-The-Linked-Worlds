@@ -287,6 +287,7 @@ namespace GameObjects
                 {
                     hero.maxspeed++;
                     hero.speed++;
+                    hero.mana++;
                     Menu.WriteTable($"[red]hacked speed[/] [bold yellow]x{hero.speed}/{hero.maxspeed}[/]");
                     Menu.KeyToContinue();
                 }
@@ -312,24 +313,17 @@ namespace GameObjects
                     {
                         hero.mana = hero.mana - hero.cooldown;
                         Console.Clear();
-                        Console.WriteLine($"Activating the Super of {hero.name}/!");
-                        Console.WriteLine();
-                        Console.WriteLine("Press a key to continue...");
-                        Console.ReadKey(true);
+                        Menu.WriteTable("\n[bold #d480ff] Activating the Super of [/][bold #80d1ff]" + hero.name + "[/] [bold #d480ff] ![/]\n");
+                        Menu.KeyToContinue();
                         hero.CastSpell(map, player, otherplayer);
-                        Console.WriteLine();
-                        Console.WriteLine("Press a key to continue...");
-                        Console.ReadKey(true);
+                        
                         hero.actionsRemaining--;
                     }
                     else
                     {
                         Console.Clear();
-                        Console.WriteLine($"{hero.name} >> I cant do that yet, I need at least {hero.cooldown} points of mana to use my power!");
-                        Console.WriteLine();
-                        Console.WriteLine();
-                        Console.WriteLine("(press a key to continue)");
-                        Console.ReadKey(true);
+                        Menu.HeroDialogue(hero, "I cant do that yet, I need at least " + hero.cooldown + " points of mana to use my power!");
+                        Menu.KeyToContinue();
                         action = GetAction(map, player, otherplayer, hero);
                         continue;
                     }
@@ -340,10 +334,8 @@ namespace GameObjects
                     Random randomTrap = new Random();
                     int index = randomTrap.Next(Traps.Count);
                     Console.Clear();
-                    Console.WriteLine("OHHH NO!! YOU HAVE FALL INTO A TRAP!");
-                    Console.WriteLine("");
-                    Console.WriteLine("(press a key to proceed :( )");
-                    Console.ReadKey(true);
+                    Menu.WriteTable("\n[yellow bold]OHHH NO!! YOU HAVE FALL INTO A[/][red bold] TRAP[/][yellow bold] ![/]\n");
+                    Menu.KeyToContinue();
                     Traps[index].CastTrap(hero, map);
                     hero.trapped = false;
                 }

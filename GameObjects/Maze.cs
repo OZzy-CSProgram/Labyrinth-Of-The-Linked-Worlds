@@ -20,7 +20,7 @@ namespace GameObjects
             {
                 for (int j = 0; j < size; j++)
                 {
-                    if (maze[i, j] == 0 || maze[i,j] == 3)
+                    if (maze[i, j] == 0 || maze[i, j] == 3)
                     {
                         FreePath.Add(new int[] { i, j });
                     }
@@ -135,10 +135,10 @@ namespace GameObjects
             // { 1,0,0,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1},
             // { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
             };
-            
+
             //                        ALDOUS-BRODER ALGORYTHM
 
-            //1 Mark all cells as unvisited
+            //1 Mark all cells as unvisited( add all cells to the unvisited list)
             List<int[]> UnvisitedCells = new List<int[]>();
             for (int i = 0; i < size; i++)
             {
@@ -210,14 +210,116 @@ namespace GameObjects
                 }
 
             }
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    if (i == 0)
+                    {
+                        maze[i, j] = 2;
+                    }
+                    if (i == size - 1)
+                    {
+                        maze[i, j] = 2;
+                    }
+                    if (j == 0)
+                    {
+                        maze[i, j] = 2;
+                    }
+                    if (j == size - 1)
+                    {
+                        maze[i, j] = 2;
+                    }
+                }
+            }
+            //spawn artifact
+            maze[Maze.size / 2, Maze.size / 2] = 4;
+            /// build walls around it
+            maze[Maze.size / 2 - 1, Maze.size / 2] = 2; // up
+            maze[Maze.size / 2 + 1, Maze.size / 2] = 2;//down
+            maze[Maze.size / 2, Maze.size / 2 - 1] = 2;//left
+            maze[Maze.size / 2, Maze.size / 2 + 1] = 2;//right
+            maze[Maze.size / 2 - 1, Maze.size / 2 - 1] = 2;//upleft
+            maze[Maze.size / 2 + 1, Maze.size / 2 + 1] = 2;//downright
+            maze[Maze.size / 2 - 1, Maze.size / 2 + 1] = 2;//upright
+            maze[Maze.size / 2 + 1, Maze.size / 2 - 1] = 2;//downleft 
+                                                          //
+                                                          //🟦🟦🟦
+                                                          //🟦💜🟦
+                                                          //🟦🟦🟦
+                                                          //
+                                                          //paths arround
+            maze[Maze.size / 2 - 2, Maze.size / 2] = 0; // up
+            maze[Maze.size / 2 - 2, Maze.size / 2 - 1] = 0; // up
+                                                           //🟩🟩
+                                                           //🟦🟦🟦
+                                                           //🟦💜🟦
+                                                           //🟦🟦🟦
+                                                           //
+            maze[Maze.size / 2 - 2, Maze.size / 2 - 2] = 0; // up
+            maze[Maze.size / 2 - 1, Maze.size / 2 - 2] = 0; // up
+                                                           //🟩🟩🟩
+                                                           //🟩🟦🟦🟦
+                                                           //⬛🟦💜🟦
+                                                           //⬛🟦🟦🟦
+                                                           //
+            maze[Maze.size / 2, Maze.size / 2 - 2] = 0; // up
+            maze[Maze.size / 2 + 1, Maze.size / 2 - 2] = 0; // up
+                                                           //🟩🟩🟩
+                                                           //🟩🟦🟦🟦
+                                                           //🟩🟦💜🟦
+                                                           //🟩🟦🟦🟦
+                                                           //
+            maze[Maze.size / 2 + 2, Maze.size / 2 - 2] = 0; // up
+            maze[Maze.size / 2 + 2, Maze.size / 2 - 1] = 0; // up
+                                                           //🟩🟩🟩
+                                                           //🟩🟦🟦🟦
+                                                           //🟩🟦💜🟦
+                                                           //🟩🟦🟦🟦
+                                                           //🟩🟩
+            maze[Maze.size / 2 + 2, Maze.size / 2] = 0; // up
+            maze[Maze.size / 2 + 2, Maze.size / 2 + 1] = 0; // up
+                                                           //🟩🟩🟩
+                                                           //🟩🟦🟦🟦
+                                                           //🟩🟦💜🟦
+                                                           //🟩🟦🟦🟦
+                                                           //🟩🟩🟩🟩
+            maze[Maze.size / 2 + 2, Maze.size / 2 + 2] = 0; // up
+            maze[Maze.size / 2 + 1, Maze.size / 2 + 2] = 0; // up
+                                                           //🟩🟩🟩
+                                                           //🟩🟦🟦🟦
+                                                           //🟩🟦💜🟦
+                                                           //🟩🟦🟦🟦🟩
+                                                           //🟩🟩🟩🟩🟩
+            maze[Maze.size / 2, Maze.size / 2 + 2] = 0; // up
+            maze[Maze.size / 2 - 1, Maze.size / 2 + 2] = 0; // up
+                                                           //🟩🟩🟩
+                                                           //🟩🟦🟦🟦🟩
+                                                           //🟩🟦💜🟦🟩
+                                                           //🟩🟦🟦🟦🟩
+                                                           //🟩🟩🟩🟩🟩
+            maze[Maze.size / 2 - 2, Maze.size / 2 + 2] = 0; // up
+            maze[Maze.size / 2 - 2, Maze.size / 2 + 1] = 0; // up
+                                                           //🟩🟩🟩🟩🟩
+                                                           //🟩🟦🟦🟦🟩
+                                                           //🟩🟦💜🟦🟩
+                                                           //🟩🟦🟦🟦🟩
+                                                           //🟩🟩🟩🟩🟩
+                                                           ////
+            //Spawn Door
+            Random random = new Random();
+            List<int[]> DoorSpawn = new List<int[]>();
+            DoorSpawn.Add(new int[] { Maze.size / 2, Maze.size / 2 - 1 });
+            DoorSpawn.Add(new int[] { Maze.size / 2, Maze.size / 2 + 1 });
+
+            int doorspawnindex = random.Next(DoorSpawn.Count);
+            maze[DoorSpawn[doorspawnindex][0], DoorSpawn[doorspawnindex][1]] = 6;
+
+            int[] KeyLocation = new int[2];
+            KeyLocation[0] = Maze.size / 2 + 2;
+            KeyLocation[1] = Maze.size / 2 + 1;
+            Maze.SpawnKey(maze);
             return maze;
-        }
-
-
-        public static bool isValidLocation(int row, int col)
-        {
-            //=======================================================================================================PENDIENTE!!completar esta Pingueta
-            return true;
         }
         public virtual void CastSpell()
         {
@@ -227,7 +329,7 @@ namespace GameObjects
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             var table = new Table();
-            table.AddColumn(new TableColumn("✣  " + a + "  ✣").Centered());
+            table.AddColumn(new TableColumn("  " + a + "  ").Centered());
 
             for (int i = 0; i < size; i++)
             {
@@ -240,6 +342,9 @@ namespace GameObjects
                     {
                         case 1: // wall
                             cellMarkup = "[#3A6089]███[/]"; // Wall blue
+                            break;
+                        case 2: // wall
+                            cellMarkup = "[#3a4089]███[/]"; // Wall blue
                             break;
                         case 0: // FreePath
                             cellMarkup = "[#232324]   [/]"; // Gray Pathes♥
@@ -288,7 +393,7 @@ namespace GameObjects
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             var table = new Table();
-            table.AddColumn(new TableColumn($"✣  {a}  ✣ ").Centered());
+            table.AddColumn(new TableColumn("✣  " + a + "  ✣ ").Centered());
 
             for (int i = 0; i < size; i++)
             {
@@ -301,6 +406,9 @@ namespace GameObjects
                     {
                         case 1: // wall
                             cellMarkup = "[#3A6089]███[/]"; // Wall blue
+                            break;
+                        case 2: // wall
+                            cellMarkup = "[#3a4089]███[/]"; // Wall blue
                             break;
                         case 0: // FreePath
                             cellMarkup = "[#232324]   [/]"; // Gray Pathes♥
@@ -344,38 +452,38 @@ namespace GameObjects
                 table.AddRow(new Markup(rowMarkup).Centered());
             }
             var healthmanabar = new BarChart();
-            if(hero.health >= 7)
+            if (hero.health >= 7)
             {
-               healthmanabar.Width(50);
-               healthmanabar.Label($"[blue bold]| [/][bold #000000]{hero.icon}[/][blue bold] |[/][black]  >>  [/][white] {hero.name}[/]\n").LeftAlignLabel();
-               healthmanabar.AddItem("💓", hero.health, Color.Green4);
-               healthmanabar.AddItem("💙", hero.mana, Color.Blue);
+                healthmanabar.Width(50);
+                healthmanabar.Label($"[blue bold]| [/][bold #000000]{hero.icon}[/][blue bold] |[/][black]  >>  [/][white] {hero.name}[/]\n").LeftAlignLabel();
+                healthmanabar.AddItem("💓", hero.health, Color.Green4);
+                healthmanabar.AddItem("💙", hero.mana, Color.Blue);
             }
-            else if(hero.health >= 5)
+            else if (hero.health >= 5)
             {
-               healthmanabar.Width(50);
-               healthmanabar.Label($"[blue bold]| [/][bold #000000]{hero.icon}[/][blue bold] |[/][black]  >>  [/][white] {hero.name}[/]\n").LeftAlignLabel();
-               healthmanabar.AddItem("💓", hero.health, Color.Yellow2);
-               healthmanabar.AddItem("💙", hero.mana, Color.Blue);
+                healthmanabar.Width(50);
+                healthmanabar.Label($"[blue bold]| [/][bold #000000]{hero.icon}[/][blue bold] |[/][black]  >>  [/][white] {hero.name}[/]\n").LeftAlignLabel();
+                healthmanabar.AddItem("💓", hero.health, Color.Yellow2);
+                healthmanabar.AddItem("💙", hero.mana, Color.Blue);
             }
-            else if(hero.health >= 3)
+            else if (hero.health >= 3)
             {
-               healthmanabar.Width(50);
-               healthmanabar.Label($"[blue bold]| [/][bold #000000]{hero.icon}[/][blue bold] |[/][black]  >>  [/][white] {hero.name}[/]\n").LeftAlignLabel();
-               healthmanabar.AddItem("💓", hero.health, Color.Orange1);
-               healthmanabar.AddItem("💙", hero.mana, Color.Blue);
+                healthmanabar.Width(50);
+                healthmanabar.Label($"[blue bold]| [/][bold #000000]{hero.icon}[/][blue bold] |[/][black]  >>  [/][white] {hero.name}[/]\n").LeftAlignLabel();
+                healthmanabar.AddItem("💓", hero.health, Color.Orange1);
+                healthmanabar.AddItem("💙", hero.mana, Color.Blue);
             }
-            else if(hero.health >= 0)
+            else if (hero.health >= 0)
             {
-               healthmanabar.Width(50);
-               healthmanabar.Label($"[blue bold]| [/][bold #000000]{hero.icon}[/][blue bold] |[/][black]  >>  [/][white] {hero.name}[/]\n").LeftAlignLabel();
-               healthmanabar.AddItem("💓", hero.health, Color.DarkRed);
-               healthmanabar.AddItem("💙", hero.mana, Color.Blue);
+                healthmanabar.Width(50);
+                healthmanabar.Label($"[blue bold]| [/][bold #000000]{hero.icon}[/][blue bold] |[/][black]  >>  [/][white] {hero.name}[/]\n").LeftAlignLabel();
+                healthmanabar.AddItem("💓", hero.health, Color.DarkRed);
+                healthmanabar.AddItem("💙", hero.mana, Color.Blue);
             }
             var stats = new Table()
             .NoBorder()
             .AddColumn(new TableColumn($"🎬[yellow bold] actions left[/] [bold]{hero.actionsRemaining}[/]"))
-            .AddRow($"\n👢[green bold]↗[/] Speed      x[bold #ebff6d]{hero.speed}[/] / x[bold #ebff6d]{hero.maxspeed}[/]").LeftAligned()
+            .AddRow($"👢[green bold]↗[/] Speed      x[bold #ebff6d]{hero.speed}[/] / x[bold #ebff6d]{hero.maxspeed}[/]").LeftAligned()
             .AddRow($"[black]⚓[/] Toughness   [bold]{hero.toughness}[/]").LeftAligned()
             .AddRow($"💓 Health      [bold]{hero.health}[/]").LeftAligned()
             .AddRow($"💙 Mana        [bold]{hero.mana}[/]").LeftAligned();
@@ -401,11 +509,11 @@ namespace GameObjects
                     }
                 }
             }
-            
+
             ///take a random
             Random coord = new Random();
             int index = coord.Next(posiblespawns.Count);
-            map[posiblespawns[index][0],posiblespawns[index][1]] = 8;
+            map[posiblespawns[index][0], posiblespawns[index][1]] = 8;
             Maze.KeyLocation = posiblespawns[index];
         }
         public static int DistanceFromKey(Hero hero, int v, int w, int size)

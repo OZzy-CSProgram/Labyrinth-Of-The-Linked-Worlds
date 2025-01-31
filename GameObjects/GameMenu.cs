@@ -41,9 +41,45 @@ namespace GameObjects
             var dialogue = new Table()
             .RoundedBorder();
             dialogue.AddColumn(new TableColumn("[bold #000000]" + hero.icon + "[/]").Centered());
-            dialogue.AddColumn(new TableColumn("[bold blue]> [/]" + s ).Centered());
+            dialogue.AddColumn(new TableColumn("[bold blue]> [/]" + s).Centered());
             AnsiConsole.Write(dialogue);
-            
+
+        }
+        public static void PrintDirections()
+        {
+            var table = new Table()
+               .NoBorder();
+            var w = new Table()
+            .Border(TableBorder.Double)
+            .BorderColor(Color.SandyBrown)
+            .AddColumn(new TableColumn("W ⬆ above").Centered());
+
+            var a = new Table()
+            .Border(TableBorder.Double)
+            .BorderColor(Color.SandyBrown)
+            .AddColumn(new TableColumn("A ⬅ left").Centered());
+
+            var s = new Table()
+            .Border(TableBorder.Double)
+            .BorderColor(Color.SandyBrown)
+            .AddColumn(new TableColumn("S ⬇ below").Centered());
+
+            var d = new Table()
+            .Border(TableBorder.Double)
+            .BorderColor(Color.SandyBrown)
+            .AddColumn(new TableColumn("D ➡ right").Centered());
+
+            var back = new Table()
+                .Border(TableBorder.Rounded)
+                .BorderColor(Color.Red3)
+                .AddColumn(new TableColumn("[bold]TAB[/] [bold red]Cancelar[/]"));
+
+            table.AddColumn(new TableColumn("").Centered()).NoBorder();
+            table.AddColumn(new TableColumn(w).Centered()).NoBorder();
+            table.AddColumn(new TableColumn(back).Centered()).NoBorder();
+
+            table.AddRow(a.Centered(), s.Centered(), d.Centered());
+            AnsiConsole.Write(table);
         }
         public static void KeyToContinue()
         {
@@ -52,7 +88,7 @@ namespace GameObjects
             table.AddColumn(new TableColumn("[#91e4f2] Press a key to continue [/]").Centered());
             AnsiConsole.Write(table);
             Console.ReadKey(true);
-            
+
         }
         public static void KeyToContinueCentered()
         {
@@ -62,14 +98,14 @@ namespace GameObjects
             table.Centered();
             AnsiConsole.Write(table);
             Console.ReadKey(true);
-            
+
         }
         public static Table CreateTable(string col)
         {
             var table = new Table()
             .RoundedBorder();
             table.AddColumn(new TableColumn(col).Centered());
-            return table;            
+            return table;
         }
         public static void WriteTable(string col)
         {
