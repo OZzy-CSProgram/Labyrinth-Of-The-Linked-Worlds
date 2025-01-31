@@ -2,6 +2,8 @@ using System.Reflection.Metadata.Ecma335;
 using System.Runtime.ExceptionServices;
 using System.Transactions;
 using Spectre.Console;
+using System.Threading;
+
 namespace GameObjects
 {
     public class Hero
@@ -765,7 +767,7 @@ namespace GameObjects
             }
         }
 
-        public static void DisplayList(List<Hero> list, string s)
+        public static Table DisplayListP1(List<Hero> list, string s)
         {
             var table = new Table();
             table.AddColumn(new TableColumn(s).Centered());
@@ -782,12 +784,157 @@ namespace GameObjects
                 table1.AddRow(" 👢 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
                 table1.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
                 table.AddRow(table1);
-                table1.BorderColor(Color.DarkGoldenrod);
+                table1.BorderColor(Color.Blue);
             }
             table.AddRow("");
+            table.BorderColor(Color.DarkBlue);
+            table.Centered();
+            return table;
+        }
+        public static Table DisplayListP2(List<Hero> list, string s)
+        {
+            var table = new Table();
+            table.AddColumn(new TableColumn(s).Centered());
+            table.AddRow("");
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var table1 = new Table();
+                table1.AddColumn("[bold #ff7400] " + (i + 1) + "[/][yellow] >>[/]  [black]  " + list[i].icon + " [/] [bold]" + list[i].name + "[/]  ");
+                table1.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
+                table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
+                table1.AddRow(" 💙 [bold] Max Mana[/] >  20");
+                table1.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
+                table1.AddRow(" 👢 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
+                table1.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
+                table.AddRow(table1);
+                table1.BorderColor(Color.Red1);
+            }
+            table.AddRow("");
+            table.BorderColor(Color.DarkRed);
+            table.Centered();
+            return table;
+        }
+        public static Table DisplayListOn3(List<Hero> list, Table table, int limit, string s)
+        {
+            for (int i = 0; i < limit; i++)
+            {
+
+                if (i == (limit - 1) / 2)
+                {
+                    var table1 = new Table();
+                    table1.Border(TableBorder.Heavy);
+                    table1.BorderColor(Color.Chartreuse3);
+                    var table2 = new Table();
+                    table2.AddColumn(list[i].icon + " [bold]" + list[i].name + "[/]  ");
+                    table2.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
+                    table2.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
+                    table2.AddRow(" 💙 [bold] Max Mana[/] >  20");
+                    table2.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
+                    table2.AddRow(" 👢 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
+                    table2.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
+                    table1.AddColumn(new TableColumn(table2).Centered());
+                    table2.BorderColor(Color.DarkGoldenrod);
+                    table.AddRow(table1);
+                }
+                else
+                {
+                    var table1 = new Table();
+                    table1.NoBorder();
+                    var table2 = new Table();
+                    table2.AddColumn(list[i].icon + " [bold]" + list[i].name + "[/]  ");
+                    table2.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
+                    table2.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
+                    table2.AddRow(" 💙 [bold] Max Mana[/] >  20");
+                    table2.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
+                    table2.AddRow(" 👢 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
+                    table2.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
+                    table1.AddColumn(new TableColumn(table2).Centered());
+                    table2.BorderColor(Color.Grey23);
+                    table.AddRow(table1);
+                }
+
+            }
+            if (s == "p1")
+            {
+                var enter = new Table();
+                enter.Border(TableBorder.Rounded);
+                enter.BorderColor(Color.DarkGreen);
+                enter.AddColumn(new TableColumn("[bold #00e410]<⬅ <⬅ <⬅ <⬅ Enter[/]"));
+                enter.Centered();
+                table.AddRow(enter);
+            }
+            if (s == "p2")
+            {
+                var enter = new Table();
+                enter.Border(TableBorder.Rounded);
+                enter.BorderColor(Color.DarkGreen);
+                enter.AddColumn(new TableColumn("[bold #00e410]Enter ➡> ➡> ➡> ➡>[/]"));
+                enter.Centered();
+                table.AddRow(enter);
+            }
+            table.AddEmptyRow();
             table.BorderColor(Color.SlateBlue1);
             table.Centered();
-            AnsiConsole.Write(table);
+            return table;
+        }
+        public static Hero DisplayList3(Table p1, List<Hero> list, Table p2, string s, string dir)
+        {
+            Console.Clear();
+            int limit = 3;
+            while (true)
+            {
+                if (list.Count < 3)
+                {
+                    limit = list.Count;
+                }
+                var table = new Table();
+                table.AddColumn(new TableColumn(s).Centered());
+                table.AddRow("");
+                table = DisplayListOn3(list, table, limit, dir);
+                Menu.HeroSelection(p1, table, p2);
+                ConsoleKeyInfo Selection = Console.ReadKey(true);
+                if (Selection.Key == ConsoleKey.DownArrow || Selection.KeyChar == 's')
+                {
+                    Hero save = list[0];
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        if (i == list.Count - 1)
+                        {
+                            break;
+                        }
+                        if (list.Count != 1)
+                        {
+                            list[i] = list[i + 1];
+                        }
+                    }
+                    list[list.Count - 1] = save;
+                }
+                if (Selection.Key == ConsoleKey.UpArrow || Selection.KeyChar == 'w')
+                {
+                    Hero save = list[list.Count - 1];
+                    for (int i = list.Count - 1; i > 0; i--)
+                    {
+                        if (i == 0)
+                        {
+                            break;
+                        }
+                        if (list.Count != 1)
+                        {
+                            list[i] = list[i - 1];
+                        }
+                    }
+                    list[0] = save;
+                }
+                if (Selection.Key == ConsoleKey.Enter)
+                {
+                    return list[(limit - 1) / 2];
+                }
+                table = DisplayListOn3(list, table, limit, dir);
+                Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+            }
+            return list[0];
         }
         public static void DisplayList2(List<Hero> list, string s, int[,] map)
         {
@@ -890,7 +1037,7 @@ namespace GameObjects
                     Direction = Console.ReadKey(true);
                     if (Direction.Key == ConsoleKey.Tab)
                     {
-                    break;
+                        break;
                     }
                     while (Direction.KeyChar != 'w' && Direction.KeyChar != 'W' && Direction.KeyChar != 'a' && Direction.KeyChar != 'A' && Direction.KeyChar != 's' && Direction.KeyChar != 'S' && Direction.KeyChar != 'd' && Direction.KeyChar != 'D' && Direction.KeyChar != 'r' && Direction.KeyChar != 'R')
                     {
@@ -1094,7 +1241,7 @@ namespace GameObjects
             while (true)
             {
                 int[] Dir = Hero.GetADirection(map, "[bold #000000]" + icon + "[/][bold blue]> [/] What direction should I you want to jump?");
-                if(Dir[0] == 0 && Dir[1] == 0)//means the player selected the option, Cancel
+                if (Dir[0] == 0 && Dir[1] == 0)//means the player selected the option, Cancel
                 {
                     mana += cooldown;
                     break;
@@ -1421,7 +1568,7 @@ namespace GameObjects
                 var printmap = Maze.PrintMaze(map, "[bold #000000]" + icon + "[/] [bold blue]> [/]Which wall would you like me to destroy mate ? ヽ(ヅ)ノ");
                 AnsiConsole.Write(printmap);
                 Menu.PrintDirections();
-                
+
 
                 var Direction = Console.ReadKey(true);
                 if (Direction.Key == ConsoleKey.Tab)

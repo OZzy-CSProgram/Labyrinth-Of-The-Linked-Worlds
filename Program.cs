@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using GameObjects;
 using Spectre.Console;
+using System.Threading;
 while (true)
 {
     ///////////////////      MAIN MENU         /////////////
@@ -297,17 +298,22 @@ while (true)
         Manner Elymnis = new Manner(21, "👽", "Elymnis The Creator", "One of the first mages that used mana,\nas a supply of energy, she can remove 3 points\nof mana to the selected enemy hero and transfer it\nto a random player in the host!", /*health*/13, /*attack*/4, /*speed*/1, /*mana*/0, /*superreq*/8, /*toughness*/20, map);
         Heroes.Add(Elymnis);
         HeroSelectionTable.Centered();
-
+        var menu = new Table();
+        var player1party = new Table();
+        var player2party = new Table();
+        var HeroesAvalibles = new Table();
+        menu.AddColumn(new TableColumn(player1party).Centered());
+        menu.AddColumn(new TableColumn(HeroesAvalibles).Centered());
+        menu.AddColumn(new TableColumn(player2party).Centered());
         while (Heroes.Count > 0)
         {
             ////Player 1 Choose
             Console.Clear();
-            AnsiConsole.Write(HeroSelectionTable);
-            Console.WriteLine();
-            Hero.DisplayList(Heroes, $"{nameofP1.ToUpper()} , ITS YOUR TURN !!!");
-            Console.WriteLine();
+            player1party = Hero.DisplayListP1(Player1.Party, $"[blue bold]{nameofP1}'s Party [/]");
+            player2party = Hero.DisplayListP2(Player2.Party, $"[red bold]{nameofP2}'s Party [/]");
 
-            Hero choice1 = Player.GetPlayerChoice(Heroes);
+            // Hero choice1 = Player.GetPlayerChoice(Heroes);
+            Hero choice1 = Hero.DisplayList3(player1party, Heroes, player2party, $"[yellow bold]{nameofP1}'s Turn    {Heroes.Count} Heroes Remaining[/]", "p1");
             if (choice1 != null)
             {
                 Console.Clear();
@@ -326,9 +332,10 @@ while (true)
             Console.Clear();
             AnsiConsole.Write(HeroSelectionTable);
             Console.WriteLine();
-            Hero.DisplayList(Heroes, $"{nameofP2.ToUpper()} , ITS YOUR TURN !!!");
-            Console.WriteLine();
-            Hero choice2 = Player.GetPlayerChoice(Heroes);
+            player1party = Hero.DisplayListP1(Player1.Party, $"[blue bold]{nameofP1}'s Party [/]");
+            player2party = Hero.DisplayListP2(Player2.Party, $"[red bold]{nameofP2}'s Party [/]");
+            Menu.HeroSelection(player1party, HeroesAvalibles, player2party);
+           Hero choice2 = Hero.DisplayList3(player1party, Heroes, player2party, $"[yellow bold]{nameofP1}'s Turn    {Heroes.Count} Heroes Remaining[/]", "p2");
             if (choice2 != null)
             {
                 Console.Clear();

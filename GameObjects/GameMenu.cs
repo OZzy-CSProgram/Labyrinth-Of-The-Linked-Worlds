@@ -90,6 +90,26 @@ namespace GameObjects
             Console.ReadKey(true);
 
         }
+        public static void HeroSelection(Table a, Table b, Table c)
+        {
+            Console.Clear();
+            Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
+            var HeroSelectionTable = Menu.CreateTable("[bold #ff1e00] _____                        _____     _         _   _         [/]\n[bold #ff3800]|  |  |___ ___ ___ ___ ___   |   __|___| |___ ___| |_|_|___ ___ [/]\n[bold #ff4e00]|     | -_|  _| . | -_|_ -|  |__   | -_| | -_|  _|  _| | . |   |[/]\n[bold #ff6400]|__|__|___|_| |___|___|___|  |_____|___|_|___|___|_| |_|___|_|_|[/]\n");
+            HeroSelectionTable.Centered();
+            AnsiConsole.Write(HeroSelectionTable);
+            Console.WriteLine();
+            var menu = new Table()
+            .NoBorder();
+            a.Expand();
+            c.Expand();
+            menu.AddColumn(new TableColumn(a).Centered());
+            menu.AddColumn(new TableColumn(b).Centered());
+            menu.AddColumn(new TableColumn(c).Centered());
+            menu.Centered();
+            menu.Expand();
+            AnsiConsole.Write(menu);
+
+        }
         public static void KeyToContinueCentered()
         {
             var table = new Table()
