@@ -245,7 +245,7 @@ namespace GameObjects
             Maze.PrintMaze2(map, $" {name}'s Turn!!!         ", table, hero);
             Console.ReadKey(true);
         }
-        public static void Play(ConsoleKeyInfo action, Hero hero, Player player, Player otherplayer, int[,] map, List<Trap> Traps)
+        public static void Play(ConsoleKeyInfo action, Hero hero, Player player, Player otherplayer, int[,] map, List<Trap> Traps, List<Box> Boxes)
         {
             while (true)
             {
@@ -338,6 +338,14 @@ namespace GameObjects
                     Menu.KeyToContinue();
                     Traps[index].CastTrap(hero, map);
                     hero.trapped = false;
+                }
+                if (hero.inbox == true)
+                {
+                    Random randomBox = new Random();
+                    int index = randomBox.Next(Boxes.Count);
+                    Console.Clear();
+                    Boxes[index].CastBox(hero, map);
+                    hero.inbox = false;
                 }
                 ////check if there are actions remaining 
                 if (hero.actionsRemaining > 0)

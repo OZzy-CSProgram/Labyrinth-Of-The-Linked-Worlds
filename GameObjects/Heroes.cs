@@ -19,10 +19,10 @@ namespace GameObjects
         public bool haveKey;
         public int restturns;
         public bool trapped = false;
+        public bool inbox = false;
         public int stunned = 0;
         public int toughness;
         public int cooldown;
-
         public int actionsRemaining = 5;
         public List<int[]> locationlog = new List<int[]>();
         public int[,] map;
@@ -153,7 +153,7 @@ namespace GameObjects
                 else if (movenumber != 0)
                 {
                     int newposition = map[hero.location[0], hero.location[1] + movenumber];
-
+                    //moving to a trap
                     if (newposition == 3)
                     {
                         ///                                    moveup
@@ -164,6 +164,20 @@ namespace GameObjects
                         //add new position to the log
                         hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
                         hero.trapped = true;
+                        hero.actionsRemaining--;
+
+                    }
+                    //moving to a box
+                    if (newposition == 5)
+                    {
+                        ///                                    moveup
+                        map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
+                        hero.location[1] += movenumber;                        //Change Player location
+                        map[hero.location[0], hero.location[1]] = id;    // Make map value = hero.id so when map is display hero appears in that position
+
+                        //add new position to the log
+                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
+                        hero.inbox = true;
                         hero.actionsRemaining--;
 
                     }
@@ -295,6 +309,7 @@ namespace GameObjects
                 else if (movenumber != 0)
                 {
                     int newposition = map[hero.location[0], hero.location[1] - movenumber];
+                    ///moving to a trap
                     if (newposition == 3)
                     {
                         ///                                    moveup
@@ -305,6 +320,20 @@ namespace GameObjects
                         //add new position to the log
                         hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
                         hero.trapped = true;
+                        hero.actionsRemaining--;
+
+                    }
+                    //moving to a box
+                    if (newposition == 5)
+                    {
+                        ///                                    moveup
+                        map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
+                        hero.location[1] -= movenumber;                        //Change Player location
+                        map[hero.location[0], hero.location[1]] = id;    // Make map value = hero.id so when map is display hero appears in that position
+
+                        //add new position to the log
+                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
+                        hero.inbox = true;
                         hero.actionsRemaining--;
 
                     }
@@ -438,6 +467,7 @@ namespace GameObjects
                 else if (movenumber != 0)
                 {
                     int newposition = map[hero.location[0] - movenumber, hero.location[1]];
+                    //moving to a trap
                     if (newposition == 3)
                     {
                         ///                                    moveup
@@ -448,6 +478,20 @@ namespace GameObjects
                         //add new position to the log
                         hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
                         hero.trapped = true;
+                        hero.actionsRemaining--;
+
+                    }
+                    //moving to a box
+                    if (newposition == 5)
+                    {
+                        ///                                    moveup
+                        map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
+                        hero.location[0] -= movenumber;                        //Change Player location
+                        map[hero.location[0], hero.location[1]] = id;    // Make map value = hero.id so when map is display hero appears in that position
+
+                        //add new position to the log
+                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
+                        hero.inbox = true;
                         hero.actionsRemaining--;
 
                     }
@@ -580,6 +624,7 @@ namespace GameObjects
                 else if (movenumber != 0)
                 {
                     int newposition = map[hero.location[0] + movenumber, hero.location[1]];
+                    //moving to a trap
                     if (newposition == 3)
                     {
                         ///                                    moveup
@@ -590,6 +635,20 @@ namespace GameObjects
                         //add new position to the log
                         hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
                         hero.trapped = true;
+                        hero.actionsRemaining--;
+
+                    }
+                    //moving to a box
+                    if (newposition == 5)
+                    {
+                        ///                                    moveup
+                        map[hero.location[0], hero.location[1]] = 0;       //make path where player is standing
+                        hero.location[0] += movenumber;                        //Change Player location
+                        map[hero.location[0], hero.location[1]] = id;    // Make map value = hero.id so when map is display hero appears in that position
+
+                        //add new position to the log
+                        hero.locationlog.Add(new int[] { hero.location[0], hero.location[1] });
+                        hero.inbox = true;
                         hero.actionsRemaining--;
 
                     }
@@ -789,7 +848,6 @@ namespace GameObjects
                     table1.AddRow(" 🔪 [bold #e9e9e9]Attack[/]   >  " + list[i].attack);
                     table1.AddRow(" 👢 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
                     table1.AddRow(" 💠 [bold #e9e9e9]Super Requires[/] > Mana " + list[i].cooldown + "💙");
-                    list[i].restturns--;
                     table.AddRow(table1);
                     table1.BorderColor(Color.Red);
                 }
@@ -899,20 +957,18 @@ namespace GameObjects
             dialogue.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
             dialogue.AddColumn(new TableColumn("[bold blue]> [/] Nobody can reach my magic!  ٩(^ᴗ^)۶   .... Teleporting").Centered());
             AnsiConsole.Write(dialogue);
-            int[] receptor = Maze.GetRandomPath();
+            int[] receptor = Maze.GetRandomPath(Maze.FreePath);
             map[location[0], location[1]] = 0;
             while (receptor[0] == location[0] && receptor[1] == location[1])
             {
-                receptor = Maze.GetRandomPath();
+                receptor = Maze.GetRandomPath(Maze.FreePath);
             }
             location[0] = receptor[0];
             location[1] = receptor[1];
             map[location[0], location[1]] = id;
-            Console.WriteLine();
-            Console.WriteLine("Press a key to continue...");
-            Console.ReadKey(true);
+            Menu.KeyToContinue();
             Console.Clear();
-            Console.WriteLine($"{name} has Teleported to  [  {location[0]}  ,  {location[1]}  ]");
+            Menu.WriteTable($"{name} has Teleported to    {location[0]}  ,  {location[1]}  ");
             Menu.KeyToContinue();
         }
     }
@@ -1071,6 +1127,18 @@ namespace GameObjects
                         trapped = true;
                         break;
                     }
+                    //landing in box
+                    else if (newposition == 5)
+                    {
+                        map[location[0], location[1]] = 0;
+                        location[0] += Dir[0];
+                        location[0] += Dir[0];
+                        location[1] += Dir[1];
+                        location[1] += Dir[1];
+                        map[location[0], location[1]] = id;
+                        inbox = true;
+                        break;
+                    }
                     //landing in path
                     else if (newposition == 0)
                     {
@@ -1208,6 +1276,18 @@ namespace GameObjects
                         location[1] += Dir[1];
                         map[location[0], location[1]] = id;
                         trapped = true;
+                        break;
+                    }
+                    //landing in box
+                    else if (newposition == 5)
+                    {
+                        map[location[0], location[1]] = 0;
+                        location[0] += Dir[0];
+                        location[0] += Dir[0];
+                        location[1] += Dir[1];
+                        location[1] += Dir[1];
+                        map[location[0], location[1]] = id;
+                        inbox = true;
                         break;
                     }
                     //landing in path

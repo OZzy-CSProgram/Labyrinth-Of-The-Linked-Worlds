@@ -1,3 +1,4 @@
+using System.Collections.Specialized;
 using System.Globalization;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.Serialization;
@@ -27,11 +28,11 @@ namespace GameObjects
                 }
             }
         }
-        public static int[] GetRandomPath()
+        public static int[] GetRandomPath(List<int[]> list)
         {
             Random coord = new Random();
-            int index = coord.Next(FreePath.Count);
-            return FreePath[index];
+            int index = coord.Next(list.Count);
+            return list[index];
         }
         public static int[,] Generator()
         {
@@ -343,22 +344,25 @@ namespace GameObjects
                         case 1: // wall
                             cellMarkup = "[#3A6089]███[/]"; // Wall blue
                             break;
-                        case 2: // wall
+                        case 2: // wall2
                             cellMarkup = "[#3a4089]███[/]"; // Wall blue
                             break;
                         case 0: // FreePath
                             cellMarkup = "[#232324]   [/]"; // Gray Pathes♥
                             break;
                         case 3: // Trap
-                            cellMarkup = "[red] ✸ [/]"; // Red Trap
+                            cellMarkup = "[red]🚩 [/]"; // Red Trap
                             break;
                         case 4: // Meta
                             cellMarkup = "[#4D017C]💜 [/]"; // Heart of Ebony
                             break;
-                        case 6: // Meta
+                        case 5: // Box
+                            cellMarkup = "[red]💎 [/]"; // box
+                            break;
+                        case 6: // Door
                             cellMarkup = "[#4D017C] 🚪[/]"; // Heart of Ebony
                             break;
-                        case 8: // Meta
+                        case 8: // Key
                             cellMarkup = "[#4D017C] 🔑[/]"; // Heart of Ebony
                             break;
                         case 11: //Mage
@@ -367,16 +371,16 @@ namespace GameObjects
                         case 13: //Wallbreaker
                             cellMarkup = "[#4D017C]👳 [/]"; // Mage
                             break;
-                        case 15: //HEro
+                        case 15: //Jumper
                             cellMarkup = "[#4D017C]🐵 [/]"; // Mage
                             break;
-                        case 17: //HEro
+                        case 17: //Switcher
                             cellMarkup = "[#4D017C]🧞 [/]"; // Mage
                             break;
-                        case 19: //Wallbreaker
+                        case 19: //Witcher
                             cellMarkup = "[#4D017C]👹 [/]"; // Mage
                             break;
-                        case 21: //HEro
+                        case 21: //Manner
                             cellMarkup = "[#4D017C]👽 [/]"; // Mage
                             break;
                         default:
@@ -414,10 +418,13 @@ namespace GameObjects
                             cellMarkup = "[#232324]   [/]"; // Gray Pathes♥
                             break;
                         case 3: // Trap
-                            cellMarkup = "[red] ✸ [/]"; // Red Trap
+                            cellMarkup = "[red]🚩 [/]"; // Red Trap
                             break;
                         case 4: // Meta
                             cellMarkup = "[#4D017C]💜 [/]"; // Heart of Ebony
+                            break;
+                        case 5: // Box
+                            cellMarkup = "[red]💎 [/]"; // box
                             break;
                         case 6: // Meta
                             cellMarkup = "[#4D017C] 🚪[/]"; // Heart of Ebony

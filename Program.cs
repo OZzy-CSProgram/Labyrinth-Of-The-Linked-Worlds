@@ -51,10 +51,10 @@ while (true)
     }
     if (Selection.KeyChar == 'w' || Selection.Key == ConsoleKey.UpArrow)
     {
-         if (Player.exit)
+        if (Player.exit)
         {
             Player.exit = false;
-            Player.play = true; 
+            Player.play = true;
         }
         else if (Player.play)
         {
@@ -571,6 +571,18 @@ while (true)
         TLoseHealth6 LoseHealth6 = new TLoseHealth6();
         Traps.Add(LoseHealth6);
 
+        /////BOXES SETTINGS
+        Box.SpawnBoxes(map);
+        List<Box> Boxes = new List<Box>();
+        MoreHealth health5 = new MoreHealth();
+        Boxes.Add(health5);
+        MoreMana mana5 = new MoreMana();
+        Boxes.Add(mana5);
+        MoreToughness toughness6 = new MoreToughness();
+        Boxes.Add(toughness6);
+        MoreSpeed speedx1 = new MoreSpeed();
+        Boxes.Add(speedx1);
+
         Player1.turn = true;
         Player2.turn = false;
         while (true)
@@ -653,7 +665,7 @@ while (true)
 
 
 
-                Player.Play(action, choice1, Player1, Player2, map, Traps);
+                Player.Play(action, choice1, Player1, Player2, map, Traps, Boxes);
 
                 //victory condition
                 if (Player1.HeroesInCentre == 3)
@@ -661,7 +673,40 @@ while (true)
                     Player1.Victory = true;
                     break;
                 }
-
+                ///Decrease restturns points before passing turn
+                if (Player1.Party.Count == 3)
+                {
+                    if (Player1.Party[0].restturns > 0)
+                    {
+                        Player1.Party[0].restturns--;
+                    }
+                    if (Player1.Party[1].restturns > 0)
+                    {
+                        Player1.Party[1].restturns--;
+                    }
+                    if (Player1.Party[2].restturns > 0)
+                    {
+                        Player1.Party[2].restturns--;
+                    }
+                }
+                if (Player1.Party.Count == 2)
+                {
+                    if (Player1.Party[0].restturns > 0)
+                    {
+                        Player1.Party[0].restturns--;
+                    }
+                    if (Player1.Party[1].restturns > 0)
+                    {
+                        Player1.Party[1].restturns--;
+                    }
+                }
+                if (Player1.Party.Count == 1)
+                {
+                    if (Player1.Party[0].restturns > 0)
+                    {
+                        Player1.Party[0].restturns--;
+                    }
+                }
                 ///Decrease Stun points before passing turn
                 if (Player1.Party.Count == 3)
                 {
@@ -716,33 +761,33 @@ while (true)
                 ///check if he's mana is at the maximum amount
                 if (Player1.Party.Count == 3)
                 {
-                    if (Player1.Party[0].mana < Player2.Party[0].cooldown)
+                    if (Player1.Party[0].mana < Player1.Party[0].cooldown)
                     {
                         Player1.Party[0].mana++;
                     }
-                    if (Player1.Party[1].mana < Player2.Party[1].cooldown)
+                    if (Player1.Party[1].mana < Player1.Party[1].cooldown)
                     {
                         Player1.Party[1].mana++;
                     }
-                    if (Player1.Party[2].mana < Player2.Party[2].cooldown)
+                    if (Player1.Party[2].mana < Player1.Party[2].cooldown)
                     {
                         Player1.Party[2].mana++;
                     }
                 }
                 if (Player1.Party.Count == 2)
                 {
-                    if (Player1.Party[0].mana < Player2.Party[0].cooldown)
+                    if (Player1.Party[0].mana < Player1.Party[0].cooldown)
                     {
                         Player1.Party[0].mana++;
                     }
-                    if (Player1.Party[1].mana < Player2.Party[1].cooldown)
+                    if (Player1.Party[1].mana < Player1.Party[1].cooldown)
                     {
                         Player1.Party[1].mana++;
                     }
                 }
                 if (Player1.Party.Count == 1)
                 {
-                    if (Player1.Party[0].mana < Player2.Party[0].cooldown)
+                    if (Player1.Party[0].mana < Player1.Party[0].cooldown)
                     {
                         Player1.Party[0].mana++;
                     }
@@ -798,7 +843,7 @@ while (true)
                 ConsoleKeyInfo action;
                 action = Player.GetAction(map, Player2, Player1, choice2);
 
-                Player.Play(action, choice2, Player2, Player1, map, Traps);
+                Player.Play(action, choice2, Player2, Player1, map, Traps, Boxes);
 
                 //victory condition
                 if (Player2.HeroesInCentre == 3)
@@ -806,8 +851,40 @@ while (true)
                     Player2.Victory = true;
                     break;
                 }
-
-
+                //Decrease Restturns
+                if (Player2.Party.Count == 3)
+                {
+                    if (Player2.Party[0].restturns > 0)
+                    {
+                        Player2.Party[0].restturns--;
+                    }
+                    if (Player2.Party[1].restturns > 0)
+                    {
+                        Player2.Party[1].restturns--;
+                    }
+                    if (Player2.Party[2].restturns > 0)
+                    {
+                        Player2.Party[2].restturns--;
+                    }
+                }
+                if (Player2.Party.Count == 2)
+                {
+                    if (Player2.Party[0].restturns > 0)
+                    {
+                        Player2.Party[0].restturns--;
+                    }
+                    if (Player2.Party[1].restturns > 0)
+                    {
+                        Player2.Party[1].restturns--;
+                    }
+                }
+                if (Player2.Party.Count == 1)
+                {
+                    if (Player2.Party[0].restturns > 0)
+                    {
+                        Player2.Party[0].restturns--;
+                    }
+                }
                 ///Decrease Stun points
                 if (Player2.Party.Count == 3)
                 {

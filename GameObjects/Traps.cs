@@ -10,7 +10,7 @@ namespace GameObjects
         }
         public static void SpawnTraps(int[,] map)
         {
-            int[] Trap1 = Maze.GetRandomPath();
+            int[] Trap1 = Maze.GetRandomPath(Maze.FreePath);
             map[Trap1[0], Trap1[1]] = 3;
 
             int[] Trap2 = GetTrap(map);
@@ -67,7 +67,7 @@ namespace GameObjects
              };
             while (true)
             {
-                Trap = Maze.GetRandomPath();
+                Trap = Maze.GetRandomPath(Maze.FreePath);
                 for (int i = 1; i < 4; i++)
                 {
                     if (Trap[0] + Dir[0][0] * i >= 1 && Trap[0] + Dir[0][0] * i < Maze.size - 1 && Trap[1] + Dir[0][1] * i >= 1 && Trap[1] + Dir[0][1] * i < Maze.size - 1)
