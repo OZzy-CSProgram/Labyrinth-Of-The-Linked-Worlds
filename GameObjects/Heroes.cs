@@ -1176,10 +1176,10 @@ namespace GameObjects
             var dialogue = new Table()
             .RoundedBorder();
             dialogue.AddColumn(new TableColumn("[bold #000000]" + icon + "[/]").Centered());
-            dialogue.AddColumn(new TableColumn("[bold blue]> [/] 'Tis such a shame, but I will paralyze you [bold]" + heroselected.name + "[/], for [bold]5 turns[/] !, ᕚ('▿')ᕘ hahahahahaha").Centered());
+            dialogue.AddColumn(new TableColumn("[bold blue]> [/] 'Tis such a shame, but I will paralyze you [bold]" + heroselected.name + "[/], for [bold]3 turns[/] !, ᕚ('▿')ᕘ hahahahahaha").Centered());
             AnsiConsole.Write(dialogue);
             //stun hero
-            heroselected.stunned = 5;
+            heroselected.stunned = 3;
             Menu.KeyToContinue();
 
         }
