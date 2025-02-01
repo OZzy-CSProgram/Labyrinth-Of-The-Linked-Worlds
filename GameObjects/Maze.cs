@@ -351,7 +351,7 @@ namespace GameObjects
                             cellMarkup = "[#232324]   [/]"; // Gray Pathes♥
                             break;
                         case 3: // Trap
-                            cellMarkup = "[red]🚩 [/]"; // Red Trap
+                            cellMarkup = "[red]   [/]"; // Red Trap
                             break;
                         case 4: // Meta
                             cellMarkup = "[#4D017C]💜 [/]"; // Heart of Ebony
@@ -363,7 +363,7 @@ namespace GameObjects
                             cellMarkup = "[#4D017C] 🚪[/]"; // Heart of Ebony
                             break;
                         case 8: // Key
-                            cellMarkup = "[#4D017C] 🔑[/]"; // Heart of Ebony
+                            cellMarkup = "[#4D017C]   [/]"; // Heart of Ebony
                             break;
                         case 11: //Mage
                             cellMarkup = "[#4D017C]🧙 [/]"; // Mage
@@ -418,7 +418,7 @@ namespace GameObjects
                             cellMarkup = "[#232324]   [/]"; // Gray Pathes♥
                             break;
                         case 3: // Trap
-                            cellMarkup = "[red]🚩 [/]"; // Red Trap
+                            cellMarkup = "[red]   [/]"; // Red Trap
                             break;
                         case 4: // Meta
                             cellMarkup = "[#4D017C]💜 [/]"; // Heart of Ebony
@@ -430,7 +430,7 @@ namespace GameObjects
                             cellMarkup = "[#4D017C] 🚪[/]"; // Heart of Ebony
                             break;
                         case 8: // Meta
-                            cellMarkup = "[#4D017C] 🔑[/]"; // Heart of Ebony
+                            cellMarkup = "[#4D017C]   [/]"; // Heart of Ebony
                             break;
                         case 11: //Mage
                             cellMarkup = "[#4D017C]🧙 [/]"; // Mage
