@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using NAudio.Wave;
 ///Play music
-string soundFilePath1 = @"D:\Fabio Project\Mainsong.wav"; // Replace with your sound file path
+string soundFilePath1 = "Mainsong.wav"; // Replace with your sound file path
 Menu.Sound(soundFilePath1, "playloop");
 while (true)
 {
@@ -88,7 +88,7 @@ while (true)
         
         Menu.KeyToContinue();
         Player.inmainmenu= true;
-        string soundFilePath3 = @"D:\Fabio Project\ElaraVibes.wav"; // Replace with your sound file path
+        string soundFilePath3 = "ElaraVibes.wav"; // Replace with your sound file path
         Menu.Sound(soundFilePath3, "playloop");
         
         
@@ -134,10 +134,10 @@ while (true)
 
         var Stage1 = Menu.LadyElara(GameGui2, instance1);
         AnsiConsole.Write(Stage1);
-        string soundFilePath = @"D:\Fabio Project\elara2.wav"; // Replace with your sound file path
+        string soundFilePath = "elara2.wav"; // Replace with your sound file path
         Menu.Sound(soundFilePath, "play");
 
-        Menu.KeyToContinueCentered();
+        Menu.KeyToContinue();
 
         Console.Clear();
 
@@ -150,7 +150,7 @@ while (true)
         instance2.AddRow("\n\n\n");
         var Stage2 = Menu.LadyElara(GameGui3, instance2);
         AnsiConsole.Write(Stage2);
-        string soundFilePath4 = @"D:\Fabio Project\Elara3.wav"; // Replace with your sound file path
+        string soundFilePath4 = "Elara3.wav"; // Replace with your sound file path
         Menu.Sound(soundFilePath4, "play");
         
         Menu.KeyToContinue();
@@ -174,7 +174,7 @@ while (true)
         instance3.AddRow("\n\n\n");
         var Stage3 = Menu.LadyElara(GameGui4, instance3);
         AnsiConsole.Write(Stage3);
-        string soundFilePath5 = @"D:\Fabio Project\Elara4.wav"; // Replace with your sound file path
+        string soundFilePath5 = "Elara4.wav"; // Replace with your sound file path
         Menu.Sound(soundFilePath5, "play");
         Menu.KeyToContinue();
 
@@ -191,7 +191,7 @@ while (true)
         instance4.AddRow("[bold red]2[/] What exactly do you want me to do!").Centered();
         var Stage4 = Menu.LadyElara(GameGui5, instance4);
         AnsiConsole.Write(Stage4);
-        string soundFilePath6 = @"D:\Fabio Project\Elara5.wav"; // Replace with your sound file path
+        string soundFilePath6 = "Elara5.wav"; // Replace with your sound file path
         Menu.Sound(soundFilePath6, "play");
 
         ConsoleKeyInfo decition2 = Console.ReadKey(true);
@@ -228,7 +228,7 @@ while (true)
             instance5.AddRow("[bold red]2[/] What exactly do you want me to do!").Centered();
             var Stage5 = Menu.LadyElara(GameGui7, instance5);
             AnsiConsole.Write(Stage5);
-            string soundFilePath7 = @"D:\Fabio Project\Elara6.wav"; // Replace with your sound file path
+            string soundFilePath7 = "Elara6.wav"; // Replace with your sound file path
             Menu.Sound(soundFilePath7, "play");
             decition2 = Console.ReadKey(true);
 
@@ -257,11 +257,11 @@ while (true)
         .Border(TableBorder.Rounded)
         .BorderColor(Spectre.Console.Color.Gold1);
         instance6.AddColumn(new TableColumn("")).HideHeaders();
-        instance6.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Thank you  ! Your quest would be to go inside the Labyrinth of the Linked Worlds and get the Heart of Ebony, dont worry, you will not be alone, you will be leading a party of brave heroes of our kingdom, you can personally choose them! ").Centered();
+        instance6.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Thank you  ! Your quest would be to go inside the Labyrinth of the Linked Worlds and get\n the Heart of Ebony, dont worry, you will not be alone, you will be leading \na party of brave heroes of our kingdom, you can personally choose them! ").Centered();
         instance6.AddRow("\n\n\n\n");
         var Stage6 = Menu.LadyElara(GameGui8, instance6);
         AnsiConsole.Write(Stage6);
-        string soundFilePath8 = @"D:\Fabio Project\Elara7.wav"; // Replace with your sound file path
+        string soundFilePath8 = "Elara7.wav"; // Replace with your sound file path
         Menu.Sound(soundFilePath8, "play");
         Menu.KeyToContinue();
 
@@ -321,7 +321,11 @@ while (true)
 
         var mapprinted = Maze.PrintMaze(map, "  Generated Map !");
         AnsiConsole.Write(mapprinted);
+        Player.inmainmenu = false;
         Menu.KeyToContinue();
+        Player.inmainmenu = true;
+        string soundFilePath20 = "PlayingSong.wav"; // Replace with your sound file path
+        Menu.Sound(soundFilePath20, "playloop");
         ///////////////////////////////////////////////////////////////////////////////////
         //////////////////////////      Heroes Selection         //////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////

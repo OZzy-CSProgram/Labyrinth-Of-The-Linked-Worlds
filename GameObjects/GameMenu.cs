@@ -77,7 +77,11 @@ namespace GameObjects
 
         public static void Sound(string soundFilePath, string action)
         {
-            if (!File.Exists(soundFilePath))
+            string subfolder = "AudioFiles";
+            string audioFileName = soundFilePath;
+
+            string fullpath = Path.Combine(Directory.GetCurrentDirectory(), subfolder, audioFileName);
+            if (!File.Exists(fullpath))
             {
                 Console.WriteLine("Sound file not found!");
             }
@@ -87,12 +91,12 @@ namespace GameObjects
                 if (action == "play")
                 {
                     // Use NAudio for Windows
-                    PlaySoundWindows(soundFilePath);
+                    PlaySoundWindows(fullpath);
                 }
                 else if (action == "playloop")
                 {
                     // Use paplay for Linux
-                    Thread audioThread = new Thread(() => PlaySoundLoopWindows(soundFilePath));
+                    Thread audioThread = new Thread(() => PlaySoundLoopWindows(fullpath));
                     audioThread.Start();
                 }
             }
@@ -101,7 +105,7 @@ namespace GameObjects
                 if (action == "play")
                 {
                     // Use paplay for Linux
-                    PlaySoundLinux(soundFilePath);
+                    PlaySoundLinux(fullpath);
                 }
                 else if (action == "playloop")
                 {
