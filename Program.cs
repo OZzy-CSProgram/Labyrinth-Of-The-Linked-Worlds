@@ -492,9 +492,9 @@ while (true)
         ///Heroes Spwans
         //                       Player 1
         //Spawn of First Hero
-        Player1.Party[0].location[0] = Maze.size / 2 - 2;
-        Player1.Party[0].location[1] = Maze.size / 2;
-        int[] spawn1p1 = new int[] { Maze.size / 2 - 2, Maze.size / 2 };
+        Player1.Party[0].location[0] = 1;
+        Player1.Party[0].location[1] = 1;
+        int[] spawn1p1 = new int[] { 1, 1 };
 
         //Spawn of Second Hero
         Player1.Party[1].location[0] = 1;
