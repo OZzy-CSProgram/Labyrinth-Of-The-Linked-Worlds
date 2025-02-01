@@ -51,6 +51,15 @@ while (true)
     var GameGui12 = new Table()
     .Border(TableBorder.Heavy)
     .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    var GameGui13 = new Table()
+    .Border(TableBorder.Heavy)
+    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    var GameGui14 = new Table()
+    .Border(TableBorder.Heavy)
+    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    var GameGui15 = new Table()
+    .Border(TableBorder.Heavy)
+    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
 
 
     Menu.GetMainMenu(GameGui1);
@@ -334,7 +343,6 @@ while (true)
         AnsiConsole.Write(Stage10);
         string soundFilePath12 = "K4.wav"; // Replace with your sound file path
         Menu.Sound(soundFilePath12, "play");
-        Menu.KeyToContinue();
 
         Console.Clear();
         AnsiConsole.Write(EnterName);
@@ -344,6 +352,45 @@ while (true)
         Player2.Greet();
         Console.WriteLine("\n\n\n");
         Console.WriteLine("\n\n\n");
+        Menu.KeyToContinue();
+
+        Console.Clear();
+        var instance11 = new Table()
+        .Border(TableBorder.Rounded)
+        .BorderColor(Spectre.Console.Color.Gold1);
+        instance11.AddColumn(new TableColumn("")).HideHeaders();
+        instance11.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/] Alright, Listen. I have been informed that my adversaries have summoned yet\n another Traveler to guide a host directly to a Labyrinth wherein lies a device capable of ruining my nefarious plan!\n\n\nI shall not remain with arms crossed, witnessing how they thwart my plans before my very eyes!").Centered();
+        instance11.AddRow("\n\n\n\n");
+        var Stage11 = Menu.LordKaeg(GameGui13, instance11);
+        AnsiConsole.Write(Stage11);
+        string soundFilePath13 = "K5.wav"; // Replace with your sound file path
+        Menu.Sound(soundFilePath13, "play");
+        Menu.KeyToContinue();
+
+        Console.Clear();
+        var instance12 = new Table()
+        .Border(TableBorder.Rounded)
+        .BorderColor(Spectre.Console.Color.Gold1);
+        instance12.AddColumn(new TableColumn("")).HideHeaders();
+        instance12.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/]  That is where you come into play; your objective shall be to obtain\n the aforementioned artifact before they do. Will you be able to accomplish this?").Centered();
+        instance12.AddRow("\n\n\n\n");
+        var Stage12 = Menu.LordKaeg(GameGui14, instance12);
+        AnsiConsole.Write(Stage12);
+        string soundFilePath14 = "K6.wav"; // Replace with your sound file path
+        Menu.Sound(soundFilePath14, "play");
+        Menu.KeyToContinue();
+
+        Console.Clear();
+        var instance13 = new Table()
+        .Border(TableBorder.Rounded)
+        .BorderColor(Spectre.Console.Color.Gold1);
+        instance13.AddColumn(new TableColumn("")).HideHeaders();
+        instance13.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/]  'Tis decided then, good luck in the mision!").Centered();
+        instance13.AddRow("\n\n\n\n");
+        var Stage13 = Menu.LordKaeg(GameGui15, instance13);
+        AnsiConsole.Write(Stage13);
+        string soundFilePath15 = "K7.wav"; // Replace with your sound file path
+        Menu.Sound(soundFilePath15, "play");
         Menu.KeyToContinue();
 
         Console.Clear();
