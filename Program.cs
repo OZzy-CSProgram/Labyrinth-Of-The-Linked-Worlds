@@ -4,34 +4,45 @@ using System.Security.Cryptography.X509Certificates;
 using GameObjects;
 using Spectre.Console;
 using System.Threading;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
+using NAudio.Wave;
+///Play music
+string soundFilePath1 = @"D:\Fabio Project\Mainsong.wav"; // Replace with your sound file path
+Menu.Sound(soundFilePath1, "playloop");
 while (true)
 {
     ///////////////////      MAIN MENU         /////////////
     Console.Clear();
     Console.Beep();
     var GameGui1 = new Table()
-    .BorderColor(Color.DeepSkyBlue3);
+    .BorderColor(Spectre.Console.Color.DeepSkyBlue3);
     var GameGui2 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Color.DeepSkyBlue3_1);
+    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
     var GameGui3 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Color.SkyBlue1);
+    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
     var GameGui4 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Color.CadetBlue);
+    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
     var GameGui5 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Color.DodgerBlue1);
+    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
     var GameGui6 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Color.DarkGoldenrod);
+    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
     var GameGui7 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Color.DarkGreen);
+    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
     var GameGui8 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Color.DarkGreen);
+    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    var GameGui9 = new Table()
+    .Border(TableBorder.Heavy)
+    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+
 
     Menu.GetMainMenu(GameGui1);
 
@@ -68,24 +79,33 @@ while (true)
     {
 
         ///////////////////      PLAY- Choise   Setting Players   Generating Maze    ///////////////////////
-
+        Player.inmainmenu = false;
         Console.Clear();
         Console.WriteLine("\n\n\n");
         Console.WriteLine("Letsss goooo!!!");
         var letsgo = Menu.CreateTable("[bold #c159ff]" + @"  _    ___ _____ _ ___    ___  ___  _ " + "\n" + @" | |  | __|_   _( ) __|  / __|/ _ \| |" + "\n" + @" | |__| _|  | | |/\__ \ | (_ | (_) |_|" + "\n" + @" |____|___| |_|   |___/  \___|\___/(_)" + "\n" + "[/]");
         AnsiConsole.Write(letsgo);
+        
         Menu.KeyToContinue();
-
+        Player.inmainmenu= true;
+        string soundFilePath3 = @"D:\Fabio Project\ElaraVibes.wav"; // Replace with your sound file path
+        Menu.Sound(soundFilePath3, "playloop");
+        
+        
+        
         Console.Clear();
         Console.WriteLine("\n\n\n");
 
 
 
         Player Player1 = new Player();
+        
         //Phase 1
         var ForP1 = Menu.CreateTable("[bold]FOR THE PLAYER 1[/]\n\n (The Player 1 should be the one playing, at this current time!)");
         AnsiConsole.Write(ForP1);
         Console.WriteLine("\n\n\n");
+
+
         Menu.KeyToContinue();
 
         Console.Clear();
@@ -94,6 +114,9 @@ while (true)
         //Roleplay
         var RoleP11 = Menu.CreateTable("(you wake up in a stranger place!)");
         AnsiConsole.Write(RoleP11);
+
+
+
         Console.WriteLine("\n\n\n");
         Menu.KeyToContinue();
 
@@ -104,25 +127,32 @@ while (true)
 
         var instance1 = new Table()
         .Border(TableBorder.Rounded)
-        .BorderColor(Color.Gold1);
+        .BorderColor(Spectre.Console.Color.Gold1);
         instance1.AddColumn(new TableColumn("")).HideHeaders();
         instance1.AddRow("[bold green]Lady Elara [/] [yellow]>[/] We have been waiting for you warrior!").Centered();
         instance1.AddRow("\n\n\n");
 
         var Stage1 = Menu.LadyElara(GameGui2, instance1);
         AnsiConsole.Write(Stage1);
+        string soundFilePath = @"D:\Fabio Project\elara2.wav"; // Replace with your sound file path
+        Menu.Sound(soundFilePath, "play");
+
         Menu.KeyToContinueCentered();
+
         Console.Clear();
 
 
         var instance2 = new Table()
         .Border(TableBorder.Rounded)
-        .BorderColor(Color.Gold1);
+        .BorderColor(Spectre.Console.Color.Gold1);
         instance2.AddColumn(new TableColumn("")).HideHeaders();
         instance2.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Wait, We have not properly meet, What is your name?!").Centered();
         instance2.AddRow("\n\n\n");
         var Stage2 = Menu.LadyElara(GameGui3, instance2);
         AnsiConsole.Write(Stage2);
+        string soundFilePath4 = @"D:\Fabio Project\Elara3.wav"; // Replace with your sound file path
+        Menu.Sound(soundFilePath4, "play");
+        
         Menu.KeyToContinue();
 
         Console.Clear();
@@ -138,20 +168,22 @@ while (true)
         Console.Clear();
         var instance3 = new Table()
         .Border(TableBorder.Rounded)
-        .BorderColor(Color.Gold1);
+        .BorderColor(Spectre.Console.Color.Gold1);
         instance3.AddColumn(new TableColumn("")).HideHeaders();
-        instance3.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Greetings " + nameofP1 + " we have summoned you, from your world because we need your help!").Centered();
+        instance3.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Greetings, we have summoned you, from your world because we need your help!").Centered();
         instance3.AddRow("\n\n\n");
         var Stage3 = Menu.LadyElara(GameGui4, instance3);
         AnsiConsole.Write(Stage3);
+        string soundFilePath5 = @"D:\Fabio Project\Elara4.wav"; // Replace with your sound file path
+        Menu.Sound(soundFilePath5, "play");
         Menu.KeyToContinue();
 
         Console.Clear();
         var instance4 = new Table()
         .Border(TableBorder.Rounded)
-        .BorderColor(Color.Gold1);
+        .BorderColor(Spectre.Console.Color.Gold1);
         instance4.AddColumn(new TableColumn("")).HideHeaders();
-        instance4.AddRow("[bold green]Lady Elara [/] [yellow]>[/] I have had a vision of a future where darkness consumes all of my world,\nI have seen in my visions that the only way to stop the darkness from spreading\n is by using an ancient and lost artifact called The Heart of Ebony... \n \n\nA group of our elder mages has discover that this artifact lays in a dangerous place called \n'The Labyrinth of The Linked Worlds' So... Can you help us " + nameofP1 + " ?").Centered();
+        instance4.AddRow("[bold green]Lady Elara [/] [yellow]>[/] I have had a vision of a future where darkness consumes all of my world,\nI have seen in my visions that the only way to stop the darkness from spreading\n is by using an ancient and lost artifact called The Heart of Ebony... \n \n\nA group of our elder mages has discover that this artifact lays in a dangerous place called \n'The Labyrinth of The Linked Worlds' So... Can you help us ?").Centered();
         instance4.AddRow("\n\n");
         instance4.AddRow("(   Choose your answer   )").Centered();
         instance4.AddRow("\n\n");
@@ -159,6 +191,8 @@ while (true)
         instance4.AddRow("[bold red]2[/] What exactly do you want me to do!").Centered();
         var Stage4 = Menu.LadyElara(GameGui5, instance4);
         AnsiConsole.Write(Stage4);
+        string soundFilePath6 = @"D:\Fabio Project\Elara5.wav"; // Replace with your sound file path
+        Menu.Sound(soundFilePath6, "play");
 
         ConsoleKeyInfo decition2 = Console.ReadKey(true);
         while (decition2.KeyChar != '2' && decition2.KeyChar != '1')
@@ -185,15 +219,17 @@ while (true)
             Console.Clear();
             var instance5 = new Table()
             .Border(TableBorder.Rounded)
-            .BorderColor(Color.Gold1);
+            .BorderColor(Spectre.Console.Color.Gold1);
             instance5.AddColumn(new TableColumn("")).HideHeaders();
-            instance5.AddRow("[bold green]Lady Elara [/] [yellow]>[/] I understand the question " + nameofP1 + " ,there is a prophecy about this labyrinth that says \n'Nobody in this world shall carry the Heart of Ebony out of the Labyrinth',\n and so we have decided to summon someone from another world to help us!\n \n... Can you?").Centered();
+            instance5.AddRow("[bold green]Lady Elara [/] [yellow]>[/] I understand the question ,there is a prophecy about this labyrinth that says \n'Nobody in this world shall carry the Heart of Ebony out of the Labyrinth',\n and so we have decided to summon someone from another world to help us!\n \n... Can you?").Centered();
             instance5.AddRow("\n\n");
             instance5.AddRow("(   Choose your answer   )").Centered();
             instance5.AddRow("\n\n");
             instance5.AddRow("[bold red]2[/] What exactly do you want me to do!").Centered();
             var Stage5 = Menu.LadyElara(GameGui7, instance5);
             AnsiConsole.Write(Stage5);
+            string soundFilePath7 = @"D:\Fabio Project\Elara6.wav"; // Replace with your sound file path
+            Menu.Sound(soundFilePath7, "play");
             decition2 = Console.ReadKey(true);
 
             while (decition2.KeyChar != '2')
@@ -219,13 +255,15 @@ while (true)
         Console.Clear();
         var instance6 = new Table()
         .Border(TableBorder.Rounded)
-        .BorderColor(Color.Gold1);
+        .BorderColor(Spectre.Console.Color.Gold1);
         instance6.AddColumn(new TableColumn("")).HideHeaders();
-        instance6.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Thank you " + nameofP1 + " ! Your quest would be to go inside the Labyrinth of the Linked Worlds and get the Heart of Ebony, dont worry, you will not be alone, you will be leading a party of brave heroes of our kingdom, you can personally choose them! ").Centered();
+        instance6.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Thank you  ! Your quest would be to go inside the Labyrinth of the Linked Worlds and get the Heart of Ebony, dont worry, you will not be alone, you will be leading a party of brave heroes of our kingdom, you can personally choose them! ").Centered();
         instance6.AddRow("\n\n\n\n");
         var Stage6 = Menu.LadyElara(GameGui8, instance6);
         AnsiConsole.Write(Stage6);
-        Menu.KeyToContinueCentered();
+        string soundFilePath8 = @"D:\Fabio Project\Elara7.wav"; // Replace with your sound file path
+        Menu.Sound(soundFilePath8, "play");
+        Menu.KeyToContinue();
 
         Console.Clear();
         Console.WriteLine("\n\n\n");
@@ -238,13 +276,22 @@ while (true)
         Menu.KeyToContinue();
 
         Console.Clear();
-        Console.WriteLine("Lord Kaelg> Wake up!, You are now under my command Switcher!!!");
-        Console.WriteLine("\n\n\n");
+        var instance7 = new Table()
+        .Border(TableBorder.Rounded)
+        .BorderColor(Spectre.Console.Color.Gold1);
+        instance7.AddColumn(new TableColumn("")).HideHeaders();
+        instance7.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/] Oh, I see you are awake...  " + nameofP1 + " ! ").Centered();
+        instance7.AddRow("\n\n\n\n");
+        var Stage7 = Menu.LordKaeg(GameGui9, instance7);
+        AnsiConsole.Write(Stage7);
         Menu.KeyToContinue();
+        Console.WriteLine("Lord Kaelg> Wake up!, You are now under my command Traveler!!!");
+        Console.WriteLine("\n\n\n");
+
 
         Console.Clear();
         Console.WriteLine("\n\n\n");
-        Console.WriteLine("Lord Kaelg> If you want to get back to your miserable world you shall first serve me well!!!");
+        Console.WriteLine("Lord Kaelg> I will make this quick, If you want to get back to your miserable world you shall first serve me well!!!");
         Console.WriteLine("\n\n\n");
         Menu.KeyToContinue();
 
@@ -335,7 +382,7 @@ while (true)
             player1party = Hero.DisplayListP1(Player1.Party, $"[blue bold]{nameofP1}'s Party [/]");
             player2party = Hero.DisplayListP2(Player2.Party, $"[red bold]{nameofP2}'s Party [/]");
             Menu.HeroSelection(player1party, HeroesAvalibles, player2party);
-           Hero choice2 = Hero.DisplayList3(player1party, Heroes, player2party, $"[yellow bold]{nameofP1}'s Turn    {Heroes.Count} Heroes Remaining[/]", "p2");
+            Hero choice2 = Hero.DisplayList3(player1party, Heroes, player2party, $"[yellow bold]{nameofP1}'s Turn    {Heroes.Count} Heroes Remaining[/]", "p2");
             if (choice2 != null)
             {
                 Console.Clear();

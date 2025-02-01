@@ -1,11 +1,17 @@
 using System.Net.Security;
 using Spectre.Console;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
+using System.Threading;
+using NAudio.Wave;
 namespace GameObjects
 {
     public class Menu
     {
         public static Table LadyElara(Table gamemenu, Table table)
         {
+
             gamemenu.AddColumn(new TableColumn("")).HideHeaders();
             gamemenu.AddColumn(new TableColumn("")).HideHeaders();
 
@@ -36,6 +42,130 @@ namespace GameObjects
             gamemenu.AddRow(ladyelara, table);
             return gamemenu;
         }
+        public static Table LordKaeg(Table gamemenu, Table table)
+        {
+
+            gamemenu.AddColumn(new TableColumn("")).HideHeaders();
+            gamemenu.AddColumn(new TableColumn("")).HideHeaders();
+
+            var lordkaelg = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Color.Silver);
+            lordkaelg.AddColumn(new TableColumn("[bold #580081]LORD KAELG [/]")).Centered();
+            lordkaelg.AddRow(@"                     .                    ");
+            lordkaelg.AddRow(@"                    / \                   ");
+            lordkaelg.AddRow(@"                   _\ /_                  ");
+            lordkaelg.AddRow(@"         .     .  (,'v`.)  .     .        ");
+            lordkaelg.AddRow(@"         \)   ( )  ,' `.  ( )   (/        ");
+            lordkaelg.AddRow(@"          \`. / `-'     `-' \ ,'/         ");
+            lordkaelg.AddRow(@"           |  _,-'  ,-.  `-._  |          ");
+            lordkaelg.AddRow(@"           |,' ( )__`-'__( ) `.|          ");
+            lordkaelg.AddRow(@"           (|,-,'-._   _.-`.-.|)          ");
+            lordkaelg.AddRow(@"           /  /<( o)> <( o)>\  \          ");
+            lordkaelg.AddRow(@"           :  :     | |     :  :          ");
+            lordkaelg.AddRow(@"           |  |     ; :     |  |          ");
+            lordkaelg.AddRow(@"           |  |    (.-.)    |  |          ");
+            lordkaelg.AddRow(@"           |  |  ,' ___ `.  |  |          ");
+            lordkaelg.AddRow(@"           ;  |)/ ,'---'. \(|  :          ");
+            lordkaelg.AddRow(@"       _,-/   |/\(       )/\|   \-._      ");
+            lordkaelg.AddRow(@" _..--'.-(    |   `-'''-'   |    )-.`--.._");
+            lordkaelg.AddRow(@"         `.  ;`._________,':  ,'          ");
+            lordkaelg.AddRow(@"         ,' `/               \'`.         ");
+            gamemenu.AddRow(lordkaelg, table);
+            return gamemenu;
+        }
+
+        public static void Sound(string soundFilePath, string action)
+        {
+            if (!File.Exists(soundFilePath))
+            {
+                Console.WriteLine("Sound file not found!");
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                if (action == "play")
+                {
+                    // Use NAudio for Windows
+                    PlaySoundWindows(soundFilePath);
+                }
+                else if (action == "playloop")
+                {
+                    // Use paplay for Linux
+                    Thread audioThread = new Thread(() => PlaySoundLoopWindows(soundFilePath));
+                    audioThread.Start();
+                }
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                if (action == "play")
+                {
+                    // Use paplay for Linux
+                    PlaySoundLinux(soundFilePath);
+                }
+                else if (action == "playloop")
+                {
+                    // Use paplay for Linux
+                }
+            }
+            else
+            {
+                Console.WriteLine("Unsupported platform.");
+            }
+            static void PlaySoundWindows(string filePath)
+            {
+                using (var audioFile = new AudioFileReader(filePath))
+                using (var outputDevice = new WaveOutEvent())
+                {
+                    outputDevice.Init(audioFile);
+                    outputDevice.Play();
+                    while (outputDevice.PlaybackState == PlaybackState.Playing)
+                    {
+                        System.Threading.Thread.Sleep(1000);
+                    }
+                }
+            }
+            static void PlaySoundLinux(string filePath)
+            {
+                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    FileName = "paplay",
+                    Arguments = filePath,
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using (Process process = Process.Start(psi))
+                {
+                     process.WaitForExit();
+                }
+            }
+            //Loops
+            static void PlaySoundLoopWindows(string filePath)
+            {
+                while (Player.inmainmenu)
+                {
+                    using(var audioFile = new AudioFileReader(filePath))
+                    using(var outputDevice = new WaveOutEvent())
+                    {
+                        outputDevice.Init(audioFile);
+                        outputDevice.Play();
+                        while (outputDevice.PlaybackState == PlaybackState.Playing)
+                        {
+                            if(!Player.inmainmenu)
+                            {
+                               outputDevice.Stop();
+                               break;
+                            }
+                            Thread.Sleep(100);
+                        }
+                    }
+                }
+            }
+
+        }
+
         public static void HeroDialogue(Hero hero, string s)
         {
             var dialogue = new Table()

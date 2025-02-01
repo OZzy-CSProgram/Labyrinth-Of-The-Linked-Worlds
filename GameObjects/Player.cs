@@ -4,6 +4,7 @@ namespace GameObjects
 {
     public class Player
     {
+        public static bool inmainmenu = true;
         public static bool play = true;
         public static bool exit = false;
         public bool turn;
