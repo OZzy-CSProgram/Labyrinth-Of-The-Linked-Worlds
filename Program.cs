@@ -42,6 +42,15 @@ while (true)
     var GameGui9 = new Table()
     .Border(TableBorder.Heavy)
     .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    var GameGui10 = new Table()
+   .Border(TableBorder.Heavy)
+   .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    var GameGui11 = new Table()
+    .Border(TableBorder.Heavy)
+    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    var GameGui12 = new Table()
+    .Border(TableBorder.Heavy)
+    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
 
 
     Menu.GetMainMenu(GameGui1);
@@ -85,21 +94,21 @@ while (true)
         Console.WriteLine("Letsss goooo!!!");
         var letsgo = Menu.CreateTable("[bold #c159ff]" + @"  _    ___ _____ _ ___    ___  ___  _ " + "\n" + @" | |  | __|_   _( ) __|  / __|/ _ \| |" + "\n" + @" | |__| _|  | | |/\__ \ | (_ | (_) |_|" + "\n" + @" |____|___| |_|   |___/  \___|\___/(_)" + "\n" + "[/]");
         AnsiConsole.Write(letsgo);
-        
+
         Menu.KeyToContinue();
-        Player.inmainmenu= true;
+        Player.inmainmenu = true;
         string soundFilePath3 = "ElaraVibes.wav"; // Replace with your sound file path
         Menu.Sound(soundFilePath3, "playloop");
-        
-        
-        
+
+
+
         Console.Clear();
         Console.WriteLine("\n\n\n");
 
 
 
         Player Player1 = new Player();
-        
+
         //Phase 1
         var ForP1 = Menu.CreateTable("[bold]FOR THE PLAYER 1[/]\n\n (The Player 1 should be the one playing, at this current time!)");
         AnsiConsole.Write(ForP1);
@@ -152,7 +161,7 @@ while (true)
         AnsiConsole.Write(Stage2);
         string soundFilePath4 = "Elara3.wav"; // Replace with your sound file path
         Menu.Sound(soundFilePath4, "play");
-        
+
         Menu.KeyToContinue();
 
         Console.Clear();
@@ -280,25 +289,51 @@ while (true)
         .Border(TableBorder.Rounded)
         .BorderColor(Spectre.Console.Color.Gold1);
         instance7.AddColumn(new TableColumn("")).HideHeaders();
-        instance7.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/] Oh, I see you are awake...  " + nameofP1 + " ! ").Centered();
+        instance7.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/] Oh, I see you are awake...   ! ").Centered();
         instance7.AddRow("\n\n\n\n");
         var Stage7 = Menu.LordKaeg(GameGui9, instance7);
         AnsiConsole.Write(Stage7);
-        Menu.KeyToContinue();
-        Console.WriteLine("Lord Kaelg> Wake up!, You are now under my command Traveler!!!");
-        Console.WriteLine("\n\n\n");
-
-
-        Console.Clear();
-        Console.WriteLine("\n\n\n");
-        Console.WriteLine("Lord Kaelg> I will make this quick, If you want to get back to your miserable world you shall first serve me well!!!");
-        Console.WriteLine("\n\n\n");
+        string soundFilePath9 = "K1.wav"; // Replace with your sound file path
+        Menu.Sound(soundFilePath9, "play");
         Menu.KeyToContinue();
 
         Console.Clear();
-        Console.WriteLine("\n\n\n");
-        Console.WriteLine("Lord Kaelg> Tell me what your name is!!!");
-        Console.WriteLine("\n\n\n");
+        var instance8 = new Table()
+        .Border(TableBorder.Rounded)
+        .BorderColor(Spectre.Console.Color.Gold1);
+        instance8.AddColumn(new TableColumn("")).HideHeaders();
+        instance8.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/] Well let me inform you, you are now under my command, Traveler   ! ...").Centered();
+        instance8.AddRow("\n\n\n\n");
+        var Stage8 = Menu.LordKaeg(GameGui10, instance8);
+        AnsiConsole.Write(Stage8);
+        string soundFilePath10 = "K2.wav"; // Replace with your sound file path
+        Menu.Sound(soundFilePath10, "play");
+        Menu.KeyToContinue();
+
+        Console.Clear();
+        var instance9 = new Table()
+        .Border(TableBorder.Rounded)
+        .BorderColor(Spectre.Console.Color.Gold1);
+        instance9.AddColumn(new TableColumn("")).HideHeaders();
+        instance9.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/]  My apologies, I didn't meant to talk like that, but we have summoned you!,\n If you want to get back to your world you shall first serve me well!!!").Centered();
+        instance9.AddRow("\n\n\n\n");
+        var Stage9 = Menu.LordKaeg(GameGui11, instance9);
+        AnsiConsole.Write(Stage9);
+        string soundFilePath11 = "K3.wav"; // Replace with your sound file path
+        Menu.Sound(soundFilePath11, "play");
+        Menu.KeyToContinue();
+
+        Console.Clear();
+        var instance10 = new Table()
+        .Border(TableBorder.Rounded)
+        .BorderColor(Spectre.Console.Color.Gold1);
+        instance10.AddColumn(new TableColumn("")).HideHeaders();
+        instance10.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/] Now tell me what your name is!").Centered();
+        instance10.AddRow("\n\n\n\n");
+        var Stage10 = Menu.LordKaeg(GameGui12, instance10);
+        AnsiConsole.Write(Stage10);
+        string soundFilePath12 = "K4.wav"; // Replace with your sound file path
+        Menu.Sound(soundFilePath12, "play");
         Menu.KeyToContinue();
 
         Console.Clear();
@@ -321,6 +356,9 @@ while (true)
 
         var mapprinted = Maze.PrintMaze(map, "  Generated Map !");
         AnsiConsole.Write(mapprinted);
+
+
+
         Player.inmainmenu = false;
         Menu.KeyToContinue();
         Player.inmainmenu = true;
