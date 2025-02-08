@@ -142,7 +142,7 @@ namespace GameObjects
 
                 using (Process process = Process.Start(psi))
                 {
-                     process.WaitForExit();
+                    process.WaitForExit();
                 }
             }
             //Loops
@@ -150,17 +150,17 @@ namespace GameObjects
             {
                 while (Player.inmainmenu)
                 {
-                    using(var audioFile = new AudioFileReader(filePath))
-                    using(var outputDevice = new WaveOutEvent())
+                    using (var audioFile = new AudioFileReader(filePath))
+                    using (var outputDevice = new WaveOutEvent())
                     {
                         outputDevice.Init(audioFile);
                         outputDevice.Play();
                         while (outputDevice.PlaybackState == PlaybackState.Playing)
                         {
-                            if(!Player.inmainmenu)
+                            if (!Player.inmainmenu)
                             {
-                               outputDevice.Stop();
-                               break;
+                                outputDevice.Stop();
+                                break;
                             }
                             Thread.Sleep(100);
                         }
@@ -223,6 +223,27 @@ namespace GameObjects
             AnsiConsole.Write(table);
             Console.ReadKey(true);
 
+        }
+        public static ConsoleKeyInfo KeyAction()
+        {
+            var table = new Table()
+            .RoundedBorder();
+            table.AddColumn(new TableColumn("[#91e4f2]| Press a key to continue |     | Tab to skip | [/]").Centered());
+            AnsiConsole.Write(table);
+            ConsoleKeyInfo action = Console.ReadKey(true);
+            return action;
+
+        }
+        public static bool CheckSkip(ConsoleKeyInfo action)
+        {
+            if (action.Key == ConsoleKey.Tab)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static void HeroSelection(Table a, Table b, Table c)
         {

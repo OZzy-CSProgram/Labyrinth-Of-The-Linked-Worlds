@@ -20,46 +20,46 @@ while (true)
     .BorderColor(Spectre.Console.Color.DeepSkyBlue3);
     var GameGui2 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    .BorderColor(Spectre.Console.Color.Blue);
     var GameGui3 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    .BorderColor(Spectre.Console.Color.Blue);
     var GameGui4 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    .BorderColor(Spectre.Console.Color.Blue);
     var GameGui5 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    .BorderColor(Spectre.Console.Color.Blue);
     var GameGui6 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    .BorderColor(Spectre.Console.Color.Blue);
     var GameGui7 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    .BorderColor(Spectre.Console.Color.Blue);
     var GameGui8 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    .BorderColor(Spectre.Console.Color.Blue);
     var GameGui9 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    .BorderColor(Spectre.Console.Color.OrangeRed1);
     var GameGui10 = new Table()
    .Border(TableBorder.Heavy)
-   .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+   .BorderColor(Spectre.Console.Color.OrangeRed1);
     var GameGui11 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    .BorderColor(Spectre.Console.Color.OrangeRed1);
     var GameGui12 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    .BorderColor(Spectre.Console.Color.OrangeRed1);
     var GameGui13 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    .BorderColor(Spectre.Console.Color.OrangeRed1);
     var GameGui14 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    .BorderColor(Spectre.Console.Color.OrangeRed1);
     var GameGui15 = new Table()
     .Border(TableBorder.Heavy)
-    .BorderColor(Spectre.Console.Color.DarkGoldenrod);
+    .BorderColor(Spectre.Console.Color.OrangeRed1);
 
 
     Menu.GetMainMenu(GameGui1);
@@ -117,49 +117,67 @@ while (true)
 
 
         Player Player1 = new Player();
-
-        //Phase 1
-        var ForP1 = Menu.CreateTable("[bold]FOR THE PLAYER 1[/]\n\n (The Player 1 should be the one playing, at this current time!)");
-        AnsiConsole.Write(ForP1);
-        Console.WriteLine("\n\n\n");
+        while (true)
+        {
 
 
-        Menu.KeyToContinue();
+            //Phase 1
+            var ForP1 = Menu.CreateTable("[bold]FOR THE PLAYER 1[/]\n\n (The Player 1 should be the one playing, at this current time!)");
+            AnsiConsole.Write(ForP1);
+            Console.WriteLine("\n\n\n");
 
+
+            if (Menu.CheckSkip(Menu.KeyAction()))
+            {
+                Console.Clear();
+                Player1.skipselected = true;
+                break;
+            }
+
+            Console.Clear();
+            Console.WriteLine("\n\n\n");
+
+            //Roleplay
+            var RoleP11 = Menu.CreateTable("(you wake up in a stranger place!)");
+            AnsiConsole.Write(RoleP11);
+
+
+
+            Console.WriteLine("\n\n\n");
+            if (Menu.CheckSkip(Menu.KeyAction()))
+            {
+                Console.Clear();
+                Player1.skipselected = true;
+                break;
+            }
+
+            Console.Clear();
+            Console.WriteLine("\n\n\n");
+
+            //More Roleplay
+
+            var instance1 = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Spectre.Console.Color.Gold1);
+            instance1.AddColumn(new TableColumn("")).HideHeaders();
+            instance1.AddRow("[bold green]Lady Elara [/] [yellow]>[/] We have been waiting for you warrior!").Centered();
+            instance1.AddRow("\n\n\n");
+
+            var Stage1 = Menu.LadyElara(GameGui2, instance1);
+            AnsiConsole.Write(Stage1);
+            string soundFilePath = "elara2.wav"; // Replace with your sound file path
+            Menu.Sound(soundFilePath, "play");
+
+            if (Menu.CheckSkip(Menu.KeyAction()))
+            {
+                Console.Clear();
+                Player1.skipselected = true;
+                break;
+            }
+
+            break;
+        }
         Console.Clear();
-        Console.WriteLine("\n\n\n");
-
-        //Roleplay
-        var RoleP11 = Menu.CreateTable("(you wake up in a stranger place!)");
-        AnsiConsole.Write(RoleP11);
-
-
-
-        Console.WriteLine("\n\n\n");
-        Menu.KeyToContinue();
-
-        Console.Clear();
-        Console.WriteLine("\n\n\n");
-
-        //More Roleplay
-
-        var instance1 = new Table()
-        .Border(TableBorder.Rounded)
-        .BorderColor(Spectre.Console.Color.Gold1);
-        instance1.AddColumn(new TableColumn("")).HideHeaders();
-        instance1.AddRow("[bold green]Lady Elara [/] [yellow]>[/] We have been waiting for you warrior!").Centered();
-        instance1.AddRow("\n\n\n");
-
-        var Stage1 = Menu.LadyElara(GameGui2, instance1);
-        AnsiConsole.Write(Stage1);
-        string soundFilePath = "elara2.wav"; // Replace with your sound file path
-        Menu.Sound(soundFilePath, "play");
-
-        Menu.KeyToContinue();
-
-        Console.Clear();
-
-
         var instance2 = new Table()
         .Border(TableBorder.Rounded)
         .BorderColor(Spectre.Console.Color.Gold1);
@@ -182,157 +200,186 @@ while (true)
         Console.WriteLine("\n\n\n");
         Console.WriteLine("\n\n\n");
         Menu.KeyToContinue();
-
         Console.Clear();
-        var instance3 = new Table()
-        .Border(TableBorder.Rounded)
-        .BorderColor(Spectre.Console.Color.Gold1);
-        instance3.AddColumn(new TableColumn("")).HideHeaders();
-        instance3.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Greetings, we have summoned you, from your world because we need your help!").Centered();
-        instance3.AddRow("\n\n\n");
-        var Stage3 = Menu.LadyElara(GameGui4, instance3);
-        AnsiConsole.Write(Stage3);
-        string soundFilePath5 = "Elara4.wav"; // Replace with your sound file path
-        Menu.Sound(soundFilePath5, "play");
-        Menu.KeyToContinue();
-
-        Console.Clear();
-        var instance4 = new Table()
-        .Border(TableBorder.Rounded)
-        .BorderColor(Spectre.Console.Color.Gold1);
-        instance4.AddColumn(new TableColumn("")).HideHeaders();
-        instance4.AddRow("[bold green]Lady Elara [/] [yellow]>[/] I have had a vision of a future where darkness consumes all of my world,\nI have seen in my visions that the only way to stop the darkness from spreading\n is by using an ancient and lost artifact called The Heart of Ebony... \n \n\nA group of our elder mages has discover that this artifact lays in a dangerous place called \n'The Labyrinth of The Linked Worlds' So... Can you help us ?").Centered();
-        instance4.AddRow("\n\n");
-        instance4.AddRow("(   Choose your answer   )").Centered();
-        instance4.AddRow("\n\n");
-        instance4.AddRow("[bold red]1[/] Why me?").Centered();
-        instance4.AddRow("[bold red]2[/] What exactly do you want me to do!").Centered();
-        var Stage4 = Menu.LadyElara(GameGui5, instance4);
-        AnsiConsole.Write(Stage4);
-        string soundFilePath6 = "Elara5.wav"; // Replace with your sound file path
-        Menu.Sound(soundFilePath6, "play");
-
-        ConsoleKeyInfo decition2 = Console.ReadKey(true);
-        while (decition2.KeyChar != '2' && decition2.KeyChar != '1')
+        while (!Player1.skipselected)// Not selected the option of skip this
         {
             Console.Clear();
-
-            Console.WriteLine("thats not a valid answer)");
-            Console.WriteLine("\n\n\n");
-            Menu.KeyToContinue();
-
-            Console.Clear();
-            Console.WriteLine("\n\n\n\n\n\n");
-            AnsiConsole.Write(Stage4);
-            decition2 = Console.ReadKey(true);
-
-            if (decition2.KeyChar == '2' || decition2.KeyChar == '1')
-            {
-                break;
-            }
-        }
-
-        while (decition2.KeyChar == '1')
-        {
-            Console.Clear();
-            var instance5 = new Table()
+            var instance3 = new Table()
             .Border(TableBorder.Rounded)
             .BorderColor(Spectre.Console.Color.Gold1);
-            instance5.AddColumn(new TableColumn("")).HideHeaders();
-            instance5.AddRow("[bold green]Lady Elara [/] [yellow]>[/] I understand the question ,there is a prophecy about this labyrinth that says \n'Nobody in this world shall carry the Heart of Ebony out of the Labyrinth',\n and so we have decided to summon someone from another world to help us!\n \n... Can you?").Centered();
-            instance5.AddRow("\n\n");
-            instance5.AddRow("(   Choose your answer   )").Centered();
-            instance5.AddRow("\n\n");
-            instance5.AddRow("[bold red]2[/] What exactly do you want me to do!").Centered();
-            var Stage5 = Menu.LadyElara(GameGui7, instance5);
-            AnsiConsole.Write(Stage5);
-            string soundFilePath7 = "Elara6.wav"; // Replace with your sound file path
-            Menu.Sound(soundFilePath7, "play");
-            decition2 = Console.ReadKey(true);
-
-            while (decition2.KeyChar != '2')
+            instance3.AddColumn(new TableColumn("")).HideHeaders();
+            instance3.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Greetings, we have summoned you, from your world because we need your help!").Centered();
+            instance3.AddRow("\n\n\n");
+            var Stage3 = Menu.LadyElara(GameGui4, instance3);
+            AnsiConsole.Write(Stage3);
+            string soundFilePath5 = "Elara4.wav"; // Replace with your sound file path
+            Menu.Sound(soundFilePath5, "play");
+            if (Menu.CheckSkip(Menu.KeyAction()))
             {
                 Console.Clear();
-                Console.WriteLine("\n\n\n");
-                Console.WriteLine("(thats not a valid answer)");
+                Player1.skipselected = true;
+                break;
+            }
+
+            Console.Clear();
+            var instance4 = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Spectre.Console.Color.Gold1);
+            instance4.AddColumn(new TableColumn("")).HideHeaders();
+            instance4.AddRow("[bold green]Lady Elara [/] [yellow]>[/] I have had a vision of a future where darkness consumes all of my world,\nI have seen in my visions that the only way to stop the darkness from spreading\n is by using an ancient and lost artifact called The Heart of Ebony... \n \n\nA group of our elder mages has discover that this artifact lays in a dangerous place called \n'The Labyrinth of The Linked Worlds' So... Can you help us ?").Centered();
+            instance4.AddRow("\n\n");
+            instance4.AddRow("(   Choose your answer   )").Centered();
+            instance4.AddRow("\n\n");
+            instance4.AddRow("[bold red]1[/] Why me?").Centered();
+            instance4.AddRow("[bold red]2[/] What exactly do you want me to do!").Centered();
+            var Stage4 = Menu.LadyElara(GameGui5, instance4);
+            AnsiConsole.Write(Stage4);
+            string soundFilePath6 = "Elara5.wav"; // Replace with your sound file path
+            Menu.Sound(soundFilePath6, "play");
+
+            ConsoleKeyInfo decition2 = Console.ReadKey(true);
+            while (decition2.KeyChar != '2' && decition2.KeyChar != '1')
+            {
+                Console.Clear();
+
+                Console.WriteLine("thats not a valid answer)");
                 Console.WriteLine("\n\n\n");
                 Menu.KeyToContinue();
 
                 Console.Clear();
-                AnsiConsole.Write(Stage5);
+                Console.WriteLine("\n\n\n\n\n\n");
+                AnsiConsole.Write(Stage4);
                 decition2 = Console.ReadKey(true);
 
-                if (decition2.KeyChar == '2')
+                if (decition2.KeyChar == '2' || decition2.KeyChar == '1')
                 {
                     break;
                 }
             }
 
+            while (decition2.KeyChar == '1')
+            {
+                Console.Clear();
+                var instance5 = new Table()
+                .Border(TableBorder.Rounded)
+                .BorderColor(Spectre.Console.Color.Gold1);
+                instance5.AddColumn(new TableColumn("")).HideHeaders();
+                instance5.AddRow("[bold green]Lady Elara [/] [yellow]>[/] I understand the question ,there is a prophecy about this labyrinth that says \n'Nobody in this world shall carry the Heart of Ebony out of the Labyrinth',\n and so we have decided to summon someone from another world to help us!\n \n... Can you?").Centered();
+                instance5.AddRow("\n\n");
+                instance5.AddRow("(   Choose your answer   )").Centered();
+                instance5.AddRow("\n\n");
+                instance5.AddRow("[bold red]2[/] What exactly do you want me to do!").Centered();
+                var Stage5 = Menu.LadyElara(GameGui7, instance5);
+                AnsiConsole.Write(Stage5);
+                string soundFilePath7 = "Elara6.wav"; // Replace with your sound file path
+                Menu.Sound(soundFilePath7, "play");
+                decition2 = Console.ReadKey(true);
+
+                while (decition2.KeyChar != '2')
+                {
+                    Console.Clear();
+                    Console.WriteLine("\n\n\n");
+                    Console.WriteLine("(thats not a valid answer)");
+                    Console.WriteLine("\n\n\n");
+                    Menu.KeyToContinue();
+
+                    Console.Clear();
+                    AnsiConsole.Write(Stage5);
+                    decition2 = Console.ReadKey(true);
+
+                    if (decition2.KeyChar == '2')
+                    {
+                        break;
+                    }
+                }
+
+            }
+
+            Console.Clear();
+            var instance6 = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Spectre.Console.Color.Gold1);
+            instance6.AddColumn(new TableColumn("")).HideHeaders();
+            instance6.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Thank you  ! Your quest would be to go inside the Labyrinth of the Linked Worlds and get\n the Heart of Ebony, dont worry, you will not be alone, you will be leading \na party of brave heroes of our kingdom, you can personally choose them! ").Centered();
+            instance6.AddRow("\n\n\n\n");
+            var Stage6 = Menu.LadyElara(GameGui8, instance6);
+            AnsiConsole.Write(Stage6);
+            string soundFilePath8 = "Elara7.wav"; // Replace with your sound file path
+            Menu.Sound(soundFilePath8, "play");
+            Menu.KeyToContinue();
+
+            Console.Clear();
+            Console.WriteLine("\n\n\n");
+            break;
         }
-
-        Console.Clear();
-        var instance6 = new Table()
-        .Border(TableBorder.Rounded)
-        .BorderColor(Spectre.Console.Color.Gold1);
-        instance6.AddColumn(new TableColumn("")).HideHeaders();
-        instance6.AddRow("[bold green]Lady Elara [/] [yellow]>[/] Thank you  ! Your quest would be to go inside the Labyrinth of the Linked Worlds and get\n the Heart of Ebony, dont worry, you will not be alone, you will be leading \na party of brave heroes of our kingdom, you can personally choose them! ").Centered();
-        instance6.AddRow("\n\n\n\n");
-        var Stage6 = Menu.LadyElara(GameGui8, instance6);
-        AnsiConsole.Write(Stage6);
-        string soundFilePath8 = "Elara7.wav"; // Replace with your sound file path
-        Menu.Sound(soundFilePath8, "play");
-        Menu.KeyToContinue();
-
-        Console.Clear();
-        Console.WriteLine("\n\n\n");
-
         //Phase 2
         Player Player2 = new Player();
-        var ForP2 = Menu.CreateTable("[bold]FOR THE PLAYER 2[/]\n\n (The Player 2 should be the one playing, at this current time!)");
-        AnsiConsole.Write(ForP2);
-        Console.WriteLine("\n\n\n");
-        Menu.KeyToContinue();
+        while (true)
+        {
 
-        Console.Clear();
-        var instance7 = new Table()
-        .Border(TableBorder.Rounded)
-        .BorderColor(Spectre.Console.Color.Gold1);
-        instance7.AddColumn(new TableColumn("")).HideHeaders();
-        instance7.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/] Oh, I see you are awake...   ! ").Centered();
-        instance7.AddRow("\n\n\n\n");
-        var Stage7 = Menu.LordKaeg(GameGui9, instance7);
-        AnsiConsole.Write(Stage7);
-        string soundFilePath9 = "K1.wav"; // Replace with your sound file path
-        Menu.Sound(soundFilePath9, "play");
-        Menu.KeyToContinue();
 
-        Console.Clear();
-        var instance8 = new Table()
-        .Border(TableBorder.Rounded)
-        .BorderColor(Spectre.Console.Color.Gold1);
-        instance8.AddColumn(new TableColumn("")).HideHeaders();
-        instance8.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/] Well let me inform you, you are now under my command, Traveler   ! ...").Centered();
-        instance8.AddRow("\n\n\n\n");
-        var Stage8 = Menu.LordKaeg(GameGui10, instance8);
-        AnsiConsole.Write(Stage8);
-        string soundFilePath10 = "K2.wav"; // Replace with your sound file path
-        Menu.Sound(soundFilePath10, "play");
-        Menu.KeyToContinue();
+            var ForP2 = Menu.CreateTable("[bold]FOR THE PLAYER 2[/]\n\n (The Player 2 should be the one playing, at this current time!)");
+            AnsiConsole.Write(ForP2);
+            Console.WriteLine("\n\n\n");
+            if (Menu.CheckSkip(Menu.KeyAction()))
+            {
+                Console.Clear();
+                Player2.skipselected = true;
+                break;
+            }
 
-        Console.Clear();
-        var instance9 = new Table()
-        .Border(TableBorder.Rounded)
-        .BorderColor(Spectre.Console.Color.Gold1);
-        instance9.AddColumn(new TableColumn("")).HideHeaders();
-        instance9.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/]  My apologies, I didn't meant to talk like that, but we have summoned you!,\n If you want to get back to your world you shall first serve me well!!!").Centered();
-        instance9.AddRow("\n\n\n\n");
-        var Stage9 = Menu.LordKaeg(GameGui11, instance9);
-        AnsiConsole.Write(Stage9);
-        string soundFilePath11 = "K3.wav"; // Replace with your sound file path
-        Menu.Sound(soundFilePath11, "play");
-        Menu.KeyToContinue();
+            Console.Clear();
+            var instance7 = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Spectre.Console.Color.Gold1);
+            instance7.AddColumn(new TableColumn("")).HideHeaders();
+            instance7.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/] Oh, I see you are awake...   ! ").Centered();
+            instance7.AddRow("\n\n\n\n");
+            var Stage7 = Menu.LordKaeg(GameGui9, instance7);
+            AnsiConsole.Write(Stage7);
+            string soundFilePath9 = "K1.wav"; // Replace with your sound file path
+            Menu.Sound(soundFilePath9, "play");
+            if (Menu.CheckSkip(Menu.KeyAction()))
+            {
+                Console.Clear();
+                Player2.skipselected = true;
+                break;
+            }
 
-        Console.Clear();
+            Console.Clear();
+            var instance8 = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Spectre.Console.Color.Gold1);
+            instance8.AddColumn(new TableColumn("")).HideHeaders();
+            instance8.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/] Well let me inform you, you are now under my command, Traveler   ! ...").Centered();
+            instance8.AddRow("\n\n\n\n");
+            var Stage8 = Menu.LordKaeg(GameGui10, instance8);
+            AnsiConsole.Write(Stage8);
+            string soundFilePath10 = "K2.wav"; // Replace with your sound file path
+            Menu.Sound(soundFilePath10, "play");
+            if (Menu.CheckSkip(Menu.KeyAction()))
+            {
+                Console.Clear();
+                Player2.skipselected = true;
+                break;
+            }
+
+            Console.Clear();
+            var instance9 = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Spectre.Console.Color.Gold1);
+            instance9.AddColumn(new TableColumn("")).HideHeaders();
+            instance9.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/]  My apologies, I didn't meant to talk like that, but we have summoned you!,\n If you want to get back to your world you shall first serve me well!!!").Centered();
+            instance9.AddRow("\n\n\n\n");
+            var Stage9 = Menu.LordKaeg(GameGui11, instance9);
+            AnsiConsole.Write(Stage9);
+            string soundFilePath11 = "K3.wav"; // Replace with your sound file path
+            Menu.Sound(soundFilePath11, "play");
+            Menu.KeyToContinue();
+
+            Console.Clear();
+            break;
+        }
         var instance10 = new Table()
         .Border(TableBorder.Rounded)
         .BorderColor(Spectre.Console.Color.Gold1);
@@ -355,44 +402,59 @@ while (true)
         Menu.KeyToContinue();
 
         Console.Clear();
-        var instance11 = new Table()
-        .Border(TableBorder.Rounded)
-        .BorderColor(Spectre.Console.Color.Gold1);
-        instance11.AddColumn(new TableColumn("")).HideHeaders();
-        instance11.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/] Alright, Listen. I have been informed that my adversaries have summoned yet\n another Traveler to guide a host directly to a Labyrinth wherein lies a device capable of ruining my nefarious plan!\n\n\nI shall not remain with arms crossed, witnessing how they thwart my plans before my very eyes!").Centered();
-        instance11.AddRow("\n\n\n\n");
-        var Stage11 = Menu.LordKaeg(GameGui13, instance11);
-        AnsiConsole.Write(Stage11);
-        string soundFilePath13 = "K5.wav"; // Replace with your sound file path
-        Menu.Sound(soundFilePath13, "play");
-        Menu.KeyToContinue();
+        while (!Player2.skipselected)
+        {
 
-        Console.Clear();
-        var instance12 = new Table()
-        .Border(TableBorder.Rounded)
-        .BorderColor(Spectre.Console.Color.Gold1);
-        instance12.AddColumn(new TableColumn("")).HideHeaders();
-        instance12.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/]  That is where you come into play; your objective shall be to obtain\n the aforementioned artifact before they do. Will you be able to accomplish this?").Centered();
-        instance12.AddRow("\n\n\n\n");
-        var Stage12 = Menu.LordKaeg(GameGui14, instance12);
-        AnsiConsole.Write(Stage12);
-        string soundFilePath14 = "K6.wav"; // Replace with your sound file path
-        Menu.Sound(soundFilePath14, "play");
-        Menu.KeyToContinue();
 
-        Console.Clear();
-        var instance13 = new Table()
-        .Border(TableBorder.Rounded)
-        .BorderColor(Spectre.Console.Color.Gold1);
-        instance13.AddColumn(new TableColumn("")).HideHeaders();
-        instance13.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/]  'Tis decided then, good luck in the mision!").Centered();
-        instance13.AddRow("\n\n\n\n");
-        var Stage13 = Menu.LordKaeg(GameGui15, instance13);
-        AnsiConsole.Write(Stage13);
-        string soundFilePath15 = "K7.wav"; // Replace with your sound file path
-        Menu.Sound(soundFilePath15, "play");
-        Menu.KeyToContinue();
+            var instance11 = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Spectre.Console.Color.Gold1);
+            instance11.AddColumn(new TableColumn("")).HideHeaders();
+            instance11.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/] Alright, Listen. I have been informed that my adversaries have summoned yet\n another Traveler to guide a host directly to a Labyrinth wherein lies a device capable of ruining my nefarious plan!\n\n\nI shall not remain with arms crossed, witnessing how they thwart my plans before my very eyes!").Centered();
+            instance11.AddRow("\n\n\n\n");
+            var Stage11 = Menu.LordKaeg(GameGui13, instance11);
+            AnsiConsole.Write(Stage11);
+            string soundFilePath13 = "K5.wav"; // Replace with your sound file path
+            Menu.Sound(soundFilePath13, "play");
+            if (Menu.CheckSkip(Menu.KeyAction()))
+            {
+                Console.Clear();
+                Player2.skipselected = true;
+                break;
+            }
 
+            Console.Clear();
+            var instance12 = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Spectre.Console.Color.Gold1);
+            instance12.AddColumn(new TableColumn("")).HideHeaders();
+            instance12.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/]  That is where you come into play; your objective shall be to obtain\n the aforementioned artifact before they do. Will you be able to accomplish this?").Centered();
+            instance12.AddRow("\n\n\n\n");
+            var Stage12 = Menu.LordKaeg(GameGui14, instance12);
+            AnsiConsole.Write(Stage12);
+            string soundFilePath14 = "K6.wav"; // Replace with your sound file path
+            Menu.Sound(soundFilePath14, "play");
+            if (Menu.CheckSkip(Menu.KeyAction()))
+            {
+                Console.Clear();
+                Player2.skipselected = true;
+                break;
+            }
+
+            Console.Clear();
+            var instance13 = new Table()
+            .Border(TableBorder.Rounded)
+            .BorderColor(Spectre.Console.Color.Gold1);
+            instance13.AddColumn(new TableColumn("")).HideHeaders();
+            instance13.AddRow("[bold #580081]Lord Kaelg [/] [yellow]>[/]  'Tis decided then, good luck in the mision!").Centered();
+            instance13.AddRow("\n\n\n\n");
+            var Stage13 = Menu.LordKaeg(GameGui15, instance13);
+            AnsiConsole.Write(Stage13);
+            string soundFilePath15 = "K7.wav"; // Replace with your sound file path
+            Menu.Sound(soundFilePath15, "play");
+            Menu.KeyToContinue();
+            break;
+        }
         Console.Clear();
         //// MAP GENERATION
         Console.Clear();
@@ -421,17 +483,17 @@ while (true)
         Console.WriteLine("\n\n\n");
         Menu.KeyToContinue();
         List<Hero> Heroes = new List<Hero>();
-        Teleporter Mediv = new Teleporter(11, "🧙🏻‍♂️", "Mediv The Guardian", "A powerfull mage with the magical power \n of teleporting to a random position in the maze!", /*health*/10, /*attack*/6, /*speed*/1, /*mana*/0, /*superreq*/8, /*toughness*/ 35, map);            ///Mage
+        Teleporter Mediv = new Teleporter(11, "🧙🏻‍♂️", "Mediv The Guardian", "A powerfull mage with the magical power \n of teleporting to a random position in the maze!", /*health*/10, /*attack*/6, /*speed*/1, /*mana*/0, /*superreq*/4, /*toughness*/ 35, map);            ///Mage
         Heroes.Add(Mediv);
-        WallBreaker Eledron = new WallBreaker(13, "👳‍♂️", "Eledron The WallBreaker", "A strong Dwarv with a big Hammer\n He has got the ability to break walls!",  /*health*/16, /*attack*/4, /*speed*/1, /*mana*/0, /*superreq*/10, /*toughness*/45, map);                    //Wallbreaker
+        WallBreaker Eledron = new WallBreaker(13, "👳‍♂️", "Eledron The WallBreaker", "A strong Dwarv with a big Hammer\n He has got the ability to break walls!",  /*health*/16, /*attack*/4, /*speed*/1, /*mana*/0, /*superreq*/5, /*toughness*/45, map);                    //Wallbreaker
         Heroes.Add(Eledron);
-        Jumper Monkinho = new Jumper(15, "🐵", "Monkinho The Jumper", "A monkey with the ability to jump 3 cells \n in front of him, but obstacles can interrupt his jump!", /*health*/12, /*attack*/5, /*speed*/1, /*mana*/0, /*superreq*/6, /*toughness*/25, map);         //Monkey
+        Jumper Monkinho = new Jumper(15, "🐵", "Monkinho The Jumper", "A monkey with the amazing ability of\n jumping throught a walls \n ", /*health*/12, /*attack*/5, /*speed*/1, /*mana*/0, /*superreq*/3, /*toughness*/25, map);         //Monkey
         Heroes.Add(Monkinho);
-        Switcher Warlus = new Switcher(17, "🧞", "Warlus The Genius", "A Genius with the great power of,\n switching position with an enemy hero selected!", /*health*/10, /*attack*/5, /*speed*/1, /*mana*/0, /*superreq*/8,/*toughness*/30, map);                       ///switcher
+        Switcher Warlus = new Switcher(17, "🧞", "Warlus The Genius", "A Genius with the great power of,\n switching position with an enemy hero selected!", /*health*/10, /*attack*/5, /*speed*/1, /*mana*/0, /*superreq*/4,/*toughness*/30, map);                       ///switcher
         Heroes.Add(Warlus);
-        Witcher Galia = new Witcher(19, "👹", "Galia The Witch", "A tenebrous witch with the dangerous power,\n of paralyzing the enemy hero selected!", /*health*/9, /*attack*/7, /*speed*/1, /*mana*/0, /*superreq*/10,/*toughness*/15, map);                              ///witch
+        Witcher Galia = new Witcher(19, "👹", "Galia The Witch", "A tenebrous witch with the dangerous power,\n of paralyzing the enemy hero selected!", /*health*/9, /*attack*/7, /*speed*/1, /*mana*/0, /*superreq*/6,/*toughness*/15, map);                              ///witch
         Heroes.Add(Galia);
-        Manner Elymnis = new Manner(21, "👽", "Elymnis The Creator", "One of the first mages that used mana,\nas a supply of energy, she can remove 3 points\nof mana to the selected enemy hero and transfer it\nto a random player in the host!", /*health*/13, /*attack*/4, /*speed*/1, /*mana*/0, /*superreq*/8, /*toughness*/20, map);
+        Manner Elymnis = new Manner(21, "👽", "Elymnis The Creator", "One of the first mages that used mana,\nas a supply of energy, she can remove 3 points\nof mana to the selected enemy hero and transfer it\nto a random player in the host!", /*health*/13, /*attack*/4, /*speed*/1, /*mana*/0, /*superreq*/4, /*toughness*/20, map);
         Heroes.Add(Elymnis);
         HeroSelectionTable.Centered();
         var menu = new Table();

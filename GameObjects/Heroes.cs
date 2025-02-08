@@ -779,7 +779,7 @@ namespace GameObjects
                 table1.AddColumn("[bold #ff7400] " + (i + 1) + "[/][yellow] >>[/]  [black]  " + list[i].icon + " [/] [bold]" + list[i].name + "[/]  ");
                 table1.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
                 table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
-                table1.AddRow(" 💙 [bold] Max Mana[/] >  20");
+                table1.AddRow(" 💙 [bold] Max Mana[/] >  " + list[i].cooldown);
                 table1.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
                 table1.AddRow(" 👢 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
                 table1.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
@@ -803,7 +803,7 @@ namespace GameObjects
                 table1.AddColumn("[bold #ff7400] " + (i + 1) + "[/][yellow] >>[/]  [black]  " + list[i].icon + " [/] [bold]" + list[i].name + "[/]  ");
                 table1.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
                 table1.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
-                table1.AddRow(" 💙 [bold] Max Mana[/] >  20");
+                table1.AddRow(" 💙 [bold] Max Mana[/] >  " + list[i].cooldown);
                 table1.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
                 table1.AddRow(" 👢 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
                 table1.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
@@ -820,7 +820,7 @@ namespace GameObjects
             for (int i = 0; i < limit; i++)
             {
 
-                if (i == (limit - 1) / 2)
+                if (i == (limit - 1) / 2)// is in the middle
                 {
                     var table1 = new Table();
                     table1.Border(TableBorder.Heavy);
@@ -829,7 +829,7 @@ namespace GameObjects
                     table2.AddColumn(list[i].icon + " [bold]" + list[i].name + "[/]  ");
                     table2.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
                     table2.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
-                    table2.AddRow(" 💙 [bold] Max Mana[/] >  20");
+                    table2.AddRow(" 💙 [bold] Max Mana[/] >  " + list[i].cooldown);
                     table2.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
                     table2.AddRow(" 👢 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
                     table2.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
@@ -837,18 +837,18 @@ namespace GameObjects
                     table2.BorderColor(Color.DarkGoldenrod);
                     table.AddRow(table1);
                 }
-                else
+                else// is not in the middle
                 {
                     var table1 = new Table();
                     table1.NoBorder();
                     var table2 = new Table();
-                    table2.AddColumn(list[i].icon + " [bold]" + list[i].name + "[/]  ");
-                    table2.AddRow(" 📜 [bold]Info  [/]   >  " + list[i].info);
-                    table2.AddRow(" 💗 [bold]Health[/]    >  " + list[i].health);
-                    table2.AddRow(" 💙 [bold] Max Mana[/] >  20");
-                    table2.AddRow(" 🔪 [bold]Attack[/]   >  " + list[i].attack);
-                    table2.AddRow(" 👢 [bold #e9e9e9]Speed[/]   >  " + list[i].speed);
-                    table2.AddRow(" 💠 [bold]Super Requirements[/] > Mana " + list[i].cooldown + "💙");
+                    table2.AddColumn(list[i].icon + " [bold #a4a4a4]" + list[i].name + "[/]  ");
+                    table2.AddRow(" 📜 [bold #858585]Info  [/]  [#706f6f] >  " + list[i].info + "[/]");
+                    table2.AddRow(" 💗 [bold #858585]Health[/]   [#706f6f] >  " + list[i].health + "[/]");
+                    table2.AddRow(" 💙 [bold #858585] Max Mana[/] [#706f6f]>  " + list[i].cooldown + "[/]");
+                    table2.AddRow(" 🔪 [bold #858585]Attack[/]   [#706f6f]>  " + list[i].attack + "[/]");
+                    table2.AddRow(" 👢 [bold #858585]Speed[/]   [#706f6f]>  " + list[i].speed + "[/]");
+                    table2.AddRow(" 💠 [bold #858585]Super Requirements[/] [#706f6f]> Mana " + list[i].cooldown + "💙[/]");
                     table1.AddColumn(new TableColumn(table2).Centered());
                     table2.BorderColor(Color.Grey23);
                     table.AddRow(table1);

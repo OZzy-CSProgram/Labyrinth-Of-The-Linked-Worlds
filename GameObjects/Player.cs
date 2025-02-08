@@ -8,6 +8,7 @@ namespace GameObjects
         public static bool play = true;
         public static bool exit = false;
         public bool turn;
+        public bool skipselected;
         public bool haveKey;
         public bool Victory;
         public int HeroesInCentre;
